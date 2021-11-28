@@ -1,6 +1,6 @@
-declare module 'instagram-web-api';
-declare module 'xhr2';
-declare module 'filereader';
+declare module "instagram-web-api";
+declare module "xhr2";
+declare module "filereader";
 
 interface NavButton {
   label: string;
@@ -11,4 +11,11 @@ interface NavButton {
 interface Dropdown {
   path: string;
   label: string;
+}
+
+interface PartnerImage {
+  alt: string;
+  image: string;
+  width: number;
+  height: number
 }

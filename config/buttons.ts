@@ -8,52 +8,52 @@ const navButtons: NavButton[] = [
   },
   {
     label: "anläggningen",
-    path: "/anläggningen",
+    path: "/anlaggningen",
     dropdown: [
       {
         label: "stallet",
-        path: "/anläggningen/stallet",
+        path: "/anlaggningen/stallet",
       },
       {
         label: "lösdriften",
-        path: "/anläggningen/lösdriften",
+        path: "/anlaggningen/losdriften",
       },
       {
         label: "hagarna",
-        path: "/anläggningen/hagarna",
+        path: "/anlaggningen/hagarna",
       },
       {
         label: "ridbanan",
-        path: "/anläggningen/ridbanan",
+        path: "/anlaggningen/ridbanan",
       },
     ],
   },
   {
     label: "hästar",
-    path: "/hästar",
+    path: "/hastar",
     dropdown: [
       {
         label: "tävlingshästar",
-        path: "/anläggningen/tävlingshästar",
+        path: "/anlaggningen/tavlingshastar",
       },
       {
         label: "unghästar",
-        path: "/anläggningen/unghästar",
+        path: "/anlaggningen/unghastar",
       },
       {
         label: "avelsto",
-        path: "/anläggningen/avelsto",
+        path: "/anlaggningen/avelsto",
       },
     ],
   },
   {
-    label: "bokning",
-    path: "/bokning",
+    label: "samarbetspartners",
+    path: "/samarbetspartners",
     dropdown: [],
   },
   {
-    label: "samarbetspartners",
-    path: "/samarbetspartners",
+    label: "bokning",
+    path: "/bokning",
     dropdown: [],
   },
 ];
