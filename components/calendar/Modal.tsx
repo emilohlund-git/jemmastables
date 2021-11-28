@@ -7,6 +7,9 @@ interface Props {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     day: DateTime;
+    currentTitle: any;
+    currentTimeFrom: any;
+    currentTimeTo: any;
 }
 
 function classNames(...classes: any) {
@@ -14,8 +17,17 @@ function classNames(...classes: any) {
 }
 
 export default function MyModal(props: Props) {
+    const [date, setDate] = useState(props.day.toISODate());
+    const [timeFrom, setTimeFrom] = useState("12:00");
+    const [timeTo, setTimeTo] = useState("12:00");
+    const [title, setTitle] = useState("");
+
     function closeModal() {
         props.setOpen(false)
+    }
+
+    const handleSave = (e: any) => {
+        closeModal();
     }
 
     return (
@@ -60,7 +72,7 @@ export default function MyModal(props: Props) {
                                     as="h3"
                                     className="text-lg font-medium leading-6 text-gray-900 mb-6"
                                 >
-                                    <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400" type="text" placeholder="Add title" aria-label="Title" />
+                                    <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400" type="text" onChange={((e) => { setTitle(e.target.value), props.currentTitle(e.target.value) })} placeholder="Add title" aria-label="Title" />
                                 </Dialog.Title>
                                 <Tab.Group>
                                     <Tab.List className="flex p-1 space-x-1 bg-blue-100 rounded-xl transform transition-all">
@@ -117,12 +129,12 @@ export default function MyModal(props: Props) {
                                         >
                                             <div className="flex flex-row items-center">
                                                 <FiClock className="text-gray-500 mr-2" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="date" value={props.day.toISODate()} />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="time" value={"12:00"} aria-label="Title" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="time" value={"12:00"} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setDate(e.target.value), props.currentTitle(e.target.value) })} type="date" value={date} />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value), props.currentTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value), props.currentTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
                                             <div className="flex w-full justify-end">
-                                                <button className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
+                                                <button className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4" onClick={handleSave}>
                                                     Spara
                                                 </button>
                                             </div>
