@@ -51,7 +51,7 @@ const JemmaCalendar = (props: Props) => {
             <div className="my-2 grid grid-cols-7 gap-1">
                 {days ?
                     days.map((day, i) => (
-                        <DayBox key={i} day={day} />
+                        <DayBox currentDate={currentDate} setCurrentDate={setCurrentDate} key={i} day={day} />
                     ))
                     :
                     <></>

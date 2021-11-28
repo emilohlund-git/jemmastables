@@ -15,7 +15,7 @@ const NavButton = (props: Props) => {
         <div onMouseOver={() => setToggle(true)} onMouseOut={() => setToggle(false)} className="relative cursor-pointer h-10">
             <div className="flex">
                 <Link href={props.button.path} passHref>
-                    <span className={`${router.pathname === "/" ? "text-white" : "text-black"} ${props.button.path == router.pathname ? "border-b-2" : ""} text-s self-center select-none ${props.button.path == "/bokning" ? "transition-all transform bg-gray-900 text-white hover:bg-gray-700 hover:scale-95 self-center py-2 px-4 rounded-3xl shadow-md -mt-2" : ""}`}>{props.button.label.toUpperCase()}</span>
+                    <span className={`${router.pathname === "/" ? "text-white" : "text-black"} ${props.button.path == router.pathname ? "border-b-2" : ""} text-s self-center select-none ${props.button.path == "/bokning" ? "transition-all transform bg-gray-900 text-white hover:bg-gray-700 hover:scale-95 self-center py-2 px-4 rounded-3xl shadow-md -mt-2" : ""}`}>{props.button.label}</span>
                 </Link>
                 {props.button.dropdown.length > 0 && <FiChevronDown className={`ml-2 ${router.pathname === "/" ? "text-white" : "text-black"} text-lg self-center transform transition-all ${toggle ? "rotate-180" : "rotate-0"}`} />}
             </div>
