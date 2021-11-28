@@ -6,7 +6,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/emilohlund-git/jemmastables">
-    <img src="/public/images/logo.png" alt="Logo" width="150" height="150">
+    <img src="https://i.ibb.co/k5LdY4j/jemmastables-logo.png" alt="Logo" width="150" height="150">
   </a>
 
   <h3 align="center">Jemmastables</h3>
