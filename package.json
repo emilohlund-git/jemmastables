@@ -8,15 +8,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "filereader": "^0.10.3",
+    "instagram-web-api": "^2.2.2",
     "next": "12.0.4",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-icons": "^4.3.1",
+    "xhr2": "^0.2.1"
   },
   "devDependencies": {
     "@types/node": "16.11.10",
     "@types/react": "17.0.37",
+    "autoprefixer": "^10.4.0",
     "eslint": "7",
     "eslint-config-next": "12.0.4",
+    "netlify-cli": "^8.0.3",
+    "postcss": "^8.4.4",
+    "tailwindcss": "^2.2.19",
     "typescript": "4.5.2"
   }
 }
