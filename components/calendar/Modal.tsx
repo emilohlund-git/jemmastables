@@ -7,15 +7,15 @@ interface Props {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     day: DateTime;
-    currentTitle: any;
-    currentTimeFrom: any;
-    currentTimeTo: any;
-    setType: any;
-    type: any;
-    setCurrentDate: any;
+    setCurrentTitle: React.Dispatch<React.SetStateAction<string>>;
+    setCurrentTimeFrom: React.Dispatch<React.SetStateAction<string>>;
+    setCurrentTimeTo: React.Dispatch<React.SetStateAction<string>>;
+    setType: React.Dispatch<React.SetStateAction<number>>;
+    type: number;
+    setCurrentDate: React.Dispatch<React.SetStateAction<DateTime>>;
 }
 
-function classNames(...classes: any) {
+function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
@@ -83,7 +83,7 @@ export default function MyModal(props: Props) {
                                     as="h3"
                                     className="text-lg font-medium leading-6 text-gray-900 mb-6"
                                 >
-                                    <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400" value={title} type="text" onChange={((e) => { setTitle(e.target.value), props.currentTitle(e.target.value) })} placeholder="Lägg till titel" aria-label="Title" />
+                                    <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400" value={title} type="text" onChange={((e) => { setTitle(e.target.value), props.setCurrentTitle(e.target.value) })} placeholder="Lägg till titel" aria-label="Title" />
                                 </Dialog.Title>
                                 <Tab.Group defaultIndex={props.type} onChange={(index) => props.setType(index)}>
                                     <Tab.List className="flex p-1 space-x-1 bg-blue-100 rounded-xl transform transition-all">
@@ -140,9 +140,9 @@ export default function MyModal(props: Props) {
                                         >
                                             <div className="flex flex-row items-center">
                                                 <FiClock className="text-gray-500 mr-2" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setDate(e.target.value), props.currentTitle(e.target.value), handleCurrentDate(e.target.value) })} disabled type="date" value={date} />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value), props.currentTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value), props.currentTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setDate(e.target.value), props.setCurrentTitle(e.target.value), handleCurrentDate(e.target.value) })} disabled type="date" value={date} />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value), props.setCurrentTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value), props.setCurrentTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
                                             <div className="flex w-full justify-end">
                                                 <button className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4" onClick={handleSave}>

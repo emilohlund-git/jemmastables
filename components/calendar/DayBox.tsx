@@ -4,25 +4,21 @@ import MyModal from './Modal';
 
 interface Props {
     day: DateTime;
-    setCurrentDate: any;
-    currentDate: any;
+    setCurrentDate: React.Dispatch<React.SetStateAction<DateTime>>;
+    currentDate: DateTime;
 }
 
 const DayBox = (props: Props) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [currentTitle, setCurrentTitle] = useState();
-    const [currentTimeFrom, setCurrentTimeFrom] = useState();
-    const [currentTimeTo, setCurrentTimeTo] = useState();
+    const [currentTitle, setCurrentTitle] = useState("");
+    const [currentTimeFrom, setCurrentTimeFrom] = useState("");
+    const [currentTimeTo, setCurrentTimeTo] = useState("");
     const [type, setType] = useState(0);
 
     const handleClick = () => {
         if (DateTime.now() <= props.day) {
             setIsOpen(!isOpen);
         }
-    }
-
-    const onStart = () => {
-        console.log("Go!");
     }
 
     return (
@@ -35,7 +31,7 @@ const DayBox = (props: Props) => {
                     {currentTimeFrom ? <p className="text-xs">{currentTimeFrom}</p> : <p className="text-xs">12:00</p>} <p className="text-xs">-</p> {currentTimeFrom ? <p className="text-xs">{currentTimeTo}</p> : <p className="text-xs">12:00</p>}
                 </div>
             </div>
-            <MyModal setCurrentDate={props.setCurrentDate} day={props.day} type={type} setType={setType} currentTitle={setCurrentTitle} currentTimeTo={setCurrentTimeTo} currentTimeFrom={setCurrentTimeFrom} setOpen={setIsOpen} open={isOpen} />
+            <MyModal setCurrentDate={props.setCurrentDate} day={props.day} type={type} setType={setType} setCurrentTitle={setCurrentTitle} setCurrentTimeTo={setCurrentTimeTo} setCurrentTimeFrom={setCurrentTimeFrom} setOpen={setIsOpen} open={isOpen} />
         </div>
     )
 }
