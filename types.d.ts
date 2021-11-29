@@ -1,6 +1,7 @@
 declare module "instagram-web-api";
 declare module "xhr2";
 declare module "filereader";
+declare module 'uuid';
 
 interface NavButton {
   label: string;

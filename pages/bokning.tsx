@@ -1,5 +1,6 @@
 import React from 'react'
 import JemmaCalendar from '../components/calendar/JemmaCalendar'
+import { withApollo } from '../utils/withApollo'
 
 interface Props {
 
@@ -13,4 +14,4 @@ const bokning = (props: Props) => {
     )
 }
 
-export default bokning
+export default withApollo({ ssr: true })(bokning)

@@ -45,6 +45,7 @@ export type BookedTime = {
 };
 
 export type BookedTimeInput = {
+  bookedTimeId: Scalars['String'];
   date: Scalars['String'];
   type: Scalars['String'];
 };
