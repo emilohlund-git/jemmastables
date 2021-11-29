@@ -1,0 +1,10 @@
+query BookedTimes {
+  bookedTimes {
+    id
+    bookedTimeId
+    createdAt
+    updatedAt
+    date
+    type
+  }
+}

@@ -1,0 +1,10 @@
+mutation CreateBookedTime($input: BookedTimeInput!) {
+  createBookedTime(input: $input) {
+    id
+    bookedTimeId
+    createdAt
+    updatedAt
+    type
+    date
+  }
+}

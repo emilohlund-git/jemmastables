@@ -1,0 +1,10 @@
+query BookedTime($bookedTimeId: Float!) {
+  bookedTime(id: $bookedTimeId) {
+    id
+    bookedTimeId
+    createdAt
+    updatedAt
+    type
+    date
+  }
+}

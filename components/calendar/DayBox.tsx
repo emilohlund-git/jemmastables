@@ -30,7 +30,7 @@ const DayBox = (props: Props) => {
             {props.day.weekdayLong === "måndag" ? <span className="ml-2 inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-gray-100 bg-gray-600 rounded-md absolute top-2 right-0">{props.day.weekNumber}</span> : <></>}
             <p className="text-gray-500 text-left ml-2 text-lg">{props.day.day}</p>
             <div className={`transition-all justify-center ${type == 0 && "bg-blue-100"} ${type == 1 && "bg-red-100"} ${type == 2 && "bg-green-100"} rounded-lg p-1 mt-3 flex flex-col transform ${!isOpen ? "opacity-0 scale-0" : ""}`}>
-                <p className="text-sm">{currentTitle ? currentTitle : "(No title)"}</p>
+                <p className="text-sm">{currentTitle ? currentTitle : "(Ingen titel)"}</p>
                 <div className="flex flex-row">
                     {currentTimeFrom ? <p className="text-xs">{currentTimeFrom}</p> : <p className="text-xs">12:00</p>} <p className="text-xs">-</p> {currentTimeFrom ? <p className="text-xs">{currentTimeTo}</p> : <p className="text-xs">12:00</p>}
                 </div>

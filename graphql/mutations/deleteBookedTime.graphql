@@ -1,0 +1,3 @@
+mutation DeleteBookedTime($deleteBookedTimeId: Float!) {
+  deleteBookedTime(id: $deleteBookedTimeId)
+}

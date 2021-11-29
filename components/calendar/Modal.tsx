@@ -83,7 +83,7 @@ export default function MyModal(props: Props) {
                                     as="h3"
                                     className="text-lg font-medium leading-6 text-gray-900 mb-6"
                                 >
-                                    <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400" value={title} type="text" onChange={((e) => { setTitle(e.target.value), props.currentTitle(e.target.value) })} placeholder="Add title" aria-label="Title" />
+                                    <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400" value={title} type="text" onChange={((e) => { setTitle(e.target.value), props.currentTitle(e.target.value) })} placeholder="Lägg till titel" aria-label="Title" />
                                 </Dialog.Title>
                                 <Tab.Group defaultIndex={props.type} onChange={(index) => props.setType(index)}>
                                     <Tab.List className="flex p-1 space-x-1 bg-blue-100 rounded-xl transform transition-all">

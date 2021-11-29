@@ -1,0 +1,8 @@
+query Admin {
+  Admin {
+    id
+    createdAt
+    updatedAt
+    username
+  }
+}
