@@ -33,10 +33,6 @@ export default function MyModal(props: Props) {
         props.setOpen(false)
     }
 
-    useEffect(() => {
-        console.log(date);
-    }, [])
-
     const handleCurrentDate = (e: any) => {
         const numbers = e.split("-");
         const year = parseInt(numbers[0]);
@@ -165,7 +161,7 @@ export default function MyModal(props: Props) {
                                         >
                                             <div className="flex flex-row items-center">
                                                 <FiClock className="text-gray-500 mr-2" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setDate(e.target.value), props.setCurrentTitle(e.target.value), handleCurrentDate(e.target.value) })} disabled type="date" value={date} />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setDate(e.target.value), props.setCurrentTitle(e.target.value), handleCurrentDate(e.target.value) })} disabled type="date" value={props.day.toISODate()} />
                                                 <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value), props.setCurrentTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
                                                 <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value), props.setCurrentTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
@@ -184,7 +180,7 @@ export default function MyModal(props: Props) {
                                         >
                                             <div className="flex flex-row items-center">
                                                 <FiClock className="text-gray-500 mr-2" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setDate(e.target.value), props.setCurrentTitle(e.target.value), handleCurrentDate(e.target.value) })} disabled type="date" value={date} />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setDate(e.target.value), props.setCurrentTitle(e.target.value), handleCurrentDate(e.target.value) })} disabled type="date" value={props.day.toISODate()} />
                                                 <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value), props.setCurrentTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
                                                 <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value), props.setCurrentTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
@@ -203,7 +199,7 @@ export default function MyModal(props: Props) {
                                         >
                                             <div className="flex flex-row items-center">
                                                 <FiClock className="text-gray-500 mr-2" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setDate(e.target.value), props.setCurrentTitle(e.target.value), handleCurrentDate(e.target.value) })} disabled type="date" value={date} />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setDate(e.target.value), props.setCurrentTitle(e.target.value), handleCurrentDate(e.target.value) })} disabled type="date" value={props.day.toISODate()} />
                                                 <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value), props.setCurrentTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
                                                 <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value), props.setCurrentTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>

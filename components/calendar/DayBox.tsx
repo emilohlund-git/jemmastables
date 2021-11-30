@@ -27,7 +27,7 @@ const DayBox = (props: Props) => {
             {props.day.weekdayLong === "måndag" ? <span className="ml-2 inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-gray-100 bg-gray-600 rounded-md absolute top-2 right-0">{props.day.weekNumber}</span> : <></>}
             <p className="text-gray-500 text-left ml-2 text-lg">{props.day.day}</p>
             {props.bookedTime.map((bookedTime, index) => {
-                if (props.day.setLocale("sv").toFormat("MM/DD/yyyy") == bookedTime.setLocale("sv").toFormat("yyyy-LL-dd")) {
+                if (props.day.setLocale("sv").toFormat("yyyy-LL-dd") == bookedTime.setLocale("sv").toFormat("yyyy-LL-dd")) {
                     return <h1 key={index}>Here!</h1>
                 } else {
                     return <div key={index}></div>

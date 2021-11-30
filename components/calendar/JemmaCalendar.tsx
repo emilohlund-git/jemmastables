@@ -4,7 +4,7 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import getDaysInMonth from "../../utils/calendar/getDaysInMonth";
 import getDaysInWeek from "../../utils/calendar/getDaysInWeek";
 import DayBox from "./DayBox";
-import { useBookedTimesQuery } from '../../generated/graphql';
+import { BookedTimesQuery, useBookedTimesQuery } from '../../generated/graphql';
 import formatSQLDate from "../../utils/calendar/formatSQLDate";
 
 interface Props {
@@ -18,6 +18,7 @@ const JemmaCalendar = (props: Props) => {
     );
     const [weekDays, setWeekDays] = useState(getDaysInWeek(currentDate));
     const [bookedDays, setBookedDays] = useState([] as DateTime[]);
+    const [bookedTimesData, setBookedTimesData] = useState({} as BookedTimesQuery | undefined);
 
     const { data, loading } = useBookedTimesQuery();
 
@@ -28,6 +29,10 @@ const JemmaCalendar = (props: Props) => {
             setCurrentDate(currentDate.set({ month: currentDate.month + 1 }));
         }
     }
+
+    useEffect(() => {
+        setBookedTimesData(data);
+    }, [currentDate, data])
 
     useEffect(() => {
         if (!loading) {
