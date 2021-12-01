@@ -1,9 +1,11 @@
 import type { AppProps } from 'next/app'
 import Layout from '../components/Layout'
+import store from '../redux/store';
+import { Provider } from 'react-redux';
 import "tailwindcss/tailwind.css"
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Layout><Component {...pageProps} /></Layout>
+  return <Provider store={store}><Layout><Component {...pageProps} /></Layout></Provider>
 }
 
 export default MyApp
