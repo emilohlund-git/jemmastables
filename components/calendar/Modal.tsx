@@ -1,7 +1,9 @@
-import { Dialog, Transition, Tab } from '@headlessui/react'
+import { Dialog, Tab, Transition } from '@headlessui/react';
 import { DateTime } from 'luxon';
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react';
 import { FiClock } from 'react-icons/fi';
+import { v4 as uuidv4 } from 'uuid';
+import { useCreateBookedTimeMutation } from '../../generated/graphql';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
 
@@ -26,12 +28,10 @@ export default function MyModal(props: Props) {
     const [timeTo, setTimeTo] = useState("12:00");
     const [title, setTitle] = useState("");
 
+    const [book] = useCreateBookedTimeMutation();
+
     function closeModal() {
         props.setOpen(false)
-    }
-
-    const handleSave = (e: any) => {
-        closeModal();
     }
 
     const handleCurrentDate = (e: any) => {
@@ -40,6 +40,27 @@ export default function MyModal(props: Props) {
         const month = parseInt(numbers[1]);
         const day = parseInt(numbers[2]);
         props.setCurrentDate(DateTime.local(year, month, day));
+    }
+
+    const handleTimeSave = async (e: any) => {
+        const { errors } = await book({
+            variables: {
+                input: {
+                    date: props.day.toSQLDate(),
+                    type: props.type.toString(),
+                    bookedTimeId: uuidv4(),
+                }
+            },
+            update: (cache) => {
+                cache.evict({ fieldName: "bookedTimes" });
+            }
+        })
+
+        if (!errors) {
+            closeModal();
+        } else {
+            console.log(errors);
+        }
     }
 
     return (
@@ -141,12 +162,50 @@ export default function MyModal(props: Props) {
                                         >
                                             <div className="flex flex-row items-center">
                                                 <FiClock className="text-gray-500 mr-2" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setDate(e.target.value), props.setCurrentTitle(e.target.value), handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value), props.setCurrentTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value), props.setCurrentTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
+                                            </div>
+                                            <div className="flex w-full justify-end">
+                                                <button onClick={handleTimeSave} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
+                                                    Spara
+                                                </button>
+                                            </div>
+                                        </Tab.Panel>
+                                        <Tab.Panel
+                                            key={2}
+                                            className={classNames(
+                                                'bg-white rounded-xl p-3',
+                                                'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60'
+                                            )}
+                                        >
+                                            <div className="flex flex-row items-center">
+                                                <FiClock className="text-gray-500 mr-2" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setDate(e.target.value), props.setCurrentTitle(e.target.value), handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value), props.setCurrentTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value), props.setCurrentTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
+                                            </div>
+                                            <div className="flex w-full justify-end">
+                                                <button onClick={handleTimeSave} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
+                                                    Spara
+                                                </button>
+                                            </div>
+                                        </Tab.Panel>
+                                        <Tab.Panel
+                                            key={3}
+                                            className={classNames(
+                                                'bg-white rounded-xl p-3',
+                                                'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60'
+                                            )}
+                                        >
+                                            <div className="flex flex-row items-center">
+                                                <FiClock className="text-gray-500 mr-2" />
                                                 <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { props.setCurrentTitle(e.target.value), handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
                                                 <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value), props.setCurrentTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
                                                 <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value), props.setCurrentTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
                                             <div className="flex w-full justify-end">
-                                                <button className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4" onClick={handleSave}>
+                                                <button onClick={handleTimeSave} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
                                                     Spara
                                                 </button>
                                             </div>
