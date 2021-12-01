@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import MyModal from './Modal';
+import { setDate } from '../../redux/actions';
 
 interface Props {
     day: DateTime;
@@ -14,9 +16,11 @@ const DayBox = (props: Props) => {
     const [currentTimeFrom, setCurrentTimeFrom] = useState("");
     const [currentTimeTo, setCurrentTimeTo] = useState("");
     const [type, setType] = useState(0);
+    const dispatch = useDispatch();
 
     const handleClick = () => {
         if (DateTime.now() <= props.day) {
+            dispatch(setDate(props.day));
             setIsOpen(!isOpen);
         }
     }
@@ -31,7 +35,7 @@ const DayBox = (props: Props) => {
                     {currentTimeFrom ? <p className="text-xs">{currentTimeFrom}</p> : <p className="text-xs">12:00</p>} <p className="text-xs">-</p> {currentTimeFrom ? <p className="text-xs">{currentTimeTo}</p> : <p className="text-xs">12:00</p>}
                 </div>
             </div>
-            <MyModal setCurrentDate={props.setCurrentDate} day={props.day} type={type} setType={setType} setCurrentTitle={setCurrentTitle} setCurrentTimeTo={setCurrentTimeTo} setCurrentTimeFrom={setCurrentTimeFrom} setOpen={setIsOpen} open={isOpen} />
+            <MyModal setCurrentDate={props.setCurrentDate} type={type} setType={setType} setCurrentTitle={setCurrentTitle} setCurrentTimeTo={setCurrentTimeTo} setCurrentTimeFrom={setCurrentTimeFrom} setOpen={setIsOpen} open={isOpen} />
         </div>
     )
 }

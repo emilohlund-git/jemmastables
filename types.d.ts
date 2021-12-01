@@ -2,6 +2,10 @@ declare module "instagram-web-api";
 declare module "xhr2";
 declare module "filereader";
 
+interface Window {
+  __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+}
+
 interface NavButton {
   label: string;
   path: string;
@@ -17,5 +21,5 @@ interface PartnerImage {
   alt: string;
   image: string;
   width: number;
-  height: number
+  height: number;
 }
