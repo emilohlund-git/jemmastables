@@ -13,7 +13,7 @@ const Navbar = (props: Props) => {
     const [toggle, setToggle] = useState(false);
 
     return (
-        <div className={`${router.pathname == "/" ? "fixed" : "bg-white"} z-40 w-full `}>
+        <div className={`${router.pathname == "/" ? "fixed" : "bg-white dark:bg-gray-900"} z-40 w-full `}>
             <div className="p-10 flex flex-row justify-between">
                 <div className="flex">
                     <Image width={115} height={115} alt="Jemmastables Logo" layout="fixed" src={`${router.pathname === "/" ? "/images/jemmastables-logo-vit.png" : "/images/jemmastables-logo.png"}`}/>

@@ -1,7 +1,5 @@
 <div id="top"></div>
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/4f86c853-13b8-4da8-8a1f-e84097ee8336/deploy-status)](https://app.netlify.com/sites/jemmastables/deploys)
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -15,7 +13,7 @@
     An awesome README template to jumpstart your projects!
     <br />
     <br />
-    <a href="https://jemmastables.netlify.app/">View Demo</a>
+    <a href="https://jemmastables.vercel.app/bokning">View Demo</a>
   </p>
 </div>
 
