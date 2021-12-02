@@ -1,0 +1,10 @@
+query AvailableTimes {
+  availableTimes {
+    id
+    availableTimeId
+    createdAt
+    updatedAt
+    date
+    type
+  }
+}

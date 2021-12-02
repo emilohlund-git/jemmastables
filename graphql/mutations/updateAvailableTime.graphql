@@ -1,0 +1,10 @@
+mutation UpdateAvailableTime($input: CustomerInput!, $updateAvailableTimeId: Float!) {
+  updateAvailableTime(input: $input, id: $updateAvailableTimeId) {
+    id
+    availableTimeId
+    createdAt
+    updatedAt
+    type
+    date
+  }
+}

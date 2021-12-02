@@ -1,0 +1,10 @@
+query AvailableTime($availableTimeId: Float!) {
+  availableTime(id: $availableTimeId) {
+    id
+    availableTimeId
+    createdAt
+    updatedAt
+    type
+    date
+  }
+}

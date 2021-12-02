@@ -14,4 +14,4 @@ const bokning = (props: Props) => {
     )
 }
 
-export default withApollo({ ssr: true })(bokning)
+export default withApollo({ ssr: false })(bokning)

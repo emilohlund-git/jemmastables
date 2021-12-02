@@ -34,9 +34,9 @@ export type AdminResponse = {
   errors?: Maybe<Array<FieldError>>;
 };
 
-export type BookedTime = {
-  __typename?: 'BookedTime';
-  bookedTimeId: Scalars['String'];
+export type AvailableTime = {
+  __typename?: 'AvailableTime';
+  availableTimeId: Scalars['String'];
   createdAt: Scalars['String'];
   date: Scalars['String'];
   id: Scalars['Float'];
@@ -44,14 +44,14 @@ export type BookedTime = {
   updatedAt: Scalars['String'];
 };
 
-export type BookedTimeInput = {
-  bookedTimeId: Scalars['String'];
+export type AvailableTimeInput = {
+  availableTimeId: Scalars['String'];
   date: Scalars['String'];
   type: Scalars['String'];
 };
 
 export type CustomerInput = {
-  bookedTime: BookedTimeInput;
+  availableTime: AvailableTimeInput;
   createdAt: Scalars['String'];
   customerId: Scalars['String'];
   email: Scalars['String'];
@@ -69,21 +69,21 @@ export type FieldError = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createBookedTime: BookedTime;
-  deleteBookedTime: Scalars['Boolean'];
+  createAvailableTime: AvailableTime;
+  deleteAvailableTime: Scalars['Boolean'];
   login: AdminResponse;
   logout: Scalars['Boolean'];
   register: AdminResponse;
-  updateBookedTime: BookedTime;
+  updateAvailableTime: AvailableTime;
 };
 
 
-export type MutationCreateBookedTimeArgs = {
-  input: BookedTimeInput;
+export type MutationCreateAvailableTimeArgs = {
+  input: AvailableTimeInput;
 };
 
 
-export type MutationDeleteBookedTimeArgs = {
+export type MutationDeleteAvailableTimeArgs = {
   id: Scalars['Float'];
 };
 
@@ -98,7 +98,7 @@ export type MutationRegisterArgs = {
 };
 
 
-export type MutationUpdateBookedTimeArgs = {
+export type MutationUpdateAvailableTimeArgs = {
   id: Scalars['Float'];
   input: CustomerInput;
 };
@@ -106,28 +106,28 @@ export type MutationUpdateBookedTimeArgs = {
 export type Query = {
   __typename?: 'Query';
   Admin?: Maybe<Admin>;
-  bookedTime?: Maybe<BookedTime>;
-  bookedTimes: Array<BookedTime>;
+  availableTime?: Maybe<AvailableTime>;
+  availableTimes: Array<AvailableTime>;
 };
 
 
-export type QueryBookedTimeArgs = {
+export type QueryAvailableTimeArgs = {
   id: Scalars['Float'];
 };
 
-export type CreateBookedTimeMutationVariables = Exact<{
-  input: BookedTimeInput;
+export type CreateAvailableTimeMutationVariables = Exact<{
+  input: AvailableTimeInput;
 }>;
 
 
-export type CreateBookedTimeMutation = { __typename?: 'Mutation', createBookedTime: { __typename?: 'BookedTime', id: number, bookedTimeId: string, createdAt: string, updatedAt: string, type: string, date: string } };
+export type CreateAvailableTimeMutation = { __typename?: 'Mutation', createAvailableTime: { __typename?: 'AvailableTime', id: number, availableTimeId: string, createdAt: string, updatedAt: string, type: string, date: string } };
 
-export type DeleteBookedTimeMutationVariables = Exact<{
-  deleteBookedTimeId: Scalars['Float'];
+export type DeleteAvailableTimeMutationVariables = Exact<{
+  deleteAvailableTimeId: Scalars['Float'];
 }>;
 
 
-export type DeleteBookedTimeMutation = { __typename?: 'Mutation', deleteBookedTime: boolean };
+export type DeleteAvailableTimeMutation = { __typename?: 'Mutation', deleteAvailableTime: boolean };
 
 export type LoginMutationVariables = Exact<{
   options: AdminNamePasswordInput;
@@ -148,37 +148,37 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'AdminResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null | undefined, admin?: { __typename?: 'Admin', id: number, createdAt: string, updatedAt: string, username: string } | null | undefined } };
 
-export type UpdateBookedTimeMutationVariables = Exact<{
+export type UpdateAvailableTimeMutationVariables = Exact<{
   input: CustomerInput;
-  updateBookedTimeId: Scalars['Float'];
+  updateAvailableTimeId: Scalars['Float'];
 }>;
 
 
-export type UpdateBookedTimeMutation = { __typename?: 'Mutation', updateBookedTime: { __typename?: 'BookedTime', id: number, bookedTimeId: string, createdAt: string, updatedAt: string, type: string, date: string } };
+export type UpdateAvailableTimeMutation = { __typename?: 'Mutation', updateAvailableTime: { __typename?: 'AvailableTime', id: number, availableTimeId: string, createdAt: string, updatedAt: string, type: string, date: string } };
 
 export type AdminQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AdminQuery = { __typename?: 'Query', Admin?: { __typename?: 'Admin', id: number, createdAt: string, updatedAt: string, username: string } | null | undefined };
 
-export type BookedTimeQueryVariables = Exact<{
-  bookedTimeId: Scalars['Float'];
+export type AvailableTimeQueryVariables = Exact<{
+  availableTimeId: Scalars['Float'];
 }>;
 
 
-export type BookedTimeQuery = { __typename?: 'Query', bookedTime?: { __typename?: 'BookedTime', id: number, bookedTimeId: string, createdAt: string, updatedAt: string, type: string, date: string } | null | undefined };
+export type AvailableTimeQuery = { __typename?: 'Query', availableTime?: { __typename?: 'AvailableTime', id: number, availableTimeId: string, createdAt: string, updatedAt: string, type: string, date: string } | null | undefined };
 
-export type BookedTimesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type BookedTimesQuery = { __typename?: 'Query', bookedTimes: Array<{ __typename?: 'BookedTime', id: number, bookedTimeId: string, createdAt: string, updatedAt: string, date: string, type: string }> };
+export type AvailableTimesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export const CreateBookedTimeDocument = gql`
-    mutation CreateBookedTime($input: BookedTimeInput!) {
-  createBookedTime(input: $input) {
+export type AvailableTimesQuery = { __typename?: 'Query', availableTimes: Array<{ __typename?: 'AvailableTime', id: number, availableTimeId: string, createdAt: string, updatedAt: string, date: string, type: string }> };
+
+
+export const CreateAvailableTimeDocument = gql`
+    mutation CreateAvailableTime($input: AvailableTimeInput!) {
+  createAvailableTime(input: $input) {
     id
-    bookedTimeId
+    availableTimeId
     createdAt
     updatedAt
     type
@@ -186,63 +186,63 @@ export const CreateBookedTimeDocument = gql`
   }
 }
     `;
-export type CreateBookedTimeMutationFn = Apollo.MutationFunction<CreateBookedTimeMutation, CreateBookedTimeMutationVariables>;
+export type CreateAvailableTimeMutationFn = Apollo.MutationFunction<CreateAvailableTimeMutation, CreateAvailableTimeMutationVariables>;
 
 /**
- * __useCreateBookedTimeMutation__
+ * __useCreateAvailableTimeMutation__
  *
- * To run a mutation, you first call `useCreateBookedTimeMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateBookedTimeMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useCreateAvailableTimeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateAvailableTimeMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createBookedTimeMutation, { data, loading, error }] = useCreateBookedTimeMutation({
+ * const [createAvailableTimeMutation, { data, loading, error }] = useCreateAvailableTimeMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useCreateBookedTimeMutation(baseOptions?: Apollo.MutationHookOptions<CreateBookedTimeMutation, CreateBookedTimeMutationVariables>) {
+export function useCreateAvailableTimeMutation(baseOptions?: Apollo.MutationHookOptions<CreateAvailableTimeMutation, CreateAvailableTimeMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateBookedTimeMutation, CreateBookedTimeMutationVariables>(CreateBookedTimeDocument, options);
+        return Apollo.useMutation<CreateAvailableTimeMutation, CreateAvailableTimeMutationVariables>(CreateAvailableTimeDocument, options);
       }
-export type CreateBookedTimeMutationHookResult = ReturnType<typeof useCreateBookedTimeMutation>;
-export type CreateBookedTimeMutationResult = Apollo.MutationResult<CreateBookedTimeMutation>;
-export type CreateBookedTimeMutationOptions = Apollo.BaseMutationOptions<CreateBookedTimeMutation, CreateBookedTimeMutationVariables>;
-export const DeleteBookedTimeDocument = gql`
-    mutation DeleteBookedTime($deleteBookedTimeId: Float!) {
-  deleteBookedTime(id: $deleteBookedTimeId)
+export type CreateAvailableTimeMutationHookResult = ReturnType<typeof useCreateAvailableTimeMutation>;
+export type CreateAvailableTimeMutationResult = Apollo.MutationResult<CreateAvailableTimeMutation>;
+export type CreateAvailableTimeMutationOptions = Apollo.BaseMutationOptions<CreateAvailableTimeMutation, CreateAvailableTimeMutationVariables>;
+export const DeleteAvailableTimeDocument = gql`
+    mutation DeleteAvailableTime($deleteAvailableTimeId: Float!) {
+  deleteAvailableTime(id: $deleteAvailableTimeId)
 }
     `;
-export type DeleteBookedTimeMutationFn = Apollo.MutationFunction<DeleteBookedTimeMutation, DeleteBookedTimeMutationVariables>;
+export type DeleteAvailableTimeMutationFn = Apollo.MutationFunction<DeleteAvailableTimeMutation, DeleteAvailableTimeMutationVariables>;
 
 /**
- * __useDeleteBookedTimeMutation__
+ * __useDeleteAvailableTimeMutation__
  *
- * To run a mutation, you first call `useDeleteBookedTimeMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteBookedTimeMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useDeleteAvailableTimeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAvailableTimeMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [deleteBookedTimeMutation, { data, loading, error }] = useDeleteBookedTimeMutation({
+ * const [deleteAvailableTimeMutation, { data, loading, error }] = useDeleteAvailableTimeMutation({
  *   variables: {
- *      deleteBookedTimeId: // value for 'deleteBookedTimeId'
+ *      deleteAvailableTimeId: // value for 'deleteAvailableTimeId'
  *   },
  * });
  */
-export function useDeleteBookedTimeMutation(baseOptions?: Apollo.MutationHookOptions<DeleteBookedTimeMutation, DeleteBookedTimeMutationVariables>) {
+export function useDeleteAvailableTimeMutation(baseOptions?: Apollo.MutationHookOptions<DeleteAvailableTimeMutation, DeleteAvailableTimeMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteBookedTimeMutation, DeleteBookedTimeMutationVariables>(DeleteBookedTimeDocument, options);
+        return Apollo.useMutation<DeleteAvailableTimeMutation, DeleteAvailableTimeMutationVariables>(DeleteAvailableTimeDocument, options);
       }
-export type DeleteBookedTimeMutationHookResult = ReturnType<typeof useDeleteBookedTimeMutation>;
-export type DeleteBookedTimeMutationResult = Apollo.MutationResult<DeleteBookedTimeMutation>;
-export type DeleteBookedTimeMutationOptions = Apollo.BaseMutationOptions<DeleteBookedTimeMutation, DeleteBookedTimeMutationVariables>;
+export type DeleteAvailableTimeMutationHookResult = ReturnType<typeof useDeleteAvailableTimeMutation>;
+export type DeleteAvailableTimeMutationResult = Apollo.MutationResult<DeleteAvailableTimeMutation>;
+export type DeleteAvailableTimeMutationOptions = Apollo.BaseMutationOptions<DeleteAvailableTimeMutation, DeleteAvailableTimeMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($options: AdminNamePasswordInput!) {
   login(options: $options) {
@@ -357,11 +357,11 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
-export const UpdateBookedTimeDocument = gql`
-    mutation UpdateBookedTime($input: CustomerInput!, $updateBookedTimeId: Float!) {
-  updateBookedTime(input: $input, id: $updateBookedTimeId) {
+export const UpdateAvailableTimeDocument = gql`
+    mutation UpdateAvailableTime($input: CustomerInput!, $updateAvailableTimeId: Float!) {
+  updateAvailableTime(input: $input, id: $updateAvailableTimeId) {
     id
-    bookedTimeId
+    availableTimeId
     createdAt
     updatedAt
     type
@@ -369,33 +369,33 @@ export const UpdateBookedTimeDocument = gql`
   }
 }
     `;
-export type UpdateBookedTimeMutationFn = Apollo.MutationFunction<UpdateBookedTimeMutation, UpdateBookedTimeMutationVariables>;
+export type UpdateAvailableTimeMutationFn = Apollo.MutationFunction<UpdateAvailableTimeMutation, UpdateAvailableTimeMutationVariables>;
 
 /**
- * __useUpdateBookedTimeMutation__
+ * __useUpdateAvailableTimeMutation__
  *
- * To run a mutation, you first call `useUpdateBookedTimeMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateBookedTimeMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUpdateAvailableTimeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateAvailableTimeMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [updateBookedTimeMutation, { data, loading, error }] = useUpdateBookedTimeMutation({
+ * const [updateAvailableTimeMutation, { data, loading, error }] = useUpdateAvailableTimeMutation({
  *   variables: {
  *      input: // value for 'input'
- *      updateBookedTimeId: // value for 'updateBookedTimeId'
+ *      updateAvailableTimeId: // value for 'updateAvailableTimeId'
  *   },
  * });
  */
-export function useUpdateBookedTimeMutation(baseOptions?: Apollo.MutationHookOptions<UpdateBookedTimeMutation, UpdateBookedTimeMutationVariables>) {
+export function useUpdateAvailableTimeMutation(baseOptions?: Apollo.MutationHookOptions<UpdateAvailableTimeMutation, UpdateAvailableTimeMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateBookedTimeMutation, UpdateBookedTimeMutationVariables>(UpdateBookedTimeDocument, options);
+        return Apollo.useMutation<UpdateAvailableTimeMutation, UpdateAvailableTimeMutationVariables>(UpdateAvailableTimeDocument, options);
       }
-export type UpdateBookedTimeMutationHookResult = ReturnType<typeof useUpdateBookedTimeMutation>;
-export type UpdateBookedTimeMutationResult = Apollo.MutationResult<UpdateBookedTimeMutation>;
-export type UpdateBookedTimeMutationOptions = Apollo.BaseMutationOptions<UpdateBookedTimeMutation, UpdateBookedTimeMutationVariables>;
+export type UpdateAvailableTimeMutationHookResult = ReturnType<typeof useUpdateAvailableTimeMutation>;
+export type UpdateAvailableTimeMutationResult = Apollo.MutationResult<UpdateAvailableTimeMutation>;
+export type UpdateAvailableTimeMutationOptions = Apollo.BaseMutationOptions<UpdateAvailableTimeMutation, UpdateAvailableTimeMutationVariables>;
 export const AdminDocument = gql`
     query Admin {
   Admin {
@@ -433,11 +433,11 @@ export function useAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Admi
 export type AdminQueryHookResult = ReturnType<typeof useAdminQuery>;
 export type AdminLazyQueryHookResult = ReturnType<typeof useAdminLazyQuery>;
 export type AdminQueryResult = Apollo.QueryResult<AdminQuery, AdminQueryVariables>;
-export const BookedTimeDocument = gql`
-    query BookedTime($bookedTimeId: Float!) {
-  bookedTime(id: $bookedTimeId) {
+export const AvailableTimeDocument = gql`
+    query AvailableTime($availableTimeId: Float!) {
+  availableTime(id: $availableTimeId) {
     id
-    bookedTimeId
+    availableTimeId
     createdAt
     updatedAt
     type
@@ -447,37 +447,37 @@ export const BookedTimeDocument = gql`
     `;
 
 /**
- * __useBookedTimeQuery__
+ * __useAvailableTimeQuery__
  *
- * To run a query within a React component, call `useBookedTimeQuery` and pass it any options that fit your needs.
- * When your component renders, `useBookedTimeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useAvailableTimeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAvailableTimeQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useBookedTimeQuery({
+ * const { data, loading, error } = useAvailableTimeQuery({
  *   variables: {
- *      bookedTimeId: // value for 'bookedTimeId'
+ *      availableTimeId: // value for 'availableTimeId'
  *   },
  * });
  */
-export function useBookedTimeQuery(baseOptions: Apollo.QueryHookOptions<BookedTimeQuery, BookedTimeQueryVariables>) {
+export function useAvailableTimeQuery(baseOptions: Apollo.QueryHookOptions<AvailableTimeQuery, AvailableTimeQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<BookedTimeQuery, BookedTimeQueryVariables>(BookedTimeDocument, options);
+        return Apollo.useQuery<AvailableTimeQuery, AvailableTimeQueryVariables>(AvailableTimeDocument, options);
       }
-export function useBookedTimeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BookedTimeQuery, BookedTimeQueryVariables>) {
+export function useAvailableTimeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AvailableTimeQuery, AvailableTimeQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<BookedTimeQuery, BookedTimeQueryVariables>(BookedTimeDocument, options);
+          return Apollo.useLazyQuery<AvailableTimeQuery, AvailableTimeQueryVariables>(AvailableTimeDocument, options);
         }
-export type BookedTimeQueryHookResult = ReturnType<typeof useBookedTimeQuery>;
-export type BookedTimeLazyQueryHookResult = ReturnType<typeof useBookedTimeLazyQuery>;
-export type BookedTimeQueryResult = Apollo.QueryResult<BookedTimeQuery, BookedTimeQueryVariables>;
-export const BookedTimesDocument = gql`
-    query BookedTimes {
-  bookedTimes {
+export type AvailableTimeQueryHookResult = ReturnType<typeof useAvailableTimeQuery>;
+export type AvailableTimeLazyQueryHookResult = ReturnType<typeof useAvailableTimeLazyQuery>;
+export type AvailableTimeQueryResult = Apollo.QueryResult<AvailableTimeQuery, AvailableTimeQueryVariables>;
+export const AvailableTimesDocument = gql`
+    query AvailableTimes {
+  availableTimes {
     id
-    bookedTimeId
+    availableTimeId
     createdAt
     updatedAt
     date
@@ -487,28 +487,28 @@ export const BookedTimesDocument = gql`
     `;
 
 /**
- * __useBookedTimesQuery__
+ * __useAvailableTimesQuery__
  *
- * To run a query within a React component, call `useBookedTimesQuery` and pass it any options that fit your needs.
- * When your component renders, `useBookedTimesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useAvailableTimesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAvailableTimesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useBookedTimesQuery({
+ * const { data, loading, error } = useAvailableTimesQuery({
  *   variables: {
  *   },
  * });
  */
-export function useBookedTimesQuery(baseOptions?: Apollo.QueryHookOptions<BookedTimesQuery, BookedTimesQueryVariables>) {
+export function useAvailableTimesQuery(baseOptions?: Apollo.QueryHookOptions<AvailableTimesQuery, AvailableTimesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<BookedTimesQuery, BookedTimesQueryVariables>(BookedTimesDocument, options);
+        return Apollo.useQuery<AvailableTimesQuery, AvailableTimesQueryVariables>(AvailableTimesDocument, options);
       }
-export function useBookedTimesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BookedTimesQuery, BookedTimesQueryVariables>) {
+export function useAvailableTimesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AvailableTimesQuery, AvailableTimesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<BookedTimesQuery, BookedTimesQueryVariables>(BookedTimesDocument, options);
+          return Apollo.useLazyQuery<AvailableTimesQuery, AvailableTimesQueryVariables>(AvailableTimesDocument, options);
         }
-export type BookedTimesQueryHookResult = ReturnType<typeof useBookedTimesQuery>;
-export type BookedTimesLazyQueryHookResult = ReturnType<typeof useBookedTimesLazyQuery>;
-export type BookedTimesQueryResult = Apollo.QueryResult<BookedTimesQuery, BookedTimesQueryVariables>;
+export type AvailableTimesQueryHookResult = ReturnType<typeof useAvailableTimesQuery>;
+export type AvailableTimesLazyQueryHookResult = ReturnType<typeof useAvailableTimesLazyQuery>;
+export type AvailableTimesQueryResult = Apollo.QueryResult<AvailableTimesQuery, AvailableTimesQueryVariables>;

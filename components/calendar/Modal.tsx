@@ -1,10 +1,10 @@
 import { Dialog, Tab, Transition } from '@headlessui/react';
 import { DateTime } from 'luxon';
-import { Fragment, useState } from 'react';
+import { Fragment, useContext, useState } from 'react';
 import { FiClock } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { useCreateBookedTimeMutation } from '../../generated/graphql';
+import { AvailableTime, useAvailableTimesQuery, useCreateAvailableTimeMutation } from '../../generated/graphql';
 import { RootState } from '../../redux/reducers';
 
 interface Props {
@@ -22,13 +22,13 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function MyModal(props: Props) {
+const MyModal = (props: Props) => {
     const date: DateTime = useSelector((state: RootState) => state.date);
     const [timeFrom, setTimeFrom] = useState("12:00");
     const [timeTo, setTimeTo] = useState("12:00");
     const [title, setTitle] = useState("");
 
-    const [book] = useCreateBookedTimeMutation();
+    const [book] = useCreateAvailableTimeMutation();
 
     function closeModal() {
         props.setOpen(false)
@@ -43,16 +43,16 @@ export default function MyModal(props: Props) {
     }
 
     const handleTimeSave = async (e: any) => {
-        const { errors } = await book({
+        const { errors, data } = await book({
             variables: {
                 input: {
                     date: date.toSQLDate(),
                     type: props.type.toString(),
-                    bookedTimeId: uuidv4(),
+                    availableTimeId: uuidv4(),
                 }
             },
             update: (cache) => {
-                cache.evict({ fieldName: "bookedTimes" });
+                cache.evict({ fieldName: "availableTimes" });
             }
         })
 
@@ -220,3 +220,5 @@ export default function MyModal(props: Props) {
         </>
     )
 }
+
+export default MyModal;

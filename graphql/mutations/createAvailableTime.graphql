@@ -1,0 +1,10 @@
+mutation CreateAvailableTime($input: AvailableTimeInput!) {
+  createAvailableTime(input: $input) {
+    id
+    availableTimeId
+    createdAt
+    updatedAt
+    type
+    date
+  }
+}
