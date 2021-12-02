@@ -1,10 +1,10 @@
 import { Dialog, Tab, Transition } from '@headlessui/react';
 import { DateTime } from 'luxon';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { FiClock } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { useCreateBookedTimeMutation } from '../../generated/graphql';
-import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
 
 interface Props {
