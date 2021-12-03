@@ -1,5 +1,5 @@
-query AvailableTime($availableTimeId: Float!) {
-  availableTime(id: $availableTimeId) {
+query AvailableTimeByMilliseconds($date: String!) {
+  availableTimeByMilliseconds(date: $date) {
     id
     availableTimeId
     createdAt

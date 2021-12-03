@@ -4,6 +4,8 @@ mutation UpdateAvailableTime($input: CustomerInput!, $updateAvailableTimeId: Flo
     availableTimeId
     createdAt
     updatedAt
+    timeTo
+    timeFrom
     type
     date
   }

@@ -40,6 +40,8 @@ export type AvailableTime = {
   createdAt: Scalars['String'];
   date: Scalars['String'];
   id: Scalars['Float'];
+  timeFrom: Scalars['String'];
+  timeTo: Scalars['String'];
   type: Scalars['String'];
   updatedAt: Scalars['String'];
 };
@@ -47,6 +49,8 @@ export type AvailableTime = {
 export type AvailableTimeInput = {
   availableTimeId: Scalars['String'];
   date: Scalars['String'];
+  timeFrom: Scalars['String'];
+  timeTo: Scalars['String'];
   type: Scalars['String'];
 };
 
@@ -107,6 +111,7 @@ export type Query = {
   __typename?: 'Query';
   Admin?: Maybe<Admin>;
   availableTime?: Maybe<AvailableTime>;
+  availableTimeByMilliseconds?: Maybe<AvailableTime>;
   availableTimes: Array<AvailableTime>;
 };
 
@@ -115,12 +120,17 @@ export type QueryAvailableTimeArgs = {
   id: Scalars['Float'];
 };
 
+
+export type QueryAvailableTimeByMillisecondsArgs = {
+  date: Scalars['String'];
+};
+
 export type CreateAvailableTimeMutationVariables = Exact<{
   input: AvailableTimeInput;
 }>;
 
 
-export type CreateAvailableTimeMutation = { __typename?: 'Mutation', createAvailableTime: { __typename?: 'AvailableTime', id: number, availableTimeId: string, createdAt: string, updatedAt: string, type: string, date: string } };
+export type CreateAvailableTimeMutation = { __typename?: 'Mutation', createAvailableTime: { __typename?: 'AvailableTime', id: number, availableTimeId: string, createdAt: string, updatedAt: string, timeTo: string, timeFrom: string, type: string, date: string } };
 
 export type DeleteAvailableTimeMutationVariables = Exact<{
   deleteAvailableTimeId: Scalars['Float'];
@@ -154,7 +164,7 @@ export type UpdateAvailableTimeMutationVariables = Exact<{
 }>;
 
 
-export type UpdateAvailableTimeMutation = { __typename?: 'Mutation', updateAvailableTime: { __typename?: 'AvailableTime', id: number, availableTimeId: string, createdAt: string, updatedAt: string, type: string, date: string } };
+export type UpdateAvailableTimeMutation = { __typename?: 'Mutation', updateAvailableTime: { __typename?: 'AvailableTime', id: number, availableTimeId: string, createdAt: string, updatedAt: string, timeTo: string, timeFrom: string, type: string, date: string } };
 
 export type AdminQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -166,12 +176,19 @@ export type AvailableTimeQueryVariables = Exact<{
 }>;
 
 
-export type AvailableTimeQuery = { __typename?: 'Query', availableTime?: { __typename?: 'AvailableTime', id: number, availableTimeId: string, createdAt: string, updatedAt: string, type: string, date: string } | null | undefined };
+export type AvailableTimeQuery = { __typename?: 'Query', availableTime?: { __typename?: 'AvailableTime', id: number, availableTimeId: string, createdAt: string, updatedAt: string, timeTo: string, timeFrom: string, type: string, date: string } | null | undefined };
+
+export type AvailableTimeByMillisecondsQueryVariables = Exact<{
+  date: Scalars['String'];
+}>;
+
+
+export type AvailableTimeByMillisecondsQuery = { __typename?: 'Query', availableTimeByMilliseconds?: { __typename?: 'AvailableTime', id: number, availableTimeId: string, createdAt: string, updatedAt: string, timeTo: string, timeFrom: string, type: string, date: string } | null | undefined };
 
 export type AvailableTimesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AvailableTimesQuery = { __typename?: 'Query', availableTimes: Array<{ __typename?: 'AvailableTime', id: number, availableTimeId: string, createdAt: string, updatedAt: string, date: string, type: string }> };
+export type AvailableTimesQuery = { __typename?: 'Query', availableTimes: Array<{ __typename?: 'AvailableTime', id: number, availableTimeId: string, createdAt: string, updatedAt: string, timeTo: string, timeFrom: string, date: string, type: string }> };
 
 
 export const CreateAvailableTimeDocument = gql`
@@ -181,6 +198,8 @@ export const CreateAvailableTimeDocument = gql`
     availableTimeId
     createdAt
     updatedAt
+    timeTo
+    timeFrom
     type
     date
   }
@@ -364,6 +383,8 @@ export const UpdateAvailableTimeDocument = gql`
     availableTimeId
     createdAt
     updatedAt
+    timeTo
+    timeFrom
     type
     date
   }
@@ -440,6 +461,8 @@ export const AvailableTimeDocument = gql`
     availableTimeId
     createdAt
     updatedAt
+    timeTo
+    timeFrom
     type
     date
   }
@@ -473,6 +496,48 @@ export function useAvailableTimeLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type AvailableTimeQueryHookResult = ReturnType<typeof useAvailableTimeQuery>;
 export type AvailableTimeLazyQueryHookResult = ReturnType<typeof useAvailableTimeLazyQuery>;
 export type AvailableTimeQueryResult = Apollo.QueryResult<AvailableTimeQuery, AvailableTimeQueryVariables>;
+export const AvailableTimeByMillisecondsDocument = gql`
+    query AvailableTimeByMilliseconds($date: String!) {
+  availableTimeByMilliseconds(date: $date) {
+    id
+    availableTimeId
+    createdAt
+    updatedAt
+    timeTo
+    timeFrom
+    type
+    date
+  }
+}
+    `;
+
+/**
+ * __useAvailableTimeByMillisecondsQuery__
+ *
+ * To run a query within a React component, call `useAvailableTimeByMillisecondsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAvailableTimeByMillisecondsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAvailableTimeByMillisecondsQuery({
+ *   variables: {
+ *      date: // value for 'date'
+ *   },
+ * });
+ */
+export function useAvailableTimeByMillisecondsQuery(baseOptions: Apollo.QueryHookOptions<AvailableTimeByMillisecondsQuery, AvailableTimeByMillisecondsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AvailableTimeByMillisecondsQuery, AvailableTimeByMillisecondsQueryVariables>(AvailableTimeByMillisecondsDocument, options);
+      }
+export function useAvailableTimeByMillisecondsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AvailableTimeByMillisecondsQuery, AvailableTimeByMillisecondsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AvailableTimeByMillisecondsQuery, AvailableTimeByMillisecondsQueryVariables>(AvailableTimeByMillisecondsDocument, options);
+        }
+export type AvailableTimeByMillisecondsQueryHookResult = ReturnType<typeof useAvailableTimeByMillisecondsQuery>;
+export type AvailableTimeByMillisecondsLazyQueryHookResult = ReturnType<typeof useAvailableTimeByMillisecondsLazyQuery>;
+export type AvailableTimeByMillisecondsQueryResult = Apollo.QueryResult<AvailableTimeByMillisecondsQuery, AvailableTimeByMillisecondsQueryVariables>;
 export const AvailableTimesDocument = gql`
     query AvailableTimes {
   availableTimes {
@@ -480,6 +545,8 @@ export const AvailableTimesDocument = gql`
     availableTimeId
     createdAt
     updatedAt
+    timeTo
+    timeFrom
     date
     type
   }

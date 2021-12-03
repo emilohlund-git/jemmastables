@@ -4,11 +4,20 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { useAvailableTimesQuery } from "../../generated/graphql";
 import getDaysInMonth from "../../utils/calendar/getDaysInMonth";
 import getDaysInWeek from "../../utils/calendar/getDaysInWeek";
-import DayBox from "./DayBox";
+import { DayBox } from "./DayBox";
+import LoadingBox from "./LoadingBox";
 
 interface Props {
 
 }
+
+/**
+ * TODO:
+ * Find a way to improve component rendering issues,
+ * ex. Each day is loading the modal component & every single timeslot.
+ * Maybe better to find a way where modal component is top hierarchy and data fetched
+ * via redux or similar. (It kind of already works like that, just have to move it)
+ */
 
 const JemmaCalendar = (props: Props) => {
     const [currentDate, setCurrentDate] = useState(DateTime.local());
@@ -31,6 +40,7 @@ const JemmaCalendar = (props: Props) => {
 
     useEffect(() => {
         setTimeslots(data as any);
+        console.log("Querying");
     }, [data, loading])
 
     useEffect(() => {
@@ -61,7 +71,9 @@ const JemmaCalendar = (props: Props) => {
                 <div className="my-2 grid grid-cols-7 gap-1">
                     {days ?
                         days.map((day, i) => (
-                            <DayBox timeslots={timeslots} currentDate={currentDate} setCurrentDate={setCurrentDate} key={i} day={day} />
+                            !loading ?
+                                <DayBox timeslots={timeslots} currentDate={currentDate} setCurrentDate={setCurrentDate} key={i} day={day} />
+                                : <LoadingBox />
                         ))
                         :
                         <></>

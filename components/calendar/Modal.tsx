@@ -1,11 +1,16 @@
 import { Dialog, Tab, Transition } from '@headlessui/react';
 import { DateTime } from 'luxon';
-import { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { FiClock } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { AvailableTime, useAvailableTimesQuery, useCreateAvailableTimeMutation } from '../../generated/graphql';
+import { useCreateAvailableTimeMutation } from '../../generated/graphql';
 import { RootState } from '../../redux/reducers';
+
+/**
+ * TODO: 
+ * Add list of available times underneath the date & time input.
+ */
 
 interface Props {
     open: boolean;
@@ -22,7 +27,8 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-const MyModal = (props: Props) => {
+// eslint-disable-next-line react/display-name
+export const MyModal = React.memo((props: Props) => {
     const date: DateTime = useSelector((state: RootState) => state.date);
     const [timeFrom, setTimeFrom] = useState("12:00");
     const [timeTo, setTimeTo] = useState("12:00");
@@ -49,6 +55,8 @@ const MyModal = (props: Props) => {
                     date: date.toSQLDate(),
                     type: props.type.toString(),
                     availableTimeId: uuidv4(),
+                    timeTo: timeTo,
+                    timeFrom: timeFrom
                 }
             },
             update: (cache) => {
@@ -219,6 +227,4 @@ const MyModal = (props: Props) => {
             </Transition>
         </>
     )
-}
-
-export default MyModal;
+});

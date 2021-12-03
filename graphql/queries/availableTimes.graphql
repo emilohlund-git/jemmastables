@@ -4,6 +4,8 @@ query AvailableTimes {
     availableTimeId
     createdAt
     updatedAt
+    timeTo
+    timeFrom
     date
     type
   }

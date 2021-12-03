@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux';
 import { AvailableTime } from '../../generated/graphql';
 import { setDate } from '../../redux/actions';
 import formatSQLDate from '../../utils/calendar/formatSQLDate';
-import MyModal from './Modal';
+import { MyModal } from './Modal';
+import { Timeslot } from './Timeslots';
 
 interface Props {
     day: DateTime;
@@ -13,7 +14,7 @@ interface Props {
     timeslots: any;
 }
 
-const DayBox = (props: Props) => {
+export const DayBox = (props: Props) => {
     const [isOpen, setIsOpen] = useState(false);
     const [currentTitle, setCurrentTitle] = useState("");
     const [currentTimeFrom, setCurrentTimeFrom] = useState("");
@@ -29,16 +30,18 @@ const DayBox = (props: Props) => {
     }
 
     return (
-        <div onClick={handleClick} className={`${DateTime.now().setLocale("sv") >= props.day ? "bg-gray-200 dark:bg-gray-800" : "cursor-pointer transition-all bg-gray-100 dark:bg-gray-700 transform hover:scale-110 motion-reduce:transform-none hover:bg-gray-50"} ${props.day.toFormat("MM/DD/yyyy") == DateTime.now().setLocale("sv").toFormat("MM/DD/yyyy") ? "border-green-700 border-opacity-10 border-2" : ""} h-16 md:h-28 rounded-md relative`}>
+        <div onClick={handleClick} className={`${DateTime.now().setLocale("sv") >= props.day ? "bg-gray-200 dark:bg-gray-800" : "cursor-pointer transition-all bg-gray-100 dark:bg-gray-700 transform hover:scale-110 motion-reduce:transform-none hover:bg-gray-50"} ${props.day.toFormat("MM/DD/yyyy") == DateTime.now().setLocale("sv").toFormat("MM/DD/yyyy") ? "border-green-700 border-opacity-10 border-2" : ""} h-16 md:h-28 rounded-md relative overflow-hidden`}>
             {props.day.weekdayLong === "måndag" ? <span className="ml-2 inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-gray-100 bg-gray-600 rounded-md absolute top-2 right-0">{props.day.weekNumber}</span> : <></>}
             <p className="text-gray-500 dark:text-gray-300 text-left ml-2 text-lg">{props.day.day}</p>
-            <div className="mt-2">
+            <div className="mt-0 px-2">
                 {
                     props.timeslots ? props.timeslots.availableTimes.map((timeslot: AvailableTime, index: number) => {
                         if (formatSQLDate(timeslot.date).setLocale("sv").toFormat("MM/DD/yyyy") == props.day.setLocale("sv").toFormat("MM/DD/yyyy")) {
                             return (
-                                <div key={timeslot.id} className={`mt-1 ml-2 h-3 w-3 ${timeslot.type == "0" ? "bg-blue-500" : ""} ${timeslot.type == "1" ? "bg-red-500" : ""} ${timeslot.type == "2" ? "bg-green-500" : ""} rounded-full`}></div>
+                                <Timeslot key={index} type={timeslot.type} to={timeslot.timeTo} from={timeslot.timeFrom} />
                             )
+                        } else {
+                            return null;
                         }
                     })
                         :
@@ -55,6 +58,3 @@ const DayBox = (props: Props) => {
         </div>
     )
 }
-
-
-export default DayBox

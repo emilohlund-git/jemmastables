@@ -4,6 +4,8 @@ mutation CreateAvailableTime($input: AvailableTimeInput!) {
     availableTimeId
     createdAt
     updatedAt
+    timeTo
+    timeFrom
     type
     date
   }
