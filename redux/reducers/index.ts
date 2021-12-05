@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 import dateReducer from "./date";
 import isAuthenticatedReducer from "./isAuthenticated";
+import isOpenReducer from "./isOpen";
 
 const appReducer = combineReducers({
   authenticated: isAuthenticatedReducer,
   date: dateReducer,
+  isOpen: isOpenReducer,
 });
 
 const rootReducer = (state: any, action: any) => {
@@ -15,5 +17,5 @@ const rootReducer = (state: any, action: any) => {
   return appReducer(state, action);
 };
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;

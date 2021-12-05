@@ -1,11 +1,11 @@
 import { DateTime } from "luxon";
 import React, { useEffect, useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { useAvailableTimesQuery } from "../../generated/graphql";
 import getDaysInMonth from "../../utils/calendar/getDaysInMonth";
 import getDaysInWeek from "../../utils/calendar/getDaysInWeek";
 import { DayBox } from "./DayBox";
 import LoadingBox from "./LoadingBox";
+import { MyModal } from "./Modal";
 
 interface Props {
 
@@ -25,10 +25,8 @@ const JemmaCalendar = (props: Props) => {
         getDaysInMonth(currentDate)
     );
     const [weekDays, setWeekDays] = useState(getDaysInWeek(currentDate));
-
+    const [open, setOpen] = useState(false);
     const [timeslots, setTimeslots] = useState();
-
-    const { data, loading } = useAvailableTimesQuery();
 
     const changeCalendar = (value: string) => {
         if (value == "minus") {
@@ -37,11 +35,6 @@ const JemmaCalendar = (props: Props) => {
             setCurrentDate(currentDate.set({ month: currentDate.month + 1 }));
         }
     }
-
-    useEffect(() => {
-        setTimeslots(data as any);
-        console.log("Querying");
-    }, [data, loading])
 
     useEffect(() => {
         setWeekDays(getDaysInWeek(currentDate));
@@ -62,7 +55,7 @@ const JemmaCalendar = (props: Props) => {
                 <div className="grid grid-cols-7 gap-1">
                     {weekDays ?
                         weekDays.map((day, i) => (
-                            <h2 className="text-black" key={i}>{day.weekdayShort}</h2>
+                            <h2 className="text-black text-center" key={i}>{day.weekdayShort}</h2>
                         ))
                         :
                         <></>
@@ -71,15 +64,14 @@ const JemmaCalendar = (props: Props) => {
                 <div className="my-2 grid grid-cols-7 gap-1">
                     {days ?
                         days.map((day, i) => (
-                            !loading ?
-                                <DayBox timeslots={timeslots} currentDate={currentDate} setCurrentDate={setCurrentDate} key={i} day={day} />
-                                : <LoadingBox />
+                            <DayBox day={day} key={i} />
                         ))
                         :
                         <></>
                     }
                 </div>
             </div>
+            <MyModal open={open} setOpen={setOpen} />
         </>
     )
 }

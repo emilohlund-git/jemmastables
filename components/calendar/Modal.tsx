@@ -15,12 +15,6 @@ import { RootState } from '../../redux/reducers';
 interface Props {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    setCurrentTitle: React.Dispatch<React.SetStateAction<string>>;
-    setCurrentTimeFrom: React.Dispatch<React.SetStateAction<string>>;
-    setCurrentTimeTo: React.Dispatch<React.SetStateAction<string>>;
-    setType: React.Dispatch<React.SetStateAction<number>>;
-    type: number;
-    setCurrentDate: React.Dispatch<React.SetStateAction<DateTime>>;
 }
 
 function classNames(...classes: string[]) {
@@ -41,11 +35,7 @@ export const MyModal = React.memo((props: Props) => {
     }
 
     const handleCurrentDate = (e: any) => {
-        const numbers = e.split("-");
-        const year = parseInt(numbers[0]);
-        const month = parseInt(numbers[1]);
-        const day = parseInt(numbers[2]);
-        props.setCurrentDate(DateTime.local(year, month, day));
+
     }
 
     const handleTimeSave = async (e: any) => {
@@ -53,8 +43,8 @@ export const MyModal = React.memo((props: Props) => {
             variables: {
                 input: {
                     date: date.toSQLDate(),
-                    type: props.type.toString(),
                     availableTimeId: uuidv4(),
+                    type: "0",
                     timeTo: timeTo,
                     timeFrom: timeFrom
                 }
@@ -113,9 +103,9 @@ export const MyModal = React.memo((props: Props) => {
                                     as="h3"
                                     className="text-lg font-medium leading-6 text-gray-900 mb-6"
                                 >
-                                    <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400" value={title} type="text" onChange={((e) => { setTitle(e.target.value), props.setCurrentTitle(e.target.value) })} placeholder="Lägg till titel" aria-label="Title" />
+                                    <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400" value={title} type="text" onChange={((e) => { setTitle(e.target.value) })} placeholder="Lägg till titel" aria-label="Title" />
                                 </Dialog.Title>
-                                <Tab.Group defaultIndex={props.type} onChange={(index) => props.setType(index)}>
+                                <Tab.Group defaultIndex={1} onChange={(index) => 1}>
                                     <Tab.List className="flex p-1 space-x-1 bg-blue-100 rounded-xl transform transition-all">
                                         <Tab
                                             key={1}
@@ -170,9 +160,9 @@ export const MyModal = React.memo((props: Props) => {
                                         >
                                             <div className="flex flex-row items-center">
                                                 <FiClock className="text-gray-500 mr-2" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { props.setCurrentTitle(e.target.value), handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value), props.setCurrentTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value), props.setCurrentTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
                                             <div className="flex w-full justify-end">
                                                 <button onClick={handleTimeSave} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
@@ -189,9 +179,9 @@ export const MyModal = React.memo((props: Props) => {
                                         >
                                             <div className="flex flex-row items-center">
                                                 <FiClock className="text-gray-500 mr-2" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { props.setCurrentTitle(e.target.value), handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value), props.setCurrentTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value), props.setCurrentTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
                                             <div className="flex w-full justify-end">
                                                 <button onClick={handleTimeSave} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
@@ -208,9 +198,9 @@ export const MyModal = React.memo((props: Props) => {
                                         >
                                             <div className="flex flex-row items-center">
                                                 <FiClock className="text-gray-500 mr-2" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { props.setCurrentTitle(e.target.value), handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value), props.setCurrentTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value), props.setCurrentTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
                                             <div className="flex w-full justify-end">
                                                 <button onClick={handleTimeSave} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
