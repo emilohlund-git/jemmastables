@@ -4,7 +4,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { FiClock } from 'react-icons/fi';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/reducers';
-import { setIsOpen } from '../../redux/actions';
+import { setIsOpen, setType } from '../../redux/actions';
 import { useCreateDateSlotsMutation, useDateSlotQuery, useUpdateDateSlotsMutation } from '../../generated/graphql';
 
 /**
@@ -24,14 +24,13 @@ function classNames(...classes: string[]) {
 export const MyModal = React.memo((props: Props) => {
     const date: DateTime = useSelector((state: RootState) => state.date);
     const open: Boolean = useSelector((state: RootState) => state.isOpen);
+    const type: string = useSelector((state: RootState) => state.type);
 
     const { data, loading } = useDateSlotQuery({
         variables: {
             where: { date: date.toSQLDate() }
         }
     });
-
-    const [type, setType] = useState("Träning");
 
     const dispatch = useDispatch();
 
@@ -41,10 +40,6 @@ export const MyModal = React.memo((props: Props) => {
 
     const [CreateDateSlot] = useCreateDateSlotsMutation();
     const [UpdateDateSlot] = useUpdateDateSlotsMutation();
-
-    useEffect(() => {
-        console.log(type);
-    }, [type])
 
     function closeModal() {
         dispatch(setIsOpen(false));
@@ -177,9 +172,9 @@ export const MyModal = React.memo((props: Props) => {
                                     <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400" value={title} type="text" onChange={((e) => { setTitle(e.target.value) })} placeholder="Lägg till titel" aria-label="Title" />
                                 </Dialog.Title>
                                 <Tab.Group defaultIndex={1} onChange={(index) => {
-                                    if (index === 0) setType("Självhushållning")
-                                    if (index === 1) setType("Träning")
-                                    if (index === 2) setType("Öppen bana")
+                                    if (index === 0) dispatch(setType("Självhushållning"))
+                                    if (index === 1) dispatch(setType("Träning"))
+                                    if (index === 2) dispatch(setType("Öppen bana"))
                                 }}>
                                     <Tab.List className="flex p-1 space-x-1 bg-blue-100 rounded-xl transform transition-all">
                                         <Tab

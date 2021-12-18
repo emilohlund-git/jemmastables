@@ -10,6 +10,7 @@ module.exports = {
   variants: {
     extend: {
       zIndex: ['hover'],
+      height: ['hover'],
     },
   },
   plugins: [require('tailwind-scrollbar')],

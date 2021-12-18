@@ -45,7 +45,7 @@ const JemmaCalendar = (props: Props) => {
 
     return (
         <>
-            <div className="flex flex-col w-11/12 md:w-8/12">
+            <div className="flex flex-col w-11/12 md:w-8/12 pb-20">
                 <div className="mb-2">
                     <h1 className="text-black text-4xl text-center dark:text-gray-50">{currentDate.toFormat("yyyy")}</h1>
                 </div>

@@ -1,20 +1,27 @@
 export const setDate = (payload: any) => {
   return {
-    type: "SET_DATE",
+    type: 'SET_DATE',
+    payload: payload,
+  };
+};
+
+export const setType = (payload: any) => {
+  return {
+    type: 'SET_TYPE',
     payload: payload,
   };
 };
 
 export const setIsOpen = (payload: any) => {
   return {
-    type: "SET_IS_OPEN",
+    type: 'SET_IS_OPEN',
     payload: payload,
   };
 };
 
 export const setDarkmode = (payload: any) => {
   return {
-    type: "SET_DARKMODE",
+    type: 'SET_DARKMODE',
     payload: payload,
   };
 };

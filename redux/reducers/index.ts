@@ -3,12 +3,14 @@ import darkmodeReducer from "./darkmode";
 import dateReducer from "./date";
 import isAuthenticatedReducer from "./isAuthenticated";
 import isOpenReducer from "./isOpen";
+import typeReducer from "./type";
 
 const appReducer = combineReducers({
   authenticated: isAuthenticatedReducer,
   date: dateReducer,
   isOpen: isOpenReducer,
-  darkmode: darkmodeReducer
+  darkmode: darkmodeReducer,
+  type: typeReducer
 });
 
 const rootReducer = (state: any, action: any) => {
