@@ -2,17 +2,17 @@
 module.exports = {
   reactStrictMode: true,
   il8n: {
-    locales: ["sv"],
+    locales: ['sv'],
   },
-  defaultLocale: "sv",
+  defaultLocale: 'sv',
   images: {
-    domains: ["instagram.fmmx1-1.fna.fbcdn.net"],
+    domains: ['instagram.fmmx1-1.fna.fbcdn.net'],
   },
   async rewrites() {
     return [
       {
-        source: "/anläggningen",
-        destination: "/anläggningen",
+        source: '/anläggningen',
+        destination: '/anläggningen',
       },
     ];
   },
