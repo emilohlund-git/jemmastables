@@ -1,0 +1,5 @@
+query DateSlot($where: DateSlotWhere) {
+  dateSlots(where: $where) {
+    ...RegularDateSlot
+  }
+}

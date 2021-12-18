@@ -1,3 +1,0 @@
-mutation DeleteAvailableTime($deleteAvailableTimeId: Float!) {
-  deleteAvailableTime(id: $deleteAvailableTimeId)
-}

@@ -1,0 +1,7 @@
+mutation CreateUsers($input: [UserCreateInput!]!) {
+  createUsers(input: $input) {
+    users {
+      ...RegularUser
+    }
+  }
+}

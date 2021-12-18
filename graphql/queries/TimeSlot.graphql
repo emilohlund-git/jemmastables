@@ -1,0 +1,5 @@
+query TimeSlot($where: TimeSlotWhere) {
+  timeSlots(where: $where) {
+    ...RegularTimeSlot
+  }
+}

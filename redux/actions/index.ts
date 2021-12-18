@@ -11,3 +11,10 @@ export const setIsOpen = (payload: any) => {
     payload: payload,
   };
 };
+
+export const setDarkmode = (payload: any) => {
+  return {
+    type: "SET_DARKMODE",
+    payload: payload,
+  };
+};

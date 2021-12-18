@@ -1,0 +1,7 @@
+mutation CreateDateSlots($input: [DateSlotCreateInput!]!) {
+  createDateSlots(input: $input) {
+    dateSlots {
+      date
+    }
+  }
+}

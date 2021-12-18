@@ -1,0 +1,7 @@
+mutation CreateTimeSlots($input: [TimeSlotCreateInput!]!) {
+  createTimeSlots(input: $input) {
+    timeSlots {
+      ...RegularTimeSlot
+    }
+  }
+}

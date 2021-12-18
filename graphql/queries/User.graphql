@@ -1,0 +1,5 @@
+query User($where: UserWhere) {
+  users(where: $where) {
+    ...RegularUser
+  }
+}

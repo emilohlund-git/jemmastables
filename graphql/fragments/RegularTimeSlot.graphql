@@ -1,0 +1,15 @@
+fragment RegularTimeSlot on TimeSlot {
+  to
+  from
+  type {
+    type
+  }
+  date {
+    date
+  }
+  users {
+    name
+    phonenumber
+    email
+  }
+}

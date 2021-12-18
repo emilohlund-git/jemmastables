@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import React, { useEffect, useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { DateSlot, useDateSlotsQuery } from "../../generated/graphql";
 import getDaysInMonth from "../../utils/calendar/getDaysInMonth";
 import getDaysInWeek from "../../utils/calendar/getDaysInWeek";
 import { DayBox } from "./DayBox";
@@ -26,7 +27,8 @@ const JemmaCalendar = (props: Props) => {
     );
     const [weekDays, setWeekDays] = useState(getDaysInWeek(currentDate));
     const [open, setOpen] = useState(false);
-    const [timeslots, setTimeslots] = useState();
+
+    const { data, loading } = useDateSlotsQuery();
 
     const changeCalendar = (value: string) => {
         if (value == "minus") {
@@ -48,30 +50,30 @@ const JemmaCalendar = (props: Props) => {
                     <h1 className="text-black text-4xl text-center dark:text-gray-50">{currentDate.toFormat("yyyy")}</h1>
                 </div>
                 <div className="flex justify-center items-center gap-4 m-2">
-                    <FiChevronLeft onClick={() => changeCalendar("minus")} className="cursor-pointer text-black transition transform hover:scale-125 mt-1 text-lg rounded-md" />
+                    <FiChevronLeft onClick={() => changeCalendar("minus")} className="cursor-pointer text-black dark:text-gray-50 transition transform hover:scale-125 mt-1 text-lg rounded-md" />
                     <h1 className="text-black dark:text-gray-50 text-2xl text-center">{currentDate.setLocale("sv").toFormat("LLLL")}</h1>
-                    <FiChevronRight onClick={() => changeCalendar("plus")} className="cursor-pointer text-black transition transform hover:scale-125 mt-1 text-lg rounded-md" />
+                    <FiChevronRight onClick={() => changeCalendar("plus")} className="cursor-pointer text-black dark:text-gray-50 transition transform hover:scale-125 mt-1 text-lg rounded-md" />
                 </div>
                 <div className="grid grid-cols-7 gap-1">
                     {weekDays ?
                         weekDays.map((day, i) => (
-                            <h2 className="text-black text-center" key={i}>{day.weekdayShort}</h2>
+                            <h2 className="text-black dark:text-gray-50 text-center" key={i}>{day.weekdayShort}</h2>
                         ))
                         :
                         <></>
                     }
                 </div>
                 <div className="my-2 grid grid-cols-7 gap-1">
-                    {days ?
+                    {days && !loading ?
                         days.map((day, i) => (
-                            <DayBox day={day} key={i} />
+                            <DayBox day={day} dateSlot={data?.dateSlots.filter((d) => d.date === day.toSQLDate()) as [DateSlot]} key={i} />
                         ))
                         :
                         <></>
                     }
                 </div>
             </div>
-            <MyModal open={open} setOpen={setOpen} />
+            <MyModal setOpen={setOpen} />
         </>
     )
 }

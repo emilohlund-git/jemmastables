@@ -4,11 +4,13 @@ module.exports = {
   theme: {
     extend: {},
     fontFamily: {
-      'poppins': ['Poppins', 'sans-serif']
-    }
+      poppins: ["Poppins", "sans-serif"],
+    },
   },
   variants: {
-    extend: {},
+    extend: {
+      zIndex: ["hover"],
+    },
   },
   plugins: [],
 };

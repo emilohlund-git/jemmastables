@@ -1,0 +1,15 @@
+fragment RegularUser on User {
+  name
+  phonenumber
+  email
+  timeslots {
+    to
+    from
+    type {
+      type
+    }
+    date {
+      date
+    }
+  }
+}

@@ -1,0 +1,5 @@
+query DateSlots {
+  dateSlots {
+    ...RegularDateSlot
+  }
+}

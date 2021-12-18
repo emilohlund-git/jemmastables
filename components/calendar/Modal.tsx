@@ -1,11 +1,12 @@
 import { Dialog, Tab, Transition } from '@headlessui/react';
 import { DateTime } from 'luxon';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { FiClock } from 'react-icons/fi';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { useCreateAvailableTimeMutation } from '../../generated/graphql';
 import { RootState } from '../../redux/reducers';
+import { setIsOpen } from '../../redux/actions';
+import { useCreateDateSlotsMutation } from '../../generated/graphql';
 
 /**
  * TODO: 
@@ -13,7 +14,6 @@ import { RootState } from '../../redux/reducers';
  */
 
 interface Props {
-    open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -24,14 +24,23 @@ function classNames(...classes: string[]) {
 // eslint-disable-next-line react/display-name
 export const MyModal = React.memo((props: Props) => {
     const date: DateTime = useSelector((state: RootState) => state.date);
-    const [timeFrom, setTimeFrom] = useState("12:00");
+    const open: Boolean = useSelector((state: RootState) => state.isOpen);
+    const [type, setType] = useState("Träning");
+
+    const dispatch = useDispatch();
+
     const [timeTo, setTimeTo] = useState("12:00");
+    const [timeFrom, setTimeFrom] = useState("12:00");
     const [title, setTitle] = useState("");
 
-    const [book] = useCreateAvailableTimeMutation();
+    const [CreateDateSlot] = useCreateDateSlotsMutation();
+
+    useEffect(() => {
+        console.log(type);
+    }, [type])
 
     function closeModal() {
-        props.setOpen(false)
+        dispatch(setIsOpen(false));
     }
 
     const handleCurrentDate = (e: any) => {
@@ -39,18 +48,31 @@ export const MyModal = React.memo((props: Props) => {
     }
 
     const handleTimeSave = async (e: any) => {
-        const { errors, data } = await book({
+        const { errors, data } = await CreateDateSlot({
             variables: {
                 input: {
                     date: date.toSQLDate(),
-                    availableTimeId: uuidv4(),
-                    type: "0",
-                    timeTo: timeTo,
-                    timeFrom: timeFrom
+                    timeslots: {
+                        create: [
+                            {
+                                node: {
+                                    to: timeTo,
+                                    from: timeFrom,
+                                    type: {
+                                        create: {
+                                            node: {
+                                                type: type
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
                 }
             },
             update: (cache) => {
-                cache.evict({ fieldName: "availableTimes" });
+                cache.evict({ fieldName: "dateSlots" });
             }
         })
 
@@ -63,10 +85,10 @@ export const MyModal = React.memo((props: Props) => {
 
     return (
         <>
-            <Transition appear show={props.open} as={Fragment}>
+            <Transition appear show={open ? true : false} as={Fragment}>
                 <Dialog
                     as="div"
-                    className="fixed inset-0 z-10 overflow-y-auto transform transition-all"
+                    className="fixed inset-0 z-50 overflow-y-auto transform transition-all"
                     onClose={closeModal}
                 >
                     <div className="min-h-screen px-4 text-center transform transition-all">
@@ -105,7 +127,11 @@ export const MyModal = React.memo((props: Props) => {
                                 >
                                     <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400" value={title} type="text" onChange={((e) => { setTitle(e.target.value) })} placeholder="Lägg till titel" aria-label="Title" />
                                 </Dialog.Title>
-                                <Tab.Group defaultIndex={1} onChange={(index) => 1}>
+                                <Tab.Group defaultIndex={1} onChange={(index) => {
+                                    if (index === 0) setType("Självhushållning")
+                                    if (index === 1) setType("Träning")
+                                    if (index === 2) setType("Öppen bana")
+                                }}>
                                     <Tab.List className="flex p-1 space-x-1 bg-blue-100 rounded-xl transform transition-all">
                                         <Tab
                                             key={1}

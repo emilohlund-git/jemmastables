@@ -1,0 +1,5 @@
+query TimeSlots {
+  timeSlots {
+    ...RegularTimeSlot
+  }
+}
