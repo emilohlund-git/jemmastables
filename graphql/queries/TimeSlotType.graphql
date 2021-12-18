@@ -1,0 +1,8 @@
+query TimeSlotType($where: TimeSlotTypeWhere) {
+  timeSlotTypes(where: $where) {
+    type
+    timeslot {
+      ...RegularTimeSlot
+    }
+  }
+}

@@ -1,0 +1,5 @@
+query TimeSlotTypes {
+  timeSlotTypes {
+    type
+  }
+}

@@ -1,0 +1,6 @@
+mutation DeleteDateSlots($where: DateSlotWhere, $delete: DateSlotDeleteInput) {
+  deleteDateSlots(where: $where, delete: $delete) {
+    relationshipsDeleted
+    nodesDeleted
+  }
+}

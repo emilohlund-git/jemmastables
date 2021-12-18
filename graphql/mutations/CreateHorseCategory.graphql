@@ -1,0 +1,17 @@
+mutation CreateHorseCategories($input: [HorseCategoryCreateInput!]!) {
+  createHorseCategories(input: $input) {
+    horseCategories {
+      category
+      horses {
+        name
+        nickname
+        images
+        owner
+        after
+        birthyear
+        gender
+        color
+      }
+    }
+  }
+}

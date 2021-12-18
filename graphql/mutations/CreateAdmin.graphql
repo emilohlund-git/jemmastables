@@ -1,0 +1,7 @@
+mutation CreateAdmin($input: [AdminCreateInput!]!) {
+  createAdmins(input: $input) {
+    admins {
+      ...RegularAdmin
+    }
+  }
+}

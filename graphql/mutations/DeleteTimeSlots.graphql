@@ -1,0 +1,5 @@
+mutation DeleteTimeSlots($where: TimeSlotWhere) {
+  deleteTimeSlots(where: $where) {
+    nodesDeleted
+  }
+}

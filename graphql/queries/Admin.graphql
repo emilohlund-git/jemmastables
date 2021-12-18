@@ -1,0 +1,5 @@
+query Admin($where: AdminWhere) {
+  admins(where: $where) {
+    ...RegularAdmin
+  }
+}

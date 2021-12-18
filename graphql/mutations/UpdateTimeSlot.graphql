@@ -1,0 +1,7 @@
+mutation UpdateTimeSlots($where: TimeSlotWhere, $update: TimeSlotUpdateInput) {
+  updateTimeSlots(where: $where, update: $update) {
+    timeSlots {
+      ...RegularTimeSlot
+    }
+  }
+}

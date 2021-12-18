@@ -1,0 +1,4 @@
+fragment RegularAdmin on Admin {
+  username
+  password
+}

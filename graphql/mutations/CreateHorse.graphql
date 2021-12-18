@@ -1,0 +1,7 @@
+mutation CreateHorse($input: [HorseCreateInput!]!, $where: HorseCategoryWhere) {
+  createHorses(input: $input) {
+    horses {
+      ...RegularHorse
+    }
+  }
+}

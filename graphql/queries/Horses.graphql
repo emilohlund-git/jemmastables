@@ -1,0 +1,5 @@
+query Horses($where: HorseCategoryWhere) {
+  horses {
+    ...RegularHorse
+  }
+}

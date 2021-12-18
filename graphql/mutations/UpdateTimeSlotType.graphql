@@ -1,0 +1,7 @@
+mutation UpdateTimeSlotTypes($where: TimeSlotTypeWhere) {
+  updateTimeSlotTypes(where: $where) {
+    timeSlotTypes {
+      type
+    }
+  }
+}

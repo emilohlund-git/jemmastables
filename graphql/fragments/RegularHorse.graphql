@@ -1,0 +1,13 @@
+fragment RegularHorse on Horse {
+  name
+  nickname
+  images
+  owner
+  after
+  birthyear
+  gender
+  color
+  category(where: $where) {
+    category
+  }
+}
