@@ -67,9 +67,11 @@ export const MyModal = React.memo((props: Props) => {
                                         to: timeTo,
                                         from: timeFrom,
                                         type: {
-                                            create: {
-                                                node: {
-                                                    type: type
+                                            connect: {
+                                                where: {
+                                                    node: {
+                                                        type: type
+                                                    }
                                                 }
                                             }
                                         }
@@ -102,9 +104,11 @@ export const MyModal = React.memo((props: Props) => {
                                             to: timeTo,
                                             from: timeFrom,
                                             type: {
-                                                create: {
-                                                    node: {
-                                                        type: type
+                                                connect: {
+                                                    where: {
+                                                        node: {
+                                                            type: type
+                                                        }
                                                     }
                                                 }
                                             }
