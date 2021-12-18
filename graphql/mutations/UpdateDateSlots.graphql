@@ -1,0 +1,7 @@
+mutation UpdateDateSlots($where: DateSlotWhere, $update: DateSlotUpdateInput) {
+  updateDateSlots(where: $where, update: $update) {
+    dateSlots {
+      ...RegularDateSlot
+    }
+  }
+}

@@ -3,10 +3,9 @@ import { DateTime } from 'luxon';
 import React, { Fragment, useEffect, useState } from 'react';
 import { FiClock } from 'react-icons/fi';
 import { useSelector, useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '../../redux/reducers';
 import { setIsOpen } from '../../redux/actions';
-import { useCreateDateSlotsMutation } from '../../generated/graphql';
+import { useCreateDateSlotsMutation, useDateSlotQuery, useUpdateDateSlotsMutation } from '../../generated/graphql';
 
 /**
  * TODO: 
@@ -25,6 +24,13 @@ function classNames(...classes: string[]) {
 export const MyModal = React.memo((props: Props) => {
     const date: DateTime = useSelector((state: RootState) => state.date);
     const open: Boolean = useSelector((state: RootState) => state.isOpen);
+
+    const { data, loading } = useDateSlotQuery({
+        variables: {
+            where: { date: date.toSQLDate() }
+        }
+    });
+
     const [type, setType] = useState("Träning");
 
     const dispatch = useDispatch();
@@ -34,6 +40,7 @@ export const MyModal = React.memo((props: Props) => {
     const [title, setTitle] = useState("");
 
     const [CreateDateSlot] = useCreateDateSlotsMutation();
+    const [UpdateDateSlot] = useUpdateDateSlotsMutation();
 
     useEffect(() => {
         console.log(type);
@@ -47,39 +54,77 @@ export const MyModal = React.memo((props: Props) => {
 
     }
 
-    const handleTimeSave = async (e: any) => {
-        const { errors, data } = await CreateDateSlot({
-            variables: {
-                input: {
-                    date: date.toSQLDate(),
-                    timeslots: {
-                        create: [
-                            {
-                                node: {
-                                    to: timeTo,
-                                    from: timeFrom,
-                                    type: {
-                                        create: {
-                                            node: {
-                                                type: type
+    const createDateSlot = async (e: any) => {
+        if (!loading && data!.dateSlots.length === 0) {
+            const { errors, data } = await CreateDateSlot({
+                variables: {
+                    input: {
+                        date: date.toSQLDate(),
+                        timeslots: {
+                            create: [
+                                {
+                                    node: {
+                                        to: timeTo,
+                                        from: timeFrom,
+                                        type: {
+                                            create: {
+                                                node: {
+                                                    type: type
+                                                }
                                             }
                                         }
                                     }
                                 }
+                            ]
+                        },
+                    }
+                },
+                update: (cache) => {
+                    cache.evict({ fieldName: "dateSlots" });
+                }
+            })
+
+            if (!errors) {
+                closeModal();
+            } else {
+                console.log(errors);
+            }
+        } else {
+            const { errors, data } = await UpdateDateSlot({
+                variables: {
+                    where: { date: date.toSQLDate() },
+                    update: {
+                        timeslots: [
+                            {
+                                create: [
+                                    {
+                                        node: {
+                                            to: timeTo,
+                                            from: timeFrom,
+                                            type: {
+                                                create: {
+                                                    node: {
+                                                        type: type
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         ]
-                    },
+                    }
+                },
+                update: (cache) => {
+                    cache.evict({ fieldName: "dateSlots" });
                 }
-            },
-            update: (cache) => {
-                cache.evict({ fieldName: "dateSlots" });
-            }
-        })
+            });
 
-        if (!errors) {
-            closeModal();
-        } else {
-            console.log(errors);
+            if (!errors) {
+                closeModal();
+            } else {
+                console.log(errors);
+            }
         }
     }
 
@@ -191,7 +236,7 @@ export const MyModal = React.memo((props: Props) => {
                                                 <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
                                             <div className="flex w-full justify-end">
-                                                <button onClick={handleTimeSave} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
+                                                <button onClick={createDateSlot} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
                                                     Spara
                                                 </button>
                                             </div>
@@ -210,7 +255,7 @@ export const MyModal = React.memo((props: Props) => {
                                                 <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
                                             <div className="flex w-full justify-end">
-                                                <button onClick={handleTimeSave} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
+                                                <button onClick={createDateSlot} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
                                                     Spara
                                                 </button>
                                             </div>
@@ -229,7 +274,7 @@ export const MyModal = React.memo((props: Props) => {
                                                 <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
                                             <div className="flex w-full justify-end">
-                                                <button onClick={handleTimeSave} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
+                                                <button onClick={createDateSlot} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
                                                     Spara
                                                 </button>
                                             </div>

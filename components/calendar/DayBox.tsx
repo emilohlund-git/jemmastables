@@ -1,8 +1,10 @@
 import { DateTime } from 'luxon';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { DateSlot } from '../../generated/graphql';
 import { setDate, setIsOpen } from '../../redux/actions';
+import { RootState } from '../../redux/reducers';
+import { Timeslot } from './Timeslots';
 
 interface Props {
     day: DateTime;
@@ -27,12 +29,7 @@ export const DayBox = (props: Props) => {
             <p className="text-gray-500 dark:text-gray-300 text-left ml-2 text-lg">{props.day.day}</p>
             {props.dateSlot[0] ? <>
                 {props.dateSlot[0].timeslots!.map((timeslot, i) =>
-                    <div key={i} className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full transition-all justify-center ${timeslot?.type.type == "Självhushållning" && "bg-blue-100 dark:bg-blue-900"} ${timeslot?.type.type == "Träning" && "bg-red-100 dark:bg-red-900"} ${timeslot?.type.type == "Öppen bana" && "bg-green-100 dark:bg-green-900"} rounded-lg p-1 flex flex-col transform`}>
-                        <p className="text-sm">{"(Ingen titel)"}</p>
-                        <div className="flex flex-row">
-                            {props.dateSlot ? <p className="text-xs">{timeslot?.from}</p> : <p className="text-xs">12:00</p>} <p className="text-xs">-</p> {timeslot?.from ? <p className="text-xs">{timeslot?.to}</p> : <p className="text-xs">12:00</p>}
-                        </div>
-                    </div>
+                    <Timeslot type={timeslot!.type.type} to={timeslot!.to} from={timeslot!.from} key={i} />
                 )}
             </>
                 : <></>}

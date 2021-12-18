@@ -1604,6 +1604,14 @@ export type CreateUsersMutationVariables = Exact<{
 
 export type CreateUsersMutation = { __typename?: 'Mutation', createUsers: { __typename?: 'CreateUsersMutationResponse', users: Array<{ __typename?: 'User', name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> } };
 
+export type UpdateDateSlotsMutationVariables = Exact<{
+  where?: InputMaybe<DateSlotWhere>;
+  update?: InputMaybe<DateSlotUpdateInput>;
+}>;
+
+
+export type UpdateDateSlotsMutation = { __typename?: 'Mutation', updateDateSlots: { __typename?: 'UpdateDateSlotsMutationResponse', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: Array<{ __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined }> } };
+
 export type DateSlotQueryVariables = Exact<{
   where?: InputMaybe<DateSlotWhere>;
 }>;
@@ -1796,6 +1804,42 @@ export function useCreateUsersMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateUsersMutationHookResult = ReturnType<typeof useCreateUsersMutation>;
 export type CreateUsersMutationResult = Apollo.MutationResult<CreateUsersMutation>;
 export type CreateUsersMutationOptions = Apollo.BaseMutationOptions<CreateUsersMutation, CreateUsersMutationVariables>;
+export const UpdateDateSlotsDocument = gql`
+    mutation UpdateDateSlots($where: DateSlotWhere, $update: DateSlotUpdateInput) {
+  updateDateSlots(where: $where, update: $update) {
+    dateSlots {
+      ...RegularDateSlot
+    }
+  }
+}
+    ${RegularDateSlotFragmentDoc}`;
+export type UpdateDateSlotsMutationFn = Apollo.MutationFunction<UpdateDateSlotsMutation, UpdateDateSlotsMutationVariables>;
+
+/**
+ * __useUpdateDateSlotsMutation__
+ *
+ * To run a mutation, you first call `useUpdateDateSlotsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateDateSlotsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateDateSlotsMutation, { data, loading, error }] = useUpdateDateSlotsMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *      update: // value for 'update'
+ *   },
+ * });
+ */
+export function useUpdateDateSlotsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateDateSlotsMutation, UpdateDateSlotsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateDateSlotsMutation, UpdateDateSlotsMutationVariables>(UpdateDateSlotsDocument, options);
+      }
+export type UpdateDateSlotsMutationHookResult = ReturnType<typeof useUpdateDateSlotsMutation>;
+export type UpdateDateSlotsMutationResult = Apollo.MutationResult<UpdateDateSlotsMutation>;
+export type UpdateDateSlotsMutationOptions = Apollo.BaseMutationOptions<UpdateDateSlotsMutation, UpdateDateSlotsMutationVariables>;
 export const DateSlotDocument = gql`
     query DateSlot($where: DateSlotWhere) {
   dateSlots(where: $where) {
