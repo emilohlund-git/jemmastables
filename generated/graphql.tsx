@@ -17,19 +17,18 @@ export type Scalars = {
 
 export type Admin = {
   __typename?: 'Admin';
-  password: Scalars['String'];
+  id?: Maybe<Scalars['ID']>;
   username: Scalars['String'];
 };
 
 export type AdminAggregateSelection = {
   __typename?: 'AdminAggregateSelection';
   count: Scalars['Int'];
-  password: StringAggregateSelection;
+  id: IdAggregateSelection;
   username: StringAggregateSelection;
 };
 
 export type AdminCreateInput = {
-  password: Scalars['String'];
   username: Scalars['String'];
 };
 
@@ -42,28 +41,27 @@ export type AdminOptions = {
 
 /** Fields to sort Admins by. The order in which sorts are applied is not guaranteed when specifying many fields in one AdminSort object. */
 export type AdminSort = {
-  password?: InputMaybe<SortDirection>;
+  id?: InputMaybe<SortDirection>;
   username?: InputMaybe<SortDirection>;
 };
 
 export type AdminUpdateInput = {
-  password?: InputMaybe<Scalars['String']>;
   username?: InputMaybe<Scalars['String']>;
 };
 
 export type AdminWhere = {
   AND?: InputMaybe<Array<AdminWhere>>;
   OR?: InputMaybe<Array<AdminWhere>>;
-  password?: InputMaybe<Scalars['String']>;
-  password_CONTAINS?: InputMaybe<Scalars['String']>;
-  password_ENDS_WITH?: InputMaybe<Scalars['String']>;
-  password_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  password_NOT?: InputMaybe<Scalars['String']>;
-  password_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
-  password_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
-  password_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  password_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
-  password_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  id_NOT?: InputMaybe<Scalars['ID']>;
+  id_NOT_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_NOT_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  id_NOT_STARTS_WITH?: InputMaybe<Scalars['ID']>;
+  id_STARTS_WITH?: InputMaybe<Scalars['ID']>;
   username?: InputMaybe<Scalars['String']>;
   username_CONTAINS?: InputMaybe<Scalars['String']>;
   username_ENDS_WITH?: InputMaybe<Scalars['String']>;
@@ -543,6 +541,19 @@ export type HorseCategoryConnectInput = {
   horses?: InputMaybe<Array<HorseCategoryHorsesConnectFieldInput>>;
 };
 
+export type HorseCategoryConnectOrCreateFieldInput = {
+  onCreate: HorseCategoryConnectOrCreateFieldInputOnCreate;
+  where: HorseCategoryConnectOrCreateWhere;
+};
+
+export type HorseCategoryConnectOrCreateFieldInputOnCreate = {
+  node: HorseCategoryCreateInput;
+};
+
+export type HorseCategoryConnectOrCreateWhere = {
+  node: HorseCategoryUniqueWhere;
+};
+
 export type HorseCategoryConnectWhere = {
   node: HorseCategoryWhere;
 };
@@ -594,6 +605,7 @@ export type HorseCategoryDisconnectInput = {
 
 export type HorseCategoryFieldInput = {
   connect?: InputMaybe<HorseCategoryConnectFieldInput>;
+  connectOrCreate?: InputMaybe<HorseCategoryConnectOrCreateFieldInput>;
   create?: InputMaybe<HorseCategoryCreateFieldInput>;
 };
 
@@ -878,12 +890,17 @@ export type HorseCategorySort = {
   category?: InputMaybe<SortDirection>;
 };
 
+export type HorseCategoryUniqueWhere = {
+  category?: InputMaybe<Scalars['String']>;
+};
+
 export type HorseCategoryUpdateConnectionInput = {
   node?: InputMaybe<HorseCategoryUpdateInput>;
 };
 
 export type HorseCategoryUpdateFieldInput = {
   connect?: InputMaybe<HorseCategoryConnectFieldInput>;
+  connectOrCreate?: InputMaybe<HorseCategoryConnectOrCreateFieldInput>;
   create?: InputMaybe<HorseCategoryCreateFieldInput>;
   delete?: InputMaybe<HorseCategoryDeleteFieldInput>;
   disconnect?: InputMaybe<HorseCategoryDisconnectFieldInput>;
@@ -918,6 +935,10 @@ export type HorseCategoryWhere = {
 
 export type HorseConnectInput = {
   category?: InputMaybe<HorseCategoryConnectFieldInput>;
+};
+
+export type HorseConnectOrCreateInput = {
+  category?: InputMaybe<HorseCategoryConnectOrCreateFieldInput>;
 };
 
 export type HorseConnectWhere = {
@@ -1071,6 +1092,12 @@ export type HorseWhere = {
   owner_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   owner_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
   owner_STARTS_WITH?: InputMaybe<Scalars['String']>;
+};
+
+export type IdAggregateSelection = {
+  __typename?: 'IDAggregateSelection';
+  longest?: Maybe<Scalars['ID']>;
+  shortest?: Maybe<Scalars['ID']>;
 };
 
 export type Mutation = {
@@ -1235,6 +1262,7 @@ export type MutationUpdateHorseCategoriesArgs = {
 
 export type MutationUpdateHorsesArgs = {
   connect?: InputMaybe<HorseConnectInput>;
+  connectOrCreate?: InputMaybe<HorseConnectOrCreateInput>;
   create?: InputMaybe<HorseRelationInput>;
   delete?: InputMaybe<HorseDeleteInput>;
   disconnect?: InputMaybe<HorseDisconnectInput>;
@@ -1654,6 +1682,7 @@ export type TimeSlotConnectInput = {
 
 export type TimeSlotConnectOrCreateInput = {
   date?: InputMaybe<TimeSlotDateConnectOrCreateFieldInput>;
+  type?: InputMaybe<TimeSlotTypeConnectOrCreateFieldInput>;
   users?: InputMaybe<Array<TimeSlotUsersConnectOrCreateFieldInput>>;
 };
 
@@ -1832,7 +1861,7 @@ export type TimeSlotTimeSlotTypeTypeNodeAggregateSelection = {
 
 export type TimeSlotType = {
   __typename?: 'TimeSlotType';
-  timeslot: TimeSlot;
+  timeslot: Array<Maybe<TimeSlot>>;
   timeslotAggregate?: Maybe<TimeSlotTypeTimeSlotTimeslotAggregationSelection>;
   timeslotConnection: TimeSlotTypeTimeslotConnection;
   type: Scalars['String'];
@@ -1880,7 +1909,20 @@ export type TimeSlotTypeConnectFieldInput = {
 };
 
 export type TimeSlotTypeConnectInput = {
-  timeslot?: InputMaybe<TimeSlotTypeTimeslotConnectFieldInput>;
+  timeslot?: InputMaybe<Array<TimeSlotTypeTimeslotConnectFieldInput>>;
+};
+
+export type TimeSlotTypeConnectOrCreateFieldInput = {
+  onCreate: TimeSlotTypeConnectOrCreateFieldInputOnCreate;
+  where: TimeSlotTypeConnectOrCreateWhere;
+};
+
+export type TimeSlotTypeConnectOrCreateFieldInputOnCreate = {
+  node: TimeSlotTypeCreateInput;
+};
+
+export type TimeSlotTypeConnectOrCreateWhere = {
+  node: TimeSlotTypeUniqueWhere;
 };
 
 export type TimeSlotTypeConnectWhere = {
@@ -1920,7 +1962,7 @@ export type TimeSlotTypeDeleteFieldInput = {
 };
 
 export type TimeSlotTypeDeleteInput = {
-  timeslot?: InputMaybe<TimeSlotTypeTimeslotDeleteFieldInput>;
+  timeslot?: InputMaybe<Array<TimeSlotTypeTimeslotDeleteFieldInput>>;
 };
 
 export type TimeSlotTypeDisconnectFieldInput = {
@@ -1929,11 +1971,12 @@ export type TimeSlotTypeDisconnectFieldInput = {
 };
 
 export type TimeSlotTypeDisconnectInput = {
-  timeslot?: InputMaybe<TimeSlotTypeTimeslotDisconnectFieldInput>;
+  timeslot?: InputMaybe<Array<TimeSlotTypeTimeslotDisconnectFieldInput>>;
 };
 
 export type TimeSlotTypeFieldInput = {
   connect?: InputMaybe<TimeSlotTypeConnectFieldInput>;
+  connectOrCreate?: InputMaybe<TimeSlotTypeConnectOrCreateFieldInput>;
   create?: InputMaybe<TimeSlotTypeCreateFieldInput>;
 };
 
@@ -1970,7 +2013,7 @@ export type TimeSlotTypeOptions = {
 };
 
 export type TimeSlotTypeRelationInput = {
-  timeslot?: InputMaybe<TimeSlotTypeTimeslotCreateFieldInput>;
+  timeslot?: InputMaybe<Array<TimeSlotTypeTimeslotCreateFieldInput>>;
 };
 
 export type TimeSlotTypeRelationship = {
@@ -2008,7 +2051,7 @@ export type TimeSlotTypeTimeslotAggregateInput = {
 };
 
 export type TimeSlotTypeTimeslotConnectFieldInput = {
-  connect?: InputMaybe<TimeSlotConnectInput>;
+  connect?: InputMaybe<Array<TimeSlotConnectInput>>;
   where?: InputMaybe<TimeSlotConnectWhere>;
 };
 
@@ -2045,8 +2088,8 @@ export type TimeSlotTypeTimeslotDisconnectFieldInput = {
 };
 
 export type TimeSlotTypeTimeslotFieldInput = {
-  connect?: InputMaybe<TimeSlotTypeTimeslotConnectFieldInput>;
-  create?: InputMaybe<TimeSlotTypeTimeslotCreateFieldInput>;
+  connect?: InputMaybe<Array<TimeSlotTypeTimeslotConnectFieldInput>>;
+  create?: InputMaybe<Array<TimeSlotTypeTimeslotCreateFieldInput>>;
 };
 
 export type TimeSlotTypeTimeslotNodeAggregationWhereInput = {
@@ -2105,12 +2148,16 @@ export type TimeSlotTypeTimeslotUpdateConnectionInput = {
 };
 
 export type TimeSlotTypeTimeslotUpdateFieldInput = {
-  connect?: InputMaybe<TimeSlotTypeTimeslotConnectFieldInput>;
-  create?: InputMaybe<TimeSlotTypeTimeslotCreateFieldInput>;
-  delete?: InputMaybe<TimeSlotTypeTimeslotDeleteFieldInput>;
-  disconnect?: InputMaybe<TimeSlotTypeTimeslotDisconnectFieldInput>;
+  connect?: InputMaybe<Array<TimeSlotTypeTimeslotConnectFieldInput>>;
+  create?: InputMaybe<Array<TimeSlotTypeTimeslotCreateFieldInput>>;
+  delete?: InputMaybe<Array<TimeSlotTypeTimeslotDeleteFieldInput>>;
+  disconnect?: InputMaybe<Array<TimeSlotTypeTimeslotDisconnectFieldInput>>;
   update?: InputMaybe<TimeSlotTypeTimeslotUpdateConnectionInput>;
   where?: InputMaybe<TimeSlotTypeTimeslotConnectionWhere>;
+};
+
+export type TimeSlotTypeUniqueWhere = {
+  type?: InputMaybe<Scalars['String']>;
 };
 
 export type TimeSlotTypeUpdateConnectionInput = {
@@ -2119,6 +2166,7 @@ export type TimeSlotTypeUpdateConnectionInput = {
 
 export type TimeSlotTypeUpdateFieldInput = {
   connect?: InputMaybe<TimeSlotTypeConnectFieldInput>;
+  connectOrCreate?: InputMaybe<TimeSlotTypeConnectOrCreateFieldInput>;
   create?: InputMaybe<TimeSlotTypeCreateFieldInput>;
   delete?: InputMaybe<TimeSlotTypeDeleteFieldInput>;
   disconnect?: InputMaybe<TimeSlotTypeDisconnectFieldInput>;
@@ -2127,7 +2175,7 @@ export type TimeSlotTypeUpdateFieldInput = {
 };
 
 export type TimeSlotTypeUpdateInput = {
-  timeslot?: InputMaybe<TimeSlotTypeTimeslotUpdateFieldInput>;
+  timeslot?: InputMaybe<Array<TimeSlotTypeTimeslotUpdateFieldInput>>;
   type?: InputMaybe<Scalars['String']>;
 };
 
@@ -2686,7 +2734,7 @@ export type UserWhere = {
   timeslots_NOT?: InputMaybe<TimeSlotWhere>;
 };
 
-export type RegularAdminFragment = { __typename?: 'Admin', username: string, password: string };
+export type RegularAdminFragment = { __typename?: 'Admin', username: string };
 
 export type RegularDateSlotFragment = { __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: Array<{ __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
 
@@ -2701,7 +2749,7 @@ export type CreateAdminMutationVariables = Exact<{
 }>;
 
 
-export type CreateAdminMutation = { __typename?: 'Mutation', createAdmins: { __typename?: 'CreateAdminsMutationResponse', admins: Array<{ __typename?: 'Admin', username: string, password: string }> } };
+export type CreateAdminMutation = { __typename?: 'Mutation', createAdmins: { __typename?: 'CreateAdminsMutationResponse', admins: Array<{ __typename?: 'Admin', username: string }> } };
 
 export type CreateDateSlotsMutationVariables = Exact<{
   input: Array<DateSlotCreateInput> | DateSlotCreateInput;
@@ -2799,17 +2847,25 @@ export type UpdateTimeSlotTypesMutationVariables = Exact<{
 
 export type UpdateTimeSlotTypesMutation = { __typename?: 'Mutation', updateTimeSlotTypes: { __typename?: 'UpdateTimeSlotTypesMutationResponse', timeSlotTypes: Array<{ __typename?: 'TimeSlotType', type: string }> } };
 
-export type QueryQueryVariables = Exact<{
+export type UpdateUsersMutationVariables = Exact<{
+  where?: InputMaybe<UserWhere>;
+  update?: InputMaybe<UserUpdateInput>;
+}>;
+
+
+export type UpdateUsersMutation = { __typename?: 'Mutation', updateUsers: { __typename?: 'UpdateUsersMutationResponse', users: Array<{ __typename?: 'User', name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> } };
+
+export type AdminQueryVariables = Exact<{
   where?: InputMaybe<AdminWhere>;
 }>;
 
 
-export type QueryQuery = { __typename?: 'Query', admins: Array<{ __typename?: 'Admin', username: string, password: string }> };
+export type AdminQuery = { __typename?: 'Query', admins: Array<{ __typename?: 'Admin', username: string }> };
 
 export type AdminsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AdminsQuery = { __typename?: 'Query', admins: Array<{ __typename?: 'Admin', username: string, password: string }> };
+export type AdminsQuery = { __typename?: 'Query', admins: Array<{ __typename?: 'Admin', username: string }> };
 
 export type DateSlotQueryVariables = Exact<{
   where?: InputMaybe<DateSlotWhere>;
@@ -2834,7 +2890,7 @@ export type HorseQuery = { __typename?: 'Query', horses: Array<{ __typename?: 'H
 export type HorseCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HorseCategoriesQuery = { __typename?: 'Query', horseCategories: Array<{ __typename?: 'HorseCategory', category: string }> };
+export type HorseCategoriesQuery = { __typename?: 'Query', horseCategories: Array<{ __typename?: 'HorseCategory', category: string, horses?: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, images: Array<string | null | undefined>, owner: string, after: string, birthyear: string, gender: string, color: string } | null | undefined> | null | undefined }> };
 
 export type HorseCategoryQueryVariables = Exact<{
   where?: InputMaybe<HorseCategoryWhere>;
@@ -2862,7 +2918,7 @@ export type TimeSlotTypeQueryVariables = Exact<{
 }>;
 
 
-export type TimeSlotTypeQuery = { __typename?: 'Query', timeSlotTypes: Array<{ __typename?: 'TimeSlotType', type: string, timeslot: { __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined> | null | undefined } }> };
+export type TimeSlotTypeQuery = { __typename?: 'Query', timeSlotTypes: Array<{ __typename?: 'TimeSlotType', type: string, timeslot: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined> | null | undefined } | null | undefined> }> };
 
 export type TimeSlotTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2889,7 +2945,6 @@ export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'Us
 export const RegularAdminFragmentDoc = gql`
     fragment RegularAdmin on Admin {
   username
-  password
 }
     `;
 export const RegularDateSlotFragmentDoc = gql`
@@ -3468,8 +3523,44 @@ export function useUpdateTimeSlotTypesMutation(baseOptions?: Apollo.MutationHook
 export type UpdateTimeSlotTypesMutationHookResult = ReturnType<typeof useUpdateTimeSlotTypesMutation>;
 export type UpdateTimeSlotTypesMutationResult = Apollo.MutationResult<UpdateTimeSlotTypesMutation>;
 export type UpdateTimeSlotTypesMutationOptions = Apollo.BaseMutationOptions<UpdateTimeSlotTypesMutation, UpdateTimeSlotTypesMutationVariables>;
-export const QueryDocument = gql`
-    query Query($where: AdminWhere) {
+export const UpdateUsersDocument = gql`
+    mutation UpdateUsers($where: UserWhere, $update: UserUpdateInput) {
+  updateUsers(where: $where, update: $update) {
+    users {
+      ...RegularUser
+    }
+  }
+}
+    ${RegularUserFragmentDoc}`;
+export type UpdateUsersMutationFn = Apollo.MutationFunction<UpdateUsersMutation, UpdateUsersMutationVariables>;
+
+/**
+ * __useUpdateUsersMutation__
+ *
+ * To run a mutation, you first call `useUpdateUsersMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUsersMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUsersMutation, { data, loading, error }] = useUpdateUsersMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *      update: // value for 'update'
+ *   },
+ * });
+ */
+export function useUpdateUsersMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUsersMutation, UpdateUsersMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUsersMutation, UpdateUsersMutationVariables>(UpdateUsersDocument, options);
+      }
+export type UpdateUsersMutationHookResult = ReturnType<typeof useUpdateUsersMutation>;
+export type UpdateUsersMutationResult = Apollo.MutationResult<UpdateUsersMutation>;
+export type UpdateUsersMutationOptions = Apollo.BaseMutationOptions<UpdateUsersMutation, UpdateUsersMutationVariables>;
+export const AdminDocument = gql`
+    query Admin($where: AdminWhere) {
   admins(where: $where) {
     ...RegularAdmin
   }
@@ -3477,32 +3568,32 @@ export const QueryDocument = gql`
     ${RegularAdminFragmentDoc}`;
 
 /**
- * __useQueryQuery__
+ * __useAdminQuery__
  *
- * To run a query within a React component, call `useQueryQuery` and pass it any options that fit your needs.
- * When your component renders, `useQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useQueryQuery({
+ * const { data, loading, error } = useAdminQuery({
  *   variables: {
  *      where: // value for 'where'
  *   },
  * });
  */
-export function useQueryQuery(baseOptions?: Apollo.QueryHookOptions<QueryQuery, QueryQueryVariables>) {
+export function useAdminQuery(baseOptions?: Apollo.QueryHookOptions<AdminQuery, AdminQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<QueryQuery, QueryQueryVariables>(QueryDocument, options);
+        return Apollo.useQuery<AdminQuery, AdminQueryVariables>(AdminDocument, options);
       }
-export function useQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryQuery, QueryQueryVariables>) {
+export function useAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AdminQuery, AdminQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<QueryQuery, QueryQueryVariables>(QueryDocument, options);
+          return Apollo.useLazyQuery<AdminQuery, AdminQueryVariables>(AdminDocument, options);
         }
-export type QueryQueryHookResult = ReturnType<typeof useQueryQuery>;
-export type QueryLazyQueryHookResult = ReturnType<typeof useQueryLazyQuery>;
-export type QueryQueryResult = Apollo.QueryResult<QueryQuery, QueryQueryVariables>;
+export type AdminQueryHookResult = ReturnType<typeof useAdminQuery>;
+export type AdminLazyQueryHookResult = ReturnType<typeof useAdminLazyQuery>;
+export type AdminQueryResult = Apollo.QueryResult<AdminQuery, AdminQueryVariables>;
 export const AdminsDocument = gql`
     query Admins {
   admins {
@@ -3646,6 +3737,16 @@ export const HorseCategoriesDocument = gql`
     query HorseCategories {
   horseCategories {
     category
+    horses {
+      name
+      nickname
+      images
+      owner
+      after
+      birthyear
+      gender
+      color
+    }
   }
 }
     `;

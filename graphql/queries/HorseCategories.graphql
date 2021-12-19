@@ -1,5 +1,15 @@
 query HorseCategories {
   horseCategories {
     category
+    horses {
+      name
+      nickname
+      images
+      owner
+      after
+      birthyear
+      gender
+      color
+    }
   }
 }

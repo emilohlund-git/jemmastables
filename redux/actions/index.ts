@@ -12,9 +12,30 @@ export const setType = (payload: any) => {
   };
 };
 
+export const setAdmin = (payload: any) => {
+  return {
+    type: 'SET_ADMIN',
+    payload: payload,
+  };
+};
+
+export const setTime = (payload: any) => {
+  return {
+    type: 'SET_TIME',
+    payload: payload,
+  };
+};
+
 export const setIsOpen = (payload: any) => {
   return {
     type: 'SET_IS_OPEN',
+    payload: payload,
+  };
+};
+
+export const setBookingIsOpen = (payload: any) => {
+  return {
+    type: 'SET_BOOKING_IS_OPEN',
     payload: payload,
   };
 };

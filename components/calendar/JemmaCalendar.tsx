@@ -4,6 +4,7 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { DateSlot, useDateSlotsQuery } from "../../generated/graphql";
 import getDaysInMonth from "../../utils/calendar/getDaysInMonth";
 import getDaysInWeek from "../../utils/calendar/getDaysInWeek";
+import { BookingModal } from "./BookingModal";
 import { DayBox } from "./DayBox";
 import LoadingBox from "./LoadingBox";
 import { MyModal } from "./Modal";
@@ -74,6 +75,7 @@ const JemmaCalendar = (props: Props) => {
                 </div>
             </div>
             <MyModal setOpen={setOpen} />
+            <BookingModal />
         </>
     )
 }
