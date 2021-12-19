@@ -1605,7 +1605,7 @@ export type TimeSlot = {
   type: TimeSlotType;
   typeAggregate?: Maybe<TimeSlotTimeSlotTypeTypeAggregationSelection>;
   typeConnection: TimeSlotTypeConnection;
-  users?: Maybe<Array<Maybe<User>>>;
+  users?: Maybe<User>;
   usersAggregate?: Maybe<TimeSlotUserUsersAggregationSelection>;
   usersConnection: TimeSlotUsersConnection;
 };
@@ -1677,13 +1677,12 @@ export type TimeSlotAggregateSelection = {
 export type TimeSlotConnectInput = {
   date?: InputMaybe<TimeSlotDateConnectFieldInput>;
   type?: InputMaybe<TimeSlotTypeConnectFieldInput>;
-  users?: InputMaybe<Array<TimeSlotUsersConnectFieldInput>>;
+  users?: InputMaybe<TimeSlotUsersConnectFieldInput>;
 };
 
 export type TimeSlotConnectOrCreateInput = {
   date?: InputMaybe<TimeSlotDateConnectOrCreateFieldInput>;
   type?: InputMaybe<TimeSlotTypeConnectOrCreateFieldInput>;
-  users?: InputMaybe<Array<TimeSlotUsersConnectOrCreateFieldInput>>;
 };
 
 export type TimeSlotConnectWhere = {
@@ -1820,13 +1819,13 @@ export type TimeSlotDateUpdateFieldInput = {
 export type TimeSlotDeleteInput = {
   date?: InputMaybe<TimeSlotDateDeleteFieldInput>;
   type?: InputMaybe<TimeSlotTypeDeleteFieldInput>;
-  users?: InputMaybe<Array<TimeSlotUsersDeleteFieldInput>>;
+  users?: InputMaybe<TimeSlotUsersDeleteFieldInput>;
 };
 
 export type TimeSlotDisconnectInput = {
   date?: InputMaybe<TimeSlotDateDisconnectFieldInput>;
   type?: InputMaybe<TimeSlotTypeDisconnectFieldInput>;
-  users?: InputMaybe<Array<TimeSlotUsersDisconnectFieldInput>>;
+  users?: InputMaybe<TimeSlotUsersDisconnectFieldInput>;
 };
 
 export type TimeSlotOptions = {
@@ -1839,7 +1838,7 @@ export type TimeSlotOptions = {
 export type TimeSlotRelationInput = {
   date?: InputMaybe<TimeSlotDateCreateFieldInput>;
   type?: InputMaybe<TimeSlotTypeCreateFieldInput>;
-  users?: InputMaybe<Array<TimeSlotUsersCreateFieldInput>>;
+  users?: InputMaybe<TimeSlotUsersCreateFieldInput>;
 };
 
 /** Fields to sort TimeSlots by. The order in which sorts are applied is not guaranteed when specifying many fields in one TimeSlotSort object. */
@@ -2204,7 +2203,7 @@ export type TimeSlotUpdateInput = {
   from?: InputMaybe<Scalars['String']>;
   to?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<TimeSlotTypeUpdateFieldInput>;
-  users?: InputMaybe<Array<TimeSlotUsersUpdateFieldInput>>;
+  users?: InputMaybe<TimeSlotUsersUpdateFieldInput>;
 };
 
 export type TimeSlotUserUsersAggregationSelection = {
@@ -2232,17 +2231,8 @@ export type TimeSlotUsersAggregateInput = {
 };
 
 export type TimeSlotUsersConnectFieldInput = {
-  connect?: InputMaybe<Array<UserConnectInput>>;
+  connect?: InputMaybe<UserConnectInput>;
   where?: InputMaybe<UserConnectWhere>;
-};
-
-export type TimeSlotUsersConnectOrCreateFieldInput = {
-  onCreate: TimeSlotUsersConnectOrCreateFieldInputOnCreate;
-  where: UserConnectOrCreateWhere;
-};
-
-export type TimeSlotUsersConnectOrCreateFieldInputOnCreate = {
-  node: UserCreateInput;
 };
 
 export type TimeSlotUsersConnection = {
@@ -2278,9 +2268,8 @@ export type TimeSlotUsersDisconnectFieldInput = {
 };
 
 export type TimeSlotUsersFieldInput = {
-  connect?: InputMaybe<Array<TimeSlotUsersConnectFieldInput>>;
-  connectOrCreate?: InputMaybe<Array<TimeSlotUsersConnectOrCreateFieldInput>>;
-  create?: InputMaybe<Array<TimeSlotUsersCreateFieldInput>>;
+  connect?: InputMaybe<TimeSlotUsersConnectFieldInput>;
+  create?: InputMaybe<TimeSlotUsersCreateFieldInput>;
 };
 
 export type TimeSlotUsersNodeAggregationWhereInput = {
@@ -2359,11 +2348,10 @@ export type TimeSlotUsersUpdateConnectionInput = {
 };
 
 export type TimeSlotUsersUpdateFieldInput = {
-  connect?: InputMaybe<Array<TimeSlotUsersConnectFieldInput>>;
-  connectOrCreate?: InputMaybe<Array<TimeSlotUsersConnectOrCreateFieldInput>>;
-  create?: InputMaybe<Array<TimeSlotUsersCreateFieldInput>>;
-  delete?: InputMaybe<Array<TimeSlotUsersDeleteFieldInput>>;
-  disconnect?: InputMaybe<Array<TimeSlotUsersDisconnectFieldInput>>;
+  connect?: InputMaybe<TimeSlotUsersConnectFieldInput>;
+  create?: InputMaybe<TimeSlotUsersCreateFieldInput>;
+  delete?: InputMaybe<TimeSlotUsersDeleteFieldInput>;
+  disconnect?: InputMaybe<TimeSlotUsersDisconnectFieldInput>;
   update?: InputMaybe<TimeSlotUsersUpdateConnectionInput>;
   where?: InputMaybe<TimeSlotUsersConnectionWhere>;
 };
@@ -2510,10 +2498,6 @@ export type UserAggregateSelection = {
 
 export type UserConnectInput = {
   timeslots?: InputMaybe<Array<UserTimeslotsConnectFieldInput>>;
-};
-
-export type UserConnectOrCreateWhere = {
-  node: UserUniqueWhere;
 };
 
 export type UserConnectWhere = {
@@ -2682,11 +2666,6 @@ export type UserTimeslotsUpdateFieldInput = {
   where?: InputMaybe<UserTimeslotsConnectionWhere>;
 };
 
-export type UserUniqueWhere = {
-  email?: InputMaybe<Scalars['String']>;
-  phonenumber?: InputMaybe<Scalars['String']>;
-};
-
 export type UserUpdateInput = {
   email?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
@@ -2736,11 +2715,11 @@ export type UserWhere = {
 
 export type RegularAdminFragment = { __typename?: 'Admin', username: string };
 
-export type RegularDateSlotFragment = { __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: Array<{ __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
+export type RegularDateSlotFragment = { __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: { __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined } | null | undefined> | null | undefined };
 
 export type RegularHorseFragment = { __typename?: 'Horse', name: string, nickname?: string | null | undefined, images: Array<string | null | undefined>, owner: string, after: string, birthyear: string, gender: string, color: string, category: { __typename?: 'HorseCategory', category: string } };
 
-export type RegularTimeSlotFragment = { __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined> | null | undefined };
+export type RegularTimeSlotFragment = { __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined };
 
 export type RegularUserFragment = { __typename?: 'User', name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined };
 
@@ -2785,7 +2764,7 @@ export type CreateTimeSlotsMutationVariables = Exact<{
 }>;
 
 
-export type CreateTimeSlotsMutation = { __typename?: 'Mutation', createTimeSlots: { __typename?: 'CreateTimeSlotsMutationResponse', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined> | null | undefined }> } };
+export type CreateTimeSlotsMutation = { __typename?: 'Mutation', createTimeSlots: { __typename?: 'CreateTimeSlotsMutationResponse', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined }> } };
 
 export type CreateUsersMutationVariables = Exact<{
   input: Array<UserCreateInput> | UserCreateInput;
@@ -2822,7 +2801,7 @@ export type UpdateDateSlotsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateDateSlotsMutation = { __typename?: 'Mutation', updateDateSlots: { __typename?: 'UpdateDateSlotsMutationResponse', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: Array<{ __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined }> } };
+export type UpdateDateSlotsMutation = { __typename?: 'Mutation', updateDateSlots: { __typename?: 'UpdateDateSlotsMutationResponse', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: { __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined } | null | undefined> | null | undefined }> } };
 
 export type UpdateHorsesMutationVariables = Exact<{
   where?: InputMaybe<HorseWhere>;
@@ -2838,7 +2817,7 @@ export type UpdateTimeSlotsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateTimeSlotsMutation = { __typename?: 'Mutation', updateTimeSlots: { __typename?: 'UpdateTimeSlotsMutationResponse', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined> | null | undefined }> } };
+export type UpdateTimeSlotsMutation = { __typename?: 'Mutation', updateTimeSlots: { __typename?: 'UpdateTimeSlotsMutationResponse', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined }> } };
 
 export type UpdateTimeSlotTypesMutationVariables = Exact<{
   where?: InputMaybe<TimeSlotTypeWhere>;
@@ -2872,12 +2851,12 @@ export type DateSlotQueryVariables = Exact<{
 }>;
 
 
-export type DateSlotQuery = { __typename?: 'Query', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: Array<{ __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined }> };
+export type DateSlotQuery = { __typename?: 'Query', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: { __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined } | null | undefined> | null | undefined }> };
 
 export type DateSlotsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type DateSlotsQuery = { __typename?: 'Query', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: Array<{ __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined }> };
+export type DateSlotsQuery = { __typename?: 'Query', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: { __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined } | null | undefined> | null | undefined }> };
 
 export type HorseQueryVariables = Exact<{
   where?: InputMaybe<HorseCategoryWhere>;
@@ -2911,14 +2890,14 @@ export type TimeSlotQueryVariables = Exact<{
 }>;
 
 
-export type TimeSlotQuery = { __typename?: 'Query', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined> | null | undefined }> };
+export type TimeSlotQuery = { __typename?: 'Query', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined }> };
 
 export type TimeSlotTypeQueryVariables = Exact<{
   where?: InputMaybe<TimeSlotTypeWhere>;
 }>;
 
 
-export type TimeSlotTypeQuery = { __typename?: 'Query', timeSlotTypes: Array<{ __typename?: 'TimeSlotType', type: string, timeslot: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined> | null | undefined } | null | undefined> }> };
+export type TimeSlotTypeQuery = { __typename?: 'Query', timeSlotTypes: Array<{ __typename?: 'TimeSlotType', type: string, timeslot: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined } | null | undefined> }> };
 
 export type TimeSlotTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2928,7 +2907,7 @@ export type TimeSlotTypesQuery = { __typename?: 'Query', timeSlotTypes: Array<{ 
 export type TimeSlotsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TimeSlotsQuery = { __typename?: 'Query', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined> | null | undefined }> };
+export type TimeSlotsQuery = { __typename?: 'Query', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined }> };
 
 export type UserQueryVariables = Exact<{
   where?: InputMaybe<UserWhere>;

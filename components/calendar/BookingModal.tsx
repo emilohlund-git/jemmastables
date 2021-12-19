@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import React, { Fragment, useState } from 'react';
 import { FiClock, FiMail, FiPhone, FiUser } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { useUpdateTimeSlotsMutation, useUpdateUsersMutation, useUsersQuery } from '../../generated/graphql';
+import { useCreateUsersMutation, useUpdateTimeSlotsMutation, useUpdateUsersMutation, useUsersQuery } from '../../generated/graphql';
 import { setBookingIsOpen } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
 
@@ -32,61 +32,37 @@ export const BookingModal = React.memo((props: Props) => {
         dispatch(setBookingIsOpen(false));
     }
 
-    const [UpdateTimeSlot] = useUpdateTimeSlotsMutation();
     const [UpdateUser] = useUpdateUsersMutation();
+    const [CreateUser] = useCreateUsersMutation();
     const { data, loading } = useUsersQuery();
 
     const bookTimeSlot = async (e: any) => {
         e.preventDefault();
-        if (data!.users[0].email != formState.email && !loading) {
-            const { errors } = await UpdateTimeSlot({
+        let user;
+        if (!loading && data!.users) {
+            user = data!.users.find((user) => user.email === formState.email);
+        }
+
+        console.log(user);
+
+        if (user && !loading) {
+            const { errors } = await UpdateUser({
                 variables: {
                     where: {
-                        to: time.to,
-                        from: time.from,
-                        date: { date: date.toSQLDate() }
+                        email: user.email
                     },
                     update: {
-                        users: [
-                            {
-                                create: [
-                                    {
-                                        node: {
-                                            name: formState.name,
-                                            phonenumber: formState.phonenumber,
-                                            email: formState.email
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                },
-                update: (cache) => {
-                    cache.evict({ fieldName: "dateSlots" });
-                }
-            });
-            if (!errors) {
-                closeModal();
-            } else {
-                console.log(errors);
-            }
-        } else {
-            const { errors } = await UpdateTimeSlot({
-                variables: {
-                    where: {
-                        to: time.to,
-                        from: time.from,
-                        date: { date: date.toSQLDate() }
-                    },
-                    update: {
-                        users: [
+                        timeslots: [
                             {
                                 connect: [
                                     {
                                         where: {
                                             node: {
-                                                email: formState.email
+                                                to: time.to,
+                                                from: time.from,
+                                                date: {
+                                                    date: date.toSQLDate()
+                                                }
                                             }
                                         }
                                     }
@@ -97,12 +73,45 @@ export const BookingModal = React.memo((props: Props) => {
                 },
                 update: (cache) => {
                     cache.evict({ fieldName: "dateSlots" });
+                    cache.evict({ fieldName: "users" })
                 }
             });
+
             if (!errors) {
                 closeModal();
-            } else {
-                console.log(errors);
+            }
+        } else if (!user && !loading) {
+            const { errors } = await CreateUser({
+                variables: {
+                    input: {
+                        name: formState.name,
+                        phonenumber: formState.phonenumber,
+                        email: formState.email,
+                        timeslots: {
+                            connect: [
+                                {
+                                    where: {
+                                        node: {
+                                            to: time.to,
+                                            from: time.from,
+                                            date: {
+                                                date: date.toSQLDate()
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                },
+                update: (cache) => {
+                    cache.evict({ fieldName: "dateSlots" });
+                    cache.evict({ fieldName: "users" })
+                }
+            });
+
+            if (!errors) {
+                closeModal();
             }
         }
     }
