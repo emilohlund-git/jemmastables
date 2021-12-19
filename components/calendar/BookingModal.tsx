@@ -176,7 +176,7 @@ export const BookingModal = React.memo((props: Props) => {
                                         as="h1"
                                         className="text-lg font-medium leading-6 text-gray-900 mb-6"
                                     >
-                                        <h1 className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none transition focus:border-blue-400" aria-label="Title">Fyll i kontaktuppgifter</h1>
+                                        <div className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none transition focus:border-blue-400" aria-label="Title">Fyll i kontaktuppgifter</div>
                                     </Dialog.Title>
                                     <div className="flex flex-row items-center mb-6">
                                         <FiClock className="text-gray-500 mr-2" />
