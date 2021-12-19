@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import React, { Fragment, useState } from 'react';
 import { FiClock, FiMail, FiPhone, FiUser } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCreateUsersMutation, useUpdateTimeSlotsMutation, useUpdateUsersMutation, useUsersQuery } from '../../generated/graphql';
+import { useCreateUsersMutation, useUpdateUsersMutation, useUsersQuery } from '../../generated/graphql';
 import { setBookingIsOpen } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
 
@@ -116,6 +116,20 @@ export const BookingModal = React.memo((props: Props) => {
         }
     }
 
+    const invalidHandler = (e: any) => {
+        console.log(e.target.name);
+        e.target.setCustomValidity("");
+
+        if (!e.target.validity.valid) {
+            if (e.target.name == "name")
+                e.target.setCustomValidity("Vänligen ange ditt namn");
+            if (e.target.name == "phonenumber")
+                e.target.setCustomValidity("Vänligen ange ett telefonnummer");
+            if (e.target.name == "email")
+                e.target.setCustomValidity("Vänligen ange en giltig epost-adress");
+        }
+    }
+
     return (
         <>
             <Transition appear show={bookingOpen ? true : false} as={Fragment}>
@@ -158,14 +172,20 @@ export const BookingModal = React.memo((props: Props) => {
                                     'bg-white rounded-xl p-3',
                                     'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60'
                                 )}>
-                                    <div className="flex flex-row items-center mb-4">
+                                    <Dialog.Title
+                                        as="h1"
+                                        className="text-lg font-medium leading-6 text-gray-900 mb-6"
+                                    >
+                                        <h1 className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none transition focus:border-blue-400" aria-label="Title">Fyll i kontaktuppgifter</h1>
+                                    </Dialog.Title>
+                                    <div className="flex flex-row items-center mb-6">
                                         <FiClock className="text-gray-500 mr-2" />
                                         <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" disabled type="date" value={date.toISODate()} />
                                         <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" disabled type="time" value={time.from} aria-label="Title" />
                                         <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" disabled type="time" value={time.to} aria-label="Title" />
                                     </div>
-                                    <form onSubmit={bookTimeSlot}>
-                                        <div className="flex flex-row items-center mb-4">
+                                    <form onInvalid={invalidHandler} onSubmit={bookTimeSlot}>
+                                        <div className="flex flex-row items-center mb-6">
                                             <FiUser className="text-gray-500 mr-2" />
                                             <input value={formState.name}
                                                 onChange={(e) =>
@@ -173,9 +193,9 @@ export const BookingModal = React.memo((props: Props) => {
                                                         ...formState,
                                                         name: e.target.value
                                                     })
-                                                } className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="text" placeholder="Namn" />
+                                                } name="name" required className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="text" placeholder="Namn" />
                                         </div>
-                                        <div className="flex flex-row items-center mb-4">
+                                        <div className="flex flex-row items-center mb-6">
                                             <FiPhone className="text-gray-500 mr-2" />
                                             <input value={formState.phonenumber}
                                                 onChange={(e) =>
@@ -183,9 +203,9 @@ export const BookingModal = React.memo((props: Props) => {
                                                         ...formState,
                                                         phonenumber: e.target.value
                                                     })
-                                                } className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="text" placeholder="Telefonnummer" />
+                                                } name="phonenumber" required className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="text" placeholder="Telefonnummer" />
                                         </div>
-                                        <div className="flex flex-row items-center mb-4">
+                                        <div className="flex flex-row items-center mb-6">
                                             <FiMail className="text-gray-500 mr-2" />
                                             <input value={formState.email}
                                                 onChange={(e) =>
@@ -193,11 +213,11 @@ export const BookingModal = React.memo((props: Props) => {
                                                         ...formState,
                                                         email: e.target.value
                                                     })
-                                                } className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="email" placeholder="Epost" />
+                                                } name="email" required className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="email" placeholder="Epost" />
                                         </div>
                                         <div className="flex w-full justify-end">
                                             <button className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
-                                                Spara
+                                                Boka
                                             </button>
                                         </div>
                                     </form>

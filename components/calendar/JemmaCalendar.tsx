@@ -12,22 +12,12 @@ interface Props {
 
 }
 
-/**
- * TODO:
- * Find a way to improve component rendering issues,
- * ex. Each day is loading the modal component & every single timeslot.
- * Maybe better to find a way where modal component is top hierarchy and data fetched
- * via redux or similar. (It kind of already works like that, just have to move it)
- */
-
 const JemmaCalendar = (props: Props) => {
     const [currentDate, setCurrentDate] = useState(DateTime.local());
     const [days, setDays] = useState(
         getDaysInMonth(currentDate)
     );
     const [weekDays, setWeekDays] = useState(getDaysInWeek(currentDate));
-    const [open, setOpen] = useState(false);
-
     const { data, loading } = useDateSlotsQuery();
 
     const changeCalendar = (value: string) => {
@@ -46,18 +36,26 @@ const JemmaCalendar = (props: Props) => {
     return (
         <>
             <div className="flex flex-col w-11/12 md:w-8/12 pb-20">
-                <div className="mb-2">
-                    <h1 className="text-black text-4xl text-center dark:text-gray-50">{currentDate.toFormat("yyyy")}</h1>
-                </div>
-                <div className="flex justify-center items-center gap-4 m-2">
-                    <FiChevronLeft onClick={() => changeCalendar("minus")} className="cursor-pointer text-black dark:text-gray-50 transition transform hover:scale-125 mt-1 text-lg rounded-md" />
-                    <h1 className="text-black dark:text-gray-50 text-2xl text-center">{currentDate.setLocale("sv").toFormat("LLLL")}</h1>
-                    <FiChevronRight onClick={() => changeCalendar("plus")} className="cursor-pointer text-black dark:text-gray-50 transition transform hover:scale-125 mt-1 text-lg rounded-md" />
+                <div className="flex flex-col md:flex-col">
+                    <div className="mb-2">
+                        <h1 className="text-black text-xl pl-2 md:text-4xl md:text-center dark:text-gray-50">{currentDate.toFormat("yyyy")}</h1>
+                    </div>
+                    <div className="flex justify-around md:justify-center items-center md:gap-0 mb-4 md:m-2">
+                        <div className="w-1/4 h-12 flex items-center md:justify-end">
+                            <FiChevronLeft onClick={() => changeCalendar("minus")} className="cursor-pointer text-black dark:text-gray-50 transition transform hover:scale-125 mt-1 text-lg rounded-md" />
+                        </div>
+                        <div className="w-1/4 h-12 flex justify-center items-center">
+                            <h1 className="text-black font-bold md:font-normal dark:text-gray-50 text-2xl text-center">{currentDate.setLocale("sv").toFormat("LLLL")}</h1>
+                        </div>
+                        <div className="w-1/4 h-12 flex items-center justify-end md:justify-start">
+                            <FiChevronRight onClick={() => changeCalendar("plus")} className="cursor-pointer text-black dark:text-gray-50 transition transform hover:scale-125 mt-1 text-lg rounded-md" />
+                        </div>
+                    </div>
                 </div>
                 <div className="grid grid-cols-7 gap-1">
                     {weekDays ?
                         weekDays.map((day, i) => (
-                            <h2 className="text-black dark:text-gray-50 text-center" key={i}>{day.weekdayShort}</h2>
+                            <h2 className="md:text-black text-gray-400 dark:text-gray-50 text-center" key={i}>{day.weekdayShort}</h2>
                         ))
                         :
                         <></>

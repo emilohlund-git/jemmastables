@@ -13,7 +13,6 @@ import { useCreateDateSlotsMutation, useDateSlotQuery, useUpdateDateSlotsMutatio
  */
 
 interface Props {
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function classNames(...classes: string[]) {
