@@ -1,17 +1,9 @@
-import { DateSlot } from "../../generated/graphql";
+import { DateSlot } from '../../generated/graphql';
 
-export const getBackgroundColor = (d: DateSlot) => {
+export const getBackgroundColorByDateSlot = (d: DateSlot) => {
   const colors: string[] = [];
   d.timeslots!.forEach((slot) => {
-    colors.push(
-      slot?.type.type === 'Självhushållning'
-        ? 'bg-blue-200'
-        : slot?.type.type === 'Träning'
-        ? 'bg-red-200'
-        : slot?.type.type === 'Öppen bana'
-        ? 'bg-green-200'
-        : 'bg-white'
-    );
+    colors.push(slot?.users ? 'bg-red-200' : 'bg-green-200');
   });
   return colors[0];
 };

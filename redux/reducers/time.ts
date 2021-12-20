@@ -5,7 +5,7 @@ const initialState = {
 
 const timeReducer = (
   state = initialState,
-  action: { type: string; payload: { time: any } }
+  action: { type: string; payload: { time: {} } }
 ) => {
   switch (action.type) {
     case 'SET_TIME':

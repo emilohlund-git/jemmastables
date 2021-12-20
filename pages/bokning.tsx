@@ -8,7 +8,7 @@ interface Props {
 
 const bokning = (props: Props) => {
     return (
-        <div className="flex flex-col justify-center dark:bg-gray-900  ">
+        <div className="flex flex-col justify-center dark:bg-gray-900">
             <JemmaCalendar />
         </div>
     )

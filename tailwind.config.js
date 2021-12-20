@@ -2,7 +2,12 @@ module.exports = {
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class', // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      transitionProperty: {
+        height: 'height',
+        spacing: 'margin, padding',
+      },
+    },
     fontFamily: {
       poppins: ['Poppins', 'sans-serif'],
     },

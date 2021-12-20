@@ -33,9 +33,7 @@ const JemmaCalendar = (props: Props) => {
             setCurrentDate(currentDate.set({ month: currentDate.month + 1 }));
         }
     }
-
-    console.log(data);
-
+    
     useEffect(() => {
         setWeekDays(getDaysInWeek(currentDate));
         setDays(getDaysInMonth(currentDate));
@@ -86,7 +84,7 @@ const JemmaCalendar = (props: Props) => {
                         <h2>{date.setLocale("sv").toFormat("yyyy LLL dd")}</h2>
                     </div>
                     <div className="m-4">
-                        <p>{isToday(date) ? "idag" : ""}</p>
+                        <p>v.{date.weekNumber}</p>
                     </div>
                 </div>
                 {!loading && data?.dateSlots.map((dateSlot) => {

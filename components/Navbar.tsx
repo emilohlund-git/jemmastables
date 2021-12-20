@@ -17,7 +17,7 @@ const Navbar = (props: Props) => {
 
     return (
         <div className={`${router.pathname == "/" ? "fixed" : "bg-white dark:bg-gray-900"} z-40 w-full`}>
-            <div className="pr-4 pt-4 md:p-10 flex flex-row justify-between">
+            <div className="pr-4 pt-4 pb-3 md:p-10 flex flex-row justify-between">
                 <div className={`${router.pathname == "/bokning" ? "hidden md:flex" : ""} flex`}>
                     <Image priority width={115} height={115} alt="Jemmastables Logo" layout="fixed" src={`${router.pathname === "/" || darkmode ? "/images/jemmastables-logo-vit.png" : "/images/jemmastables-logo.png"}`} />
                 </div>
