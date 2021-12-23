@@ -1,12 +1,41 @@
-import { compose, createStore } from "redux";
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createWrapper, HYDRATE } from 'next-redux-wrapper';
+import rootReducer from '../reducers';
+import thunkMiddleware from 'redux-thunk';
+import storage from '../syncStorage';
 
-import rootReducer from "../reducers";
+// BINDING MIDDLEWARE
+const bindMiddleware = (middleware: any) => {
+  if (process.env.NODE_ENV !== 'production') {
+    const { composeWithDevTools } = require('redux-devtools-extension');
+    return composeWithDevTools(applyMiddleware(...middleware));
+  }
+  return applyMiddleware(...middleware);
+};
 
-const composeEnhancers =
-  (typeof window !== "undefined" &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
-  compose;
+const makeStore = ({ isServer }: { isServer: any }) => {
+  if (isServer) {
+    return createStore(rootReducer, bindMiddleware([thunkMiddleware]));
+  } else {
+    const { persistStore, persistReducer } = require('redux-persist');
+    const persistConfig = {
+      key: 'nextjs',
+      whitelist: ['user'],
+      storage,
+    };
 
-const store = createStore(rootReducer, composeEnhancers());
+    const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export default store;
+    const store = createStore(
+      persistedReducer,
+      bindMiddleware([thunkMiddleware])
+    );
+
+    /* @ts-ignore */
+    store.__persistor = persistStore(store);
+
+    return store;
+  }
+};
+/* @ts-ignore */
+export const wrapper = createWrapper(makeStore);

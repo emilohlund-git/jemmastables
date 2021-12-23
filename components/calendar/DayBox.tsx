@@ -1,16 +1,13 @@
 import { DateTime } from 'luxon';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TIMESLOT_TYPE } from '../../config/constants';
-import { DateSlot, TimeSlot } from '../../generated/graphql';
+import { DateSlot } from '../../generated/graphql';
 import { setDate, setIsOpen } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
 import { getBackgroundColorByDateSlot } from '../../utils/calendar/getBackgroundColorByDateSlot';
 import { getTimeSlotType } from '../../utils/calendar/getTimeSlotType';
-import { hasTimeSlots } from '../../utils/calendar/hasTimeSlots';
 import { isBeforeToday } from '../../utils/calendar/isBeforeToday';
 import { isToday } from '../../utils/calendar/isToday';
-import { timeSlotOccupied } from '../../utils/calendar/timeSlotOccupied';
 import { Timeslot } from './Timeslots';
 
 interface Props {
@@ -34,10 +31,10 @@ export const DayBox = (props: Props) => {
     }
 
     return (
-        <div onClick={handleClick} className={`${isBeforeToday(props.day) ? "md:bg-gray-100" : "hover:bg-white"} z-20 transition-all ${props.dateSlot[0]} md:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 glow-blue-100 transform ${!isBeforeToday(props.day.setLocale("sv")) ? "hover:scale-110 hover:shadow-xl" : ""} motion-reduce:transform-none  ${isToday(props.day) ? "md:border-gray-200 border-opacity-50 border-2" : ""} transition-all transform h-9 rounded-full md:h-28 hover:z-50 md:rounded-md relative overflow-hidden md:overflow-x-hidden md:scrollbar-thumb-gray-500 md:scrollbar-thin scrollbar-track-gray-100`}>
+        <div onClick={handleClick} className={`${isBeforeToday(props.day) ? "md:bg-gray-100" : "hover:bg-white"} z-20 transition-all ${props.dateSlot[0]} md:bg-gray-50 glow-blue-100 transform ${!isBeforeToday(props.day.setLocale("sv")) ? "hover:scale-110 hover:shadow-xl" : ""} motion-reduce:transform-none  ${isToday(props.day) ? "md:border-gray-200 border-opacity-50 border-2" : ""} transition-all transform h-9 rounded-full md:h-28 hover:z-50 md:rounded-md relative overflow-hidden md:overflow-x-hidden md:scrollbar-thumb-gray-500 md:scrollbar-thin scrollbar-track-gray-100`}>
             {props.day.weekdayLong === "måndag" ? <span className="ml-2 md:inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-gray-100 bg-gray-600 rounded-md absolute top-2 right-0 hidden">{props.day.weekNumber}</span> : <></>}
             <div className="mt-2 md:mt-0">
-                <p className={`${isBeforeToday(props.day) ? "text-gray-300 md:text-gray-300" : ""} dark:text-gray-300 text-center md:text-left md:ml-2 mt-1 md:mt-0 text-xs md:text-lg`}>{props.day.day}</p>
+                <p className={`${isBeforeToday(props.day) ? "text-gray-300 md:text-gray-300" : ""} text-center md:text-left md:ml-2 mt-1 md:mt-0 text-xs md:text-lg`}>{props.day.day}</p>
             </div>
             <div className="hidden md:flex md:flex-col">
                 {props.dateSlot[0] && !isBeforeToday(props.day) ? <>
@@ -49,7 +46,9 @@ export const DayBox = (props: Props) => {
                 </>
                     : <></>}
             </div>
-            <div className={`h-2 w-2 ${props.dateSlot[0] && getBackgroundColorByDateSlot(props.dateSlot[0])}`}></div>
-        </div>
+            {props.dateSlot[0] && props.dateSlot[0].timeslots!.length === 1 && getTimeSlotType(props.dateSlot[0].timeslots[0]!) != "Träning" &&
+                <div className={`h-2 w-2 ${props.dateSlot[0] && getBackgroundColorByDateSlot(props.dateSlot[0])}`}></div>
+            }
+        </div >
     )
 }

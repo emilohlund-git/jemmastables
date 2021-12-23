@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { DateSlot, TimeSlot } from '../../generated/graphql'
 import { setTime } from '../../redux/actions'
 import { getBackgroundColorByTimeSlot } from '../../utils/calendar/getBackgroundColorByTimeSlot'
 import MobileBookTimeForm from './MobileBookTimeForm'
 
 interface AccordionProps {
-    timeslot: any
-    dateslot: any
+    timeslot: TimeSlot
+    dateslot: DateSlot
 }
 
 export const Accordion = (props: AccordionProps) => {
@@ -63,9 +64,9 @@ export const Accordion = (props: AccordionProps) => {
             <div
                 ref={contentSpace}
                 style={{ maxHeight: `${height}` }}
-                className="overflow-auto transition-max-height duration-700 ease-in-out"
+                className="overflow-auto scrollbar-none transition-max-height duration-700 ease-in-out"
             >
-                <MobileBookTimeForm />
+                <MobileBookTimeForm toggleAccordion={toggleAccordion} />
             </div>
         </div>
     )

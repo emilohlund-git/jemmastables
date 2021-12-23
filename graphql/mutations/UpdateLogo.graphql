@@ -1,0 +1,7 @@
+mutation UpdateLogo($where: LogoWhere, $update: LogoUpdateInput) {
+  updateLogos(where: $where, update: $update) {
+    logos {
+      image
+    }
+  }
+}

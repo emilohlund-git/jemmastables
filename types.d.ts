@@ -1,8 +1,12 @@
-declare module "instagram-web-api";
-declare module "xhr2";
-declare module "filereader";
+declare module 'instagram-web-api';
+declare module 'xhr2';
+declare module 'filereader';
 declare module 'uuid';
 declare module 'tailwindcss-glow';
+declare module 'bcryptjs';
+declare module 'debounce';
+declare module 'redux-persist/lib/storage/createWebStorage';
+declare module 'redux-persist/integration/react';
 
 interface Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;

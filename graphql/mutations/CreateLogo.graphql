@@ -1,0 +1,7 @@
+mutation CreateLogo($input: [LogoCreateInput!]!) {
+  createLogos(input: $input) {
+    logos {
+      image
+    }
+  }
+}

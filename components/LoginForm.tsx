@@ -1,6 +1,9 @@
 import React, { FormEvent, useState } from 'react'
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import '../utils/firebase/initApp';
+import { User, useUsersQuery } from '../generated/graphql';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAdmin } from '../redux/actions';
+import { setUser } from '../redux/actions';
 import { RootState } from '../redux/reducers';
 
 interface Props {
@@ -8,97 +11,76 @@ interface Props {
 }
 
 const LoginForm = (props: Props) => {
-    const admin: boolean = useSelector((state: RootState) => state.admin);
-    const dispatch = useDispatch();
+    const user: User = useSelector((state: RootState) => state.user);
     const [formState, setFormState] = useState({
+        email: '',
         password: '',
-        username: ''
-    });
+    })
 
-    const handleLogin = async (e: FormEvent) => {
+    const { data, loading } = useUsersQuery();
+    const dispatch = useDispatch();
+
+    const auth = getAuth();
+
+    const handleLogin = (e: FormEvent) => {
         e.preventDefault();
-
-        const requestOptions = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formState)
-        }
-
-        const response = await fetch('http://localhost:4000/login', requestOptions);
-        const data = await response.json();
-
-        if (data.status === 200) dispatch(setAdmin(true));
+        signInWithEmailAndPassword(auth, formState.email, formState.password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                dispatch(setUser(data!.users.find(u => u.email === user.email)));
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+                // ..
+            });
     }
 
-    const handleLogout = async (e: FormEvent) => {
-        e.preventDefault();
-
-        const requestOptions = {
-            method: "GET",
-        }
-
-        const response = await fetch('http://localhost:4000/logout', requestOptions);
-        const data = await response.json();
-
-        if (data.status === 200) dispatch(setAdmin(false));
+    const handleLogout = () => {
+        signOut(auth).then(() => {
+            dispatch(setUser(null));
+            // Sign-out successful.
+        }).catch((error) => {
+            // An error happened.
+        });
     }
 
     return (
-        <div className="flex flex-row items-center justify-center">
-            {!admin ?
-                <form onSubmit={handleLogin} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                    <h4 className="mv3">
-                        Logga in
-                    </h4>
-                    <div className="">
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-                                Användarnamn
-                            </label>
-                            <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text"
-                                value={formState.username}
-                                onChange={(e) =>
-                                    setFormState({
-                                        ...formState,
-                                        username: e.target.value
-                                    })
-                                }
-                                placeholder="Ditt namn"
-                            />
-                        </div>
-                        <div className="mb-6">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                                Lösenord
-                            </label>
-                            <input
-                                className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                                value={formState.password}
-                                onChange={(e) =>
-                                    setFormState({
-                                        ...formState,
-                                        password: e.target.value
-                                    })
-                                }
-                                type="password"
-                                placeholder="Ditt lösenord"
-                            />
+        <div className="flex flex-col bg-white pb-20">
+            <div className="flex flex-col self-center z-20 w-full px-2 md:w-8/12 pb-4 md:pb-20">
+                <div className="flex flex-col md:flex-col">
+                    <div className="mb-2 mt-4">
+                        <h1 className="text-black text-xl pl-2 md:text-4xl md:text-center"></h1>
+                    </div>
+                    <div className="flex justify-around md:justify-center items-center md:gap-0 mb-4 md:m-2">
+                        <div className="w-full h-12 flex justify-center items-center">
+                            <h1 className="text-black font-bold md:font-normal text-2xl text-center">{!user ? "logga in" : "hejpådig"}</h1>
                         </div>
                     </div>
-                    <div className="">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                            Logga in
-                        </button>
-                    </div>
-                </form>
-                :
-                <div className="bg-white text-center rounded px-8 pt-6 pb-8 mb-4">
-                    <h1 className="font-bold mb-4">Redan inloggad.</h1>
-                    <button onClick={handleLogout} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                        Logga ut
-                    </button>
                 </div>
-            }
+                <div className="flex flex-col justify-center items-center">
+                    {!user ?
+                        <form onSubmit={handleLogin} className="flex flex-col">
+                            <input className="shadow-sm transition-all outline-none bg-blue-50 appearance-none rounded-3xl px-4 py-2 mb-2 focus:ring-2 focus:ring-blue-400" value={formState.email} onChange={(e) => setFormState({
+                                ...formState,
+                                [e.target.name]: e.target.value
+                            })} name="email" type="email" placeholder="email" />
+                            <input className="shadow-sm transition-all outline-none bg-blue-50 appearance-none rounded-3xl px-4 py-2 mb-2 focus:ring-2 focus:ring-blue-400" value={formState.password} onChange={(e) => setFormState({
+                                ...formState,
+                                [e.target.name]: e.target.value
+                            })} name="password" type="password" placeholder="password" />
+                            <button className="shadow-sm bg-blue-400 text-white rounded-3xl py-2 text-sm" type="submit">Logga in</button>
+                        </form>
+                        :
+                        <form onSubmit={handleLogout} className="flex flex-col">
+                            <button className="shadow-sm bg-blue-400 w-48 text-white rounded-3xl px-4 py-2 text-sm">Logga ut</button>
+                        </form>
+                    }
+                </div>
+            </div>
         </div>
     )
 }

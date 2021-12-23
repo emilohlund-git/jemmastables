@@ -1,17 +1,22 @@
 import React from 'react';
+import { DateSlot, TimeSlot } from '../../generated/graphql';
 import { getTimeSlotType } from '../../utils/calendar/getTimeSlotType';
 import { Accordion } from './Accordion';
-import { TIMESLOT_TYPE } from '../../config/constants'
+import EmptyTimeSlot from './EmptyTimeSlot';
 
 interface Props {
-    timeslot: any
-    dateslot: any
+    timeslot: TimeSlot
+    dateslot: DateSlot
 }
 
 const MobileTimeSlots = (props: Props) => {
     return (
         <>
-            <Accordion timeslot={props.timeslot} dateslot={props.dateslot} />
+            {getTimeSlotType(props.timeslot) != "Träning" ?
+                <Accordion timeslot={props.timeslot} dateslot={props.dateslot} />
+                :
+                <EmptyTimeSlot />
+            }
         </>
     )
 }

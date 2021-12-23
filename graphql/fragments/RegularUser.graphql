@@ -1,4 +1,6 @@
 fragment RegularUser on User {
+  id
+  password
   name
   phonenumber
   email

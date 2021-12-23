@@ -1,19 +1,60 @@
-import React, { FormEvent, useState } from 'react'
+import { DateTime } from 'luxon';
+import React, { FormEvent } from 'react';
 import { FiMail, FiPhone, FiUser } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
+import { User, useUpdateUsersMutation } from '../../generated/graphql';
+import { RootState } from '../../redux/reducers';
 
 interface Props {
-
+    toggleAccordion: any
 }
 
 const MobileBookTimeForm = (props: Props) => {
-    const [formState, setFormState] = useState({
-        name: '',
-        phonenumber: '',
-        email: ''
-    });
+    const user: User = useSelector((state: RootState) => state.user);
+    const date: DateTime = useSelector((state: RootState) => state.date);
+    const time: {
+        to: string,
+        from: string
+    } = useSelector((state: RootState) => state.time);
 
-    const handleSubmit = (e: FormEvent) => {
+    const [UpdateUser] = useUpdateUsersMutation();
+
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        const { errors } = await UpdateUser({
+            variables: {
+                where: {
+                    email: user.email
+                },
+                update: {
+                    timeslots: [
+                        {
+                            connect: [
+                                {
+                                    where: {
+                                        node: {
+                                            to: time.to,
+                                            from: time.from,
+                                            date: {
+                                                date: date.toSQLDate()
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            update: (cache) => {
+                cache.evict({ fieldName: "dateSlots" });
+                cache.evict({ fieldName: "users" })
+            }
+        });
+
+        if (!errors) {
+            props.toggleAccordion();
+        }
     }
 
     return (
@@ -21,33 +62,16 @@ const MobileBookTimeForm = (props: Props) => {
             <form onSubmit={handleSubmit} className={`transition transform origin-top duration-100 ease-in-out}`}>
                 <div className="flex flex-row items-center mt-4 mb-6">
                     <FiUser className="text-gray-500 mr-2" />
-                    <input value={formState.name}
-                        onChange={(e) =>
-                            setFormState({
-                                ...formState,
-                                name: e.target.value
-                            })
-                        } name="name" required className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none transition text-sm" type="text" placeholder="Namn" />
+                    <input value={user.name}
+                        name="name" disabled className="w-full appearance-none bg-transparent text-gray-500 mr-2 py-1 px-2 leading-tight focus:outline-none transition text-sm" type="text" placeholder="Namn" />
                 </div>
                 <div className="flex flex-row items-center mb-6">
                     <FiPhone className="text-gray-500 mr-2" />
-                    <input value={formState.phonenumber}
-                        onChange={(e) =>
-                            setFormState({
-                                ...formState,
-                                phonenumber: e.target.value
-                            })
-                        } name="phonenumber" required className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none transition text-sm" type="text" placeholder="Telefonnummer" />
+                    <input value={user.phonenumber} name="phonenumber" disabled className="w-full appearance-none bg-transparent text-gray-500 mr-2 py-1 px-2 leading-tight focus:outline-none transition text-sm" type="text" placeholder="Telefonnummer" />
                 </div>
                 <div className="flex flex-row items-center mb-3">
                     <FiMail className="text-gray-500 mr-2" />
-                    <input value={formState.email}
-                        onChange={(e) =>
-                            setFormState({
-                                ...formState,
-                                email: e.target.value
-                            })
-                        } name="email" required className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none transition text-sm" type="email" placeholder="Epost" />
+                    <input value={user.email} name="email" disabled className="w-full appearance-none bg-transparent text-gray-500 mr-2 py-1 px-2 leading-tight focus:outline-none transition text-sm" type="email" placeholder="Epost" />
                 </div>
                 <div className="flex w-full justify-end">
                     <button className="transition-all w-full bg-gray-900 text-white font-bold py-2 px-4 border-none rounded-md mt-4">

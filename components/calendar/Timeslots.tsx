@@ -22,6 +22,6 @@ export const Timeslot = (props: Props) => {
     }
 
     return (
-        <div onClick={handleClick} className={`cursor-pointer mt-1 h-1 md:h-5 w-full transition-all transform ${props.type == "Självhushållning" ? "bg-blue-100 hover:bg-blue-200 dark:bg-blue-300" : ""} ${props.type == "Träning" ? "bg-red-100 hover:bg-red-200 dark:bg-red-300" : ""} ${props.type == "Öppen bana" ? "bg-green-100 hover:bg-green-200 dark:bg-green-300" : ""} rounded-full hover:scale-110 dark:text-black text-xs text-center`}><p className="leading-5">{props.from + " - " + props.to}</p></div>
+        <div onClick={handleClick} className={`cursor-pointer mt-1 h-1 md:h-5 w-full transition-all transform ${props.type == "Självhushållning" ? "bg-blue-100 hover:bg-blue-200" : ""} ${props.type == "Träning" ? "bg-red-100 hover:bg-red-200" : ""} ${props.type == "Öppen bana" ? "bg-green-100 hover:bg-green-200" : ""} rounded-full hover:scale-110 text-xs text-center`}><p className="leading-5">{props.from + " - " + props.to}</p></div>
     )
 }

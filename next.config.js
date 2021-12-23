@@ -6,7 +6,7 @@ module.exports = {
   },
   defaultLocale: 'sv',
   images: {
-    domains: ['instagram.fmmx1-1.fna.fbcdn.net'],
+    domains: ['instagram.fmmx1-1.fna.fbcdn.net', 'jemmastables-bucket.s3.amazonaws.com'],
   },
   async rewrites() {
     return [

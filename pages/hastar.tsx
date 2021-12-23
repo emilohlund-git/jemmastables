@@ -14,4 +14,4 @@ const hästar = (props: Props) => {
     )
 }
 
-export default withApollo({ ssr: false })(hästar)
+export default hästar

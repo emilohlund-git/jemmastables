@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import darkmodeReducer from './darkmode';
 import dateReducer from './date';
 import isAuthenticatedReducer from './isAuthenticated';
 import isOpenReducer from './isOpen';
@@ -7,16 +6,17 @@ import typeReducer from './type';
 import adminReducer from './admin';
 import bookingIsOpenReducer from './bookingIsOpen';
 import timeReducer from './time';
+import userReducer from './user';
 
 const appReducer = combineReducers({
   authenticated: isAuthenticatedReducer,
   date: dateReducer,
   isOpen: isOpenReducer,
-  darkmode: darkmodeReducer,
   type: typeReducer,
   admin: adminReducer,
   bookingIsOpen: bookingIsOpenReducer,
   time: timeReducer,
+  user: userReducer,
 });
 
 const rootReducer = (state: any, action: any) => {

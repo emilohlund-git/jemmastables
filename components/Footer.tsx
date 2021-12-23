@@ -10,16 +10,7 @@ interface Props {
 }
 
 const Footer = (props: Props) => {
-    const { theme, setTheme } = useTheme();
     const dispatch = useDispatch();
-    useEffect(() => {
-        if (theme == "dark") {
-            dispatch(setDarkmode(true));
-        } else {
-            dispatch(setDarkmode(false));
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [theme])
     return (
         <div>
             <footer id="footer" className="relative z-20 dark:bg-gray-900">
@@ -82,12 +73,6 @@ const Footer = (props: Props) => {
                                             </div>
                                         </a>
                                     </div>
-                                    <div className="relative w-36">
-                                        <select value={theme} onChange={(e) => setTheme(e.target.value)} className="w-full focus:outline-none text-center py-2 appearance-none bg-white flex items-center h-12 border rounded border-gray-700 dark:border-gray-50 text-sm leading-5 dark:bg-gray-900 dark:text-gray-50">
-                                            <option value="light">Light</option>
-                                            <option value="dark">Dark</option>
-                                        </select>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +81,7 @@ const Footer = (props: Props) => {
                 <div className="py-16 flex flex-col justify-center items-center">
                     <Link href="#">
                         <a>
-                            <Image src={`${theme == "dark" ? "/images/jemmastables-logo-vit.png" : "/images/jemmastables-logo.png"}`} alt="Jemmastables Logo" width={200} height={200} />
+                            <Image src={`/images/jemmastables-logo.png`} alt="Jemmastables Logo" width={200} height={200} />
                         </a>
                     </Link>
                     <p className="mt-6 text-xs lg:text-sm leading-none text-gray-900 dark:text-gray-50">{new Date().getFullYear()} Jemmastables. All Rights Reserved.</p>

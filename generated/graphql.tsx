@@ -74,9 +74,68 @@ export type AdminWhere = {
   username_STARTS_WITH?: InputMaybe<Scalars['String']>;
 };
 
+export type Component = {
+  __typename?: 'Component';
+  images?: Maybe<Array<Maybe<Scalars['String']>>>;
+  name: Scalars['String'];
+};
+
+export type ComponentAggregateSelection = {
+  __typename?: 'ComponentAggregateSelection';
+  count: Scalars['Int'];
+  name: StringAggregateSelection;
+};
+
+export type ComponentCreateInput = {
+  images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name: Scalars['String'];
+};
+
+export type ComponentOptions = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  /** Specify one or more ComponentSort objects to sort Components by. The sorts will be applied in the order in which they are arranged in the array. */
+  sort?: InputMaybe<Array<InputMaybe<ComponentSort>>>;
+};
+
+/** Fields to sort Components by. The order in which sorts are applied is not guaranteed when specifying many fields in one ComponentSort object. */
+export type ComponentSort = {
+  name?: InputMaybe<SortDirection>;
+};
+
+export type ComponentUpdateInput = {
+  images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type ComponentWhere = {
+  AND?: InputMaybe<Array<ComponentWhere>>;
+  OR?: InputMaybe<Array<ComponentWhere>>;
+  images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  images_INCLUDES?: InputMaybe<Scalars['String']>;
+  images_NOT?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  images_NOT_INCLUDES?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  name_CONTAINS?: InputMaybe<Scalars['String']>;
+  name_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  name_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name_NOT?: InputMaybe<Scalars['String']>;
+  name_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  name_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  name_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  name_STARTS_WITH?: InputMaybe<Scalars['String']>;
+};
+
 export type CreateAdminsMutationResponse = {
   __typename?: 'CreateAdminsMutationResponse';
   admins: Array<Admin>;
+  info: CreateInfo;
+};
+
+export type CreateComponentsMutationResponse = {
+  __typename?: 'CreateComponentsMutationResponse';
+  components: Array<Component>;
   info: CreateInfo;
 };
 
@@ -109,6 +168,18 @@ export type CreateInfo = {
   bookmark?: Maybe<Scalars['String']>;
   nodesCreated: Scalars['Int'];
   relationshipsCreated: Scalars['Int'];
+};
+
+export type CreateLogosMutationResponse = {
+  __typename?: 'CreateLogosMutationResponse';
+  info: CreateInfo;
+  logos: Array<Logo>;
+};
+
+export type CreatePagesMutationResponse = {
+  __typename?: 'CreatePagesMutationResponse';
+  info: CreateInfo;
+  pages: Array<Page>;
 };
 
 export type CreatePartnersMutationResponse = {
@@ -170,10 +241,6 @@ export type DateSlotAggregateSelection = {
 
 export type DateSlotConnectInput = {
   timeslots?: InputMaybe<Array<DateSlotTimeslotsConnectFieldInput>>;
-};
-
-export type DateSlotConnectOrCreateWhere = {
-  node: DateSlotUniqueWhere;
 };
 
 export type DateSlotConnectWhere = {
@@ -338,10 +405,6 @@ export type DateSlotTimeslotsUpdateFieldInput = {
   where?: InputMaybe<DateSlotTimeslotsConnectionWhere>;
 };
 
-export type DateSlotUniqueWhere = {
-  date?: InputMaybe<Scalars['String']>;
-};
-
 export type DateSlotUpdateInput = {
   date?: InputMaybe<Scalars['String']>;
   timeslots?: InputMaybe<Array<DateSlotTimeslotsUpdateFieldInput>>;
@@ -452,6 +515,7 @@ export type Horse = {
   color: Scalars['String'];
   gender: Scalars['String'];
   images: Array<Maybe<Scalars['String']>>;
+  movie?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   nickname?: Maybe<Scalars['String']>;
   owner: Scalars['String'];
@@ -483,6 +547,7 @@ export type HorseAggregateSelection = {
   color: StringAggregateSelection;
   count: Scalars['Int'];
   gender: StringAggregateSelection;
+  movie: StringAggregateSelection;
   name: StringAggregateSelection;
   nickname: StringAggregateSelection;
   owner: StringAggregateSelection;
@@ -494,6 +559,7 @@ export type HorseCategory = {
   horses?: Maybe<Array<Maybe<Horse>>>;
   horsesAggregate?: Maybe<HorseCategoryHorseHorsesAggregationSelection>;
   horsesConnection: HorseCategoryHorsesConnection;
+  image: Scalars['String'];
 };
 
 
@@ -530,6 +596,7 @@ export type HorseCategoryAggregateSelection = {
   __typename?: 'HorseCategoryAggregateSelection';
   category: StringAggregateSelection;
   count: Scalars['Int'];
+  image: StringAggregateSelection;
 };
 
 export type HorseCategoryConnectFieldInput = {
@@ -539,19 +606,6 @@ export type HorseCategoryConnectFieldInput = {
 
 export type HorseCategoryConnectInput = {
   horses?: InputMaybe<Array<HorseCategoryHorsesConnectFieldInput>>;
-};
-
-export type HorseCategoryConnectOrCreateFieldInput = {
-  onCreate: HorseCategoryConnectOrCreateFieldInputOnCreate;
-  where: HorseCategoryConnectOrCreateWhere;
-};
-
-export type HorseCategoryConnectOrCreateFieldInputOnCreate = {
-  node: HorseCategoryCreateInput;
-};
-
-export type HorseCategoryConnectOrCreateWhere = {
-  node: HorseCategoryUniqueWhere;
 };
 
 export type HorseCategoryConnectWhere = {
@@ -583,6 +637,7 @@ export type HorseCategoryCreateFieldInput = {
 export type HorseCategoryCreateInput = {
   category: Scalars['String'];
   horses?: InputMaybe<HorseCategoryHorsesFieldInput>;
+  image: Scalars['String'];
 };
 
 export type HorseCategoryDeleteFieldInput = {
@@ -605,7 +660,6 @@ export type HorseCategoryDisconnectInput = {
 
 export type HorseCategoryFieldInput = {
   connect?: InputMaybe<HorseCategoryConnectFieldInput>;
-  connectOrCreate?: InputMaybe<HorseCategoryConnectOrCreateFieldInput>;
   create?: InputMaybe<HorseCategoryCreateFieldInput>;
 };
 
@@ -621,6 +675,7 @@ export type HorseCategoryHorseHorsesNodeAggregateSelection = {
   birthyear: StringAggregateSelection;
   color: StringAggregateSelection;
   gender: StringAggregateSelection;
+  movie: StringAggregateSelection;
   name: StringAggregateSelection;
   nickname: StringAggregateSelection;
   owner: StringAggregateSelection;
@@ -762,6 +817,26 @@ export type HorseCategoryHorsesNodeAggregationWhereInput = {
   gender_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
   gender_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
   gender_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  movie_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  movie_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  movie_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  movie_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  movie_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  movie_EQUAL?: InputMaybe<Scalars['String']>;
+  movie_GT?: InputMaybe<Scalars['Int']>;
+  movie_GTE?: InputMaybe<Scalars['Int']>;
+  movie_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  movie_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  movie_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  movie_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  movie_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  movie_LT?: InputMaybe<Scalars['Int']>;
+  movie_LTE?: InputMaybe<Scalars['Int']>;
+  movie_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  movie_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  movie_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  movie_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  movie_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
   name_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
   name_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
   name_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
@@ -866,6 +941,26 @@ export type HorseCategoryNodeAggregationWhereInput = {
   category_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
   category_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
   category_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  image_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  image_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  image_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  image_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  image_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  image_EQUAL?: InputMaybe<Scalars['String']>;
+  image_GT?: InputMaybe<Scalars['Int']>;
+  image_GTE?: InputMaybe<Scalars['Int']>;
+  image_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  image_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  image_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  image_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  image_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  image_LT?: InputMaybe<Scalars['Int']>;
+  image_LTE?: InputMaybe<Scalars['Int']>;
+  image_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  image_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  image_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  image_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  image_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
 };
 
 export type HorseCategoryOptions = {
@@ -888,10 +983,7 @@ export type HorseCategoryRelationship = {
 /** Fields to sort HorseCategories by. The order in which sorts are applied is not guaranteed when specifying many fields in one HorseCategorySort object. */
 export type HorseCategorySort = {
   category?: InputMaybe<SortDirection>;
-};
-
-export type HorseCategoryUniqueWhere = {
-  category?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<SortDirection>;
 };
 
 export type HorseCategoryUpdateConnectionInput = {
@@ -900,7 +992,6 @@ export type HorseCategoryUpdateConnectionInput = {
 
 export type HorseCategoryUpdateFieldInput = {
   connect?: InputMaybe<HorseCategoryConnectFieldInput>;
-  connectOrCreate?: InputMaybe<HorseCategoryConnectOrCreateFieldInput>;
   create?: InputMaybe<HorseCategoryCreateFieldInput>;
   delete?: InputMaybe<HorseCategoryDeleteFieldInput>;
   disconnect?: InputMaybe<HorseCategoryDisconnectFieldInput>;
@@ -911,6 +1002,7 @@ export type HorseCategoryUpdateFieldInput = {
 export type HorseCategoryUpdateInput = {
   category?: InputMaybe<Scalars['String']>;
   horses?: InputMaybe<Array<HorseCategoryHorsesUpdateFieldInput>>;
+  image?: InputMaybe<Scalars['String']>;
 };
 
 export type HorseCategoryWhere = {
@@ -931,14 +1023,20 @@ export type HorseCategoryWhere = {
   horsesConnection?: InputMaybe<HorseCategoryHorsesConnectionWhere>;
   horsesConnection_NOT?: InputMaybe<HorseCategoryHorsesConnectionWhere>;
   horses_NOT?: InputMaybe<HorseWhere>;
+  image?: InputMaybe<Scalars['String']>;
+  image_CONTAINS?: InputMaybe<Scalars['String']>;
+  image_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  image_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  image_NOT?: InputMaybe<Scalars['String']>;
+  image_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  image_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  image_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  image_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  image_STARTS_WITH?: InputMaybe<Scalars['String']>;
 };
 
 export type HorseConnectInput = {
   category?: InputMaybe<HorseCategoryConnectFieldInput>;
-};
-
-export type HorseConnectOrCreateInput = {
-  category?: InputMaybe<HorseCategoryConnectOrCreateFieldInput>;
 };
 
 export type HorseConnectWhere = {
@@ -952,6 +1050,7 @@ export type HorseCreateInput = {
   color: Scalars['String'];
   gender: Scalars['String'];
   images: Array<InputMaybe<Scalars['String']>>;
+  movie?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   nickname?: InputMaybe<Scalars['String']>;
   owner: Scalars['String'];
@@ -974,6 +1073,7 @@ export type HorseHorseCategoryCategoryAggregationSelection = {
 export type HorseHorseCategoryCategoryNodeAggregateSelection = {
   __typename?: 'HorseHorseCategoryCategoryNodeAggregateSelection';
   category: StringAggregateSelection;
+  image: StringAggregateSelection;
 };
 
 export type HorseOptions = {
@@ -993,6 +1093,7 @@ export type HorseSort = {
   birthyear?: InputMaybe<SortDirection>;
   color?: InputMaybe<SortDirection>;
   gender?: InputMaybe<SortDirection>;
+  movie?: InputMaybe<SortDirection>;
   name?: InputMaybe<SortDirection>;
   nickname?: InputMaybe<SortDirection>;
   owner?: InputMaybe<SortDirection>;
@@ -1005,6 +1106,7 @@ export type HorseUpdateInput = {
   color?: InputMaybe<Scalars['String']>;
   gender?: InputMaybe<Scalars['String']>;
   images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  movie?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
   owner?: InputMaybe<Scalars['String']>;
@@ -1062,6 +1164,16 @@ export type HorseWhere = {
   images_INCLUDES?: InputMaybe<Scalars['String']>;
   images_NOT?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   images_NOT_INCLUDES?: InputMaybe<Scalars['String']>;
+  movie?: InputMaybe<Scalars['String']>;
+  movie_CONTAINS?: InputMaybe<Scalars['String']>;
+  movie_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  movie_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  movie_NOT?: InputMaybe<Scalars['String']>;
+  movie_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  movie_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  movie_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  movie_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  movie_STARTS_WITH?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   name_CONTAINS?: InputMaybe<Scalars['String']>;
   name_ENDS_WITH?: InputMaybe<Scalars['String']>;
@@ -1100,31 +1212,86 @@ export type IdAggregateSelection = {
   shortest?: Maybe<Scalars['ID']>;
 };
 
+export type Logo = {
+  __typename?: 'Logo';
+  image: Scalars['String'];
+};
+
+export type LogoAggregateSelection = {
+  __typename?: 'LogoAggregateSelection';
+  count: Scalars['Int'];
+  image: StringAggregateSelection;
+};
+
+export type LogoCreateInput = {
+  image: Scalars['String'];
+};
+
+export type LogoOptions = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  /** Specify one or more LogoSort objects to sort Logos by. The sorts will be applied in the order in which they are arranged in the array. */
+  sort?: InputMaybe<Array<InputMaybe<LogoSort>>>;
+};
+
+/** Fields to sort Logos by. The order in which sorts are applied is not guaranteed when specifying many fields in one LogoSort object. */
+export type LogoSort = {
+  image?: InputMaybe<SortDirection>;
+};
+
+export type LogoUpdateInput = {
+  image?: InputMaybe<Scalars['String']>;
+};
+
+export type LogoWhere = {
+  AND?: InputMaybe<Array<LogoWhere>>;
+  OR?: InputMaybe<Array<LogoWhere>>;
+  image?: InputMaybe<Scalars['String']>;
+  image_CONTAINS?: InputMaybe<Scalars['String']>;
+  image_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  image_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  image_NOT?: InputMaybe<Scalars['String']>;
+  image_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  image_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  image_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  image_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  image_STARTS_WITH?: InputMaybe<Scalars['String']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createAdmins: CreateAdminsMutationResponse;
+  createComponents: CreateComponentsMutationResponse;
   createDateSlots: CreateDateSlotsMutationResponse;
   createFacilities: CreateFacilitiesMutationResponse;
   createHorseCategories: CreateHorseCategoriesMutationResponse;
   createHorses: CreateHorsesMutationResponse;
+  createLogos: CreateLogosMutationResponse;
+  createPages: CreatePagesMutationResponse;
   createPartners: CreatePartnersMutationResponse;
   createTimeSlotTypes: CreateTimeSlotTypesMutationResponse;
   createTimeSlots: CreateTimeSlotsMutationResponse;
   createUsers: CreateUsersMutationResponse;
   deleteAdmins: DeleteInfo;
+  deleteComponents: DeleteInfo;
   deleteDateSlots: DeleteInfo;
   deleteFacilities: DeleteInfo;
   deleteHorseCategories: DeleteInfo;
   deleteHorses: DeleteInfo;
+  deleteLogos: DeleteInfo;
+  deletePages: DeleteInfo;
   deletePartners: DeleteInfo;
   deleteTimeSlotTypes: DeleteInfo;
   deleteTimeSlots: DeleteInfo;
   deleteUsers: DeleteInfo;
   updateAdmins: UpdateAdminsMutationResponse;
+  updateComponents: UpdateComponentsMutationResponse;
   updateDateSlots: UpdateDateSlotsMutationResponse;
   updateFacilities: UpdateFacilitiesMutationResponse;
   updateHorseCategories: UpdateHorseCategoriesMutationResponse;
   updateHorses: UpdateHorsesMutationResponse;
+  updateLogos: UpdateLogosMutationResponse;
+  updatePages: UpdatePagesMutationResponse;
   updatePartners: UpdatePartnersMutationResponse;
   updateTimeSlotTypes: UpdateTimeSlotTypesMutationResponse;
   updateTimeSlots: UpdateTimeSlotsMutationResponse;
@@ -1134,6 +1301,11 @@ export type Mutation = {
 
 export type MutationCreateAdminsArgs = {
   input: Array<AdminCreateInput>;
+};
+
+
+export type MutationCreateComponentsArgs = {
+  input: Array<ComponentCreateInput>;
 };
 
 
@@ -1154,6 +1326,16 @@ export type MutationCreateHorseCategoriesArgs = {
 
 export type MutationCreateHorsesArgs = {
   input: Array<HorseCreateInput>;
+};
+
+
+export type MutationCreateLogosArgs = {
+  input: Array<LogoCreateInput>;
+};
+
+
+export type MutationCreatePagesArgs = {
+  input: Array<PageCreateInput>;
 };
 
 
@@ -1182,6 +1364,11 @@ export type MutationDeleteAdminsArgs = {
 };
 
 
+export type MutationDeleteComponentsArgs = {
+  where?: InputMaybe<ComponentWhere>;
+};
+
+
 export type MutationDeleteDateSlotsArgs = {
   delete?: InputMaybe<DateSlotDeleteInput>;
   where?: InputMaybe<DateSlotWhere>;
@@ -1202,6 +1389,16 @@ export type MutationDeleteHorseCategoriesArgs = {
 export type MutationDeleteHorsesArgs = {
   delete?: InputMaybe<HorseDeleteInput>;
   where?: InputMaybe<HorseWhere>;
+};
+
+
+export type MutationDeleteLogosArgs = {
+  where?: InputMaybe<LogoWhere>;
+};
+
+
+export type MutationDeletePagesArgs = {
+  where?: InputMaybe<PageWhere>;
 };
 
 
@@ -1234,6 +1431,12 @@ export type MutationUpdateAdminsArgs = {
 };
 
 
+export type MutationUpdateComponentsArgs = {
+  update?: InputMaybe<ComponentUpdateInput>;
+  where?: InputMaybe<ComponentWhere>;
+};
+
+
 export type MutationUpdateDateSlotsArgs = {
   connect?: InputMaybe<DateSlotConnectInput>;
   create?: InputMaybe<DateSlotRelationInput>;
@@ -1262,12 +1465,23 @@ export type MutationUpdateHorseCategoriesArgs = {
 
 export type MutationUpdateHorsesArgs = {
   connect?: InputMaybe<HorseConnectInput>;
-  connectOrCreate?: InputMaybe<HorseConnectOrCreateInput>;
   create?: InputMaybe<HorseRelationInput>;
   delete?: InputMaybe<HorseDeleteInput>;
   disconnect?: InputMaybe<HorseDisconnectInput>;
   update?: InputMaybe<HorseUpdateInput>;
   where?: InputMaybe<HorseWhere>;
+};
+
+
+export type MutationUpdateLogosArgs = {
+  update?: InputMaybe<LogoUpdateInput>;
+  where?: InputMaybe<LogoWhere>;
+};
+
+
+export type MutationUpdatePagesArgs = {
+  update?: InputMaybe<PageUpdateInput>;
+  where?: InputMaybe<PageWhere>;
 };
 
 
@@ -1307,6 +1521,26 @@ export type MutationUpdateUsersArgs = {
   where?: InputMaybe<UserWhere>;
 };
 
+export type Page = {
+  __typename?: 'Page';
+  content?: Maybe<Scalars['String']>;
+  images?: Maybe<Array<Maybe<Scalars['String']>>>;
+  name: Scalars['String'];
+};
+
+export type PageAggregateSelection = {
+  __typename?: 'PageAggregateSelection';
+  content: StringAggregateSelection;
+  count: Scalars['Int'];
+  name: StringAggregateSelection;
+};
+
+export type PageCreateInput = {
+  content?: InputMaybe<Scalars['String']>;
+  images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name: Scalars['String'];
+};
+
 /** Pagination information (Relay) */
 export type PageInfo = {
   __typename?: 'PageInfo';
@@ -1314,6 +1548,54 @@ export type PageInfo = {
   hasNextPage: Scalars['Boolean'];
   hasPreviousPage: Scalars['Boolean'];
   startCursor?: Maybe<Scalars['String']>;
+};
+
+export type PageOptions = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  /** Specify one or more PageSort objects to sort Pages by. The sorts will be applied in the order in which they are arranged in the array. */
+  sort?: InputMaybe<Array<InputMaybe<PageSort>>>;
+};
+
+/** Fields to sort Pages by. The order in which sorts are applied is not guaranteed when specifying many fields in one PageSort object. */
+export type PageSort = {
+  content?: InputMaybe<SortDirection>;
+  name?: InputMaybe<SortDirection>;
+};
+
+export type PageUpdateInput = {
+  content?: InputMaybe<Scalars['String']>;
+  images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type PageWhere = {
+  AND?: InputMaybe<Array<PageWhere>>;
+  OR?: InputMaybe<Array<PageWhere>>;
+  content?: InputMaybe<Scalars['String']>;
+  content_CONTAINS?: InputMaybe<Scalars['String']>;
+  content_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  content_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  content_NOT?: InputMaybe<Scalars['String']>;
+  content_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  content_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  content_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  content_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  content_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  images_INCLUDES?: InputMaybe<Scalars['String']>;
+  images_NOT?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  images_NOT_INCLUDES?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  name_CONTAINS?: InputMaybe<Scalars['String']>;
+  name_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  name_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name_NOT?: InputMaybe<Scalars['String']>;
+  name_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  name_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  name_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  name_STARTS_WITH?: InputMaybe<Scalars['String']>;
 };
 
 export type Partners = {
@@ -1412,6 +1694,9 @@ export type Query = {
   admins: Array<Admin>;
   adminsAggregate: AdminAggregateSelection;
   adminsCount: Scalars['Int'];
+  components: Array<Component>;
+  componentsAggregate: ComponentAggregateSelection;
+  componentsCount: Scalars['Int'];
   dateSlots: Array<DateSlot>;
   dateSlotsAggregate: DateSlotAggregateSelection;
   dateSlotsCount: Scalars['Int'];
@@ -1424,6 +1709,12 @@ export type Query = {
   horses: Array<Horse>;
   horsesAggregate: HorseAggregateSelection;
   horsesCount: Scalars['Int'];
+  logos: Array<Logo>;
+  logosAggregate: LogoAggregateSelection;
+  logosCount: Scalars['Int'];
+  pages: Array<Page>;
+  pagesAggregate: PageAggregateSelection;
+  pagesCount: Scalars['Int'];
   partners: Array<Partners>;
   partnersAggregate: PartnersAggregateSelection;
   partnersCount: Scalars['Int'];
@@ -1452,6 +1743,22 @@ export type QueryAdminsAggregateArgs = {
 
 export type QueryAdminsCountArgs = {
   where?: InputMaybe<AdminWhere>;
+};
+
+
+export type QueryComponentsArgs = {
+  options?: InputMaybe<ComponentOptions>;
+  where?: InputMaybe<ComponentWhere>;
+};
+
+
+export type QueryComponentsAggregateArgs = {
+  where?: InputMaybe<ComponentWhere>;
+};
+
+
+export type QueryComponentsCountArgs = {
+  where?: InputMaybe<ComponentWhere>;
 };
 
 
@@ -1516,6 +1823,38 @@ export type QueryHorsesAggregateArgs = {
 
 export type QueryHorsesCountArgs = {
   where?: InputMaybe<HorseWhere>;
+};
+
+
+export type QueryLogosArgs = {
+  options?: InputMaybe<LogoOptions>;
+  where?: InputMaybe<LogoWhere>;
+};
+
+
+export type QueryLogosAggregateArgs = {
+  where?: InputMaybe<LogoWhere>;
+};
+
+
+export type QueryLogosCountArgs = {
+  where?: InputMaybe<LogoWhere>;
+};
+
+
+export type QueryPagesArgs = {
+  options?: InputMaybe<PageOptions>;
+  where?: InputMaybe<PageWhere>;
+};
+
+
+export type QueryPagesAggregateArgs = {
+  where?: InputMaybe<PageWhere>;
+};
+
+
+export type QueryPagesCountArgs = {
+  where?: InputMaybe<PageWhere>;
 };
 
 
@@ -1681,8 +2020,7 @@ export type TimeSlotConnectInput = {
 };
 
 export type TimeSlotConnectOrCreateInput = {
-  date?: InputMaybe<TimeSlotDateConnectOrCreateFieldInput>;
-  type?: InputMaybe<TimeSlotTypeConnectOrCreateFieldInput>;
+  users?: InputMaybe<TimeSlotUsersConnectOrCreateFieldInput>;
 };
 
 export type TimeSlotConnectWhere = {
@@ -1711,15 +2049,6 @@ export type TimeSlotDateAggregateInput = {
 export type TimeSlotDateConnectFieldInput = {
   connect?: InputMaybe<DateSlotConnectInput>;
   where?: InputMaybe<DateSlotConnectWhere>;
-};
-
-export type TimeSlotDateConnectOrCreateFieldInput = {
-  onCreate: TimeSlotDateConnectOrCreateFieldInputOnCreate;
-  where: DateSlotConnectOrCreateWhere;
-};
-
-export type TimeSlotDateConnectOrCreateFieldInputOnCreate = {
-  node: DateSlotCreateInput;
 };
 
 export type TimeSlotDateConnection = {
@@ -1756,7 +2085,6 @@ export type TimeSlotDateDisconnectFieldInput = {
 
 export type TimeSlotDateFieldInput = {
   connect?: InputMaybe<TimeSlotDateConnectFieldInput>;
-  connectOrCreate?: InputMaybe<TimeSlotDateConnectOrCreateFieldInput>;
   create?: InputMaybe<TimeSlotDateCreateFieldInput>;
 };
 
@@ -1808,7 +2136,6 @@ export type TimeSlotDateUpdateConnectionInput = {
 
 export type TimeSlotDateUpdateFieldInput = {
   connect?: InputMaybe<TimeSlotDateConnectFieldInput>;
-  connectOrCreate?: InputMaybe<TimeSlotDateConnectOrCreateFieldInput>;
   create?: InputMaybe<TimeSlotDateCreateFieldInput>;
   delete?: InputMaybe<TimeSlotDateDeleteFieldInput>;
   disconnect?: InputMaybe<TimeSlotDateDisconnectFieldInput>;
@@ -1911,19 +2238,6 @@ export type TimeSlotTypeConnectInput = {
   timeslot?: InputMaybe<Array<TimeSlotTypeTimeslotConnectFieldInput>>;
 };
 
-export type TimeSlotTypeConnectOrCreateFieldInput = {
-  onCreate: TimeSlotTypeConnectOrCreateFieldInputOnCreate;
-  where: TimeSlotTypeConnectOrCreateWhere;
-};
-
-export type TimeSlotTypeConnectOrCreateFieldInputOnCreate = {
-  node: TimeSlotTypeCreateInput;
-};
-
-export type TimeSlotTypeConnectOrCreateWhere = {
-  node: TimeSlotTypeUniqueWhere;
-};
-
 export type TimeSlotTypeConnectWhere = {
   node: TimeSlotTypeWhere;
 };
@@ -1975,7 +2289,6 @@ export type TimeSlotTypeDisconnectInput = {
 
 export type TimeSlotTypeFieldInput = {
   connect?: InputMaybe<TimeSlotTypeConnectFieldInput>;
-  connectOrCreate?: InputMaybe<TimeSlotTypeConnectOrCreateFieldInput>;
   create?: InputMaybe<TimeSlotTypeCreateFieldInput>;
 };
 
@@ -2155,17 +2468,12 @@ export type TimeSlotTypeTimeslotUpdateFieldInput = {
   where?: InputMaybe<TimeSlotTypeTimeslotConnectionWhere>;
 };
 
-export type TimeSlotTypeUniqueWhere = {
-  type?: InputMaybe<Scalars['String']>;
-};
-
 export type TimeSlotTypeUpdateConnectionInput = {
   node?: InputMaybe<TimeSlotTypeUpdateInput>;
 };
 
 export type TimeSlotTypeUpdateFieldInput = {
   connect?: InputMaybe<TimeSlotTypeConnectFieldInput>;
-  connectOrCreate?: InputMaybe<TimeSlotTypeConnectOrCreateFieldInput>;
   create?: InputMaybe<TimeSlotTypeCreateFieldInput>;
   delete?: InputMaybe<TimeSlotTypeDeleteFieldInput>;
   disconnect?: InputMaybe<TimeSlotTypeDisconnectFieldInput>;
@@ -2215,7 +2523,9 @@ export type TimeSlotUserUsersAggregationSelection = {
 export type TimeSlotUserUsersNodeAggregateSelection = {
   __typename?: 'TimeSlotUserUsersNodeAggregateSelection';
   email: StringAggregateSelection;
+  id: IdAggregateSelection;
   name: StringAggregateSelection;
+  password: StringAggregateSelection;
   phonenumber: StringAggregateSelection;
 };
 
@@ -2233,6 +2543,15 @@ export type TimeSlotUsersAggregateInput = {
 export type TimeSlotUsersConnectFieldInput = {
   connect?: InputMaybe<UserConnectInput>;
   where?: InputMaybe<UserConnectWhere>;
+};
+
+export type TimeSlotUsersConnectOrCreateFieldInput = {
+  onCreate: TimeSlotUsersConnectOrCreateFieldInputOnCreate;
+  where: UserConnectOrCreateWhere;
+};
+
+export type TimeSlotUsersConnectOrCreateFieldInputOnCreate = {
+  node: UserCreateInput;
 };
 
 export type TimeSlotUsersConnection = {
@@ -2269,6 +2588,7 @@ export type TimeSlotUsersDisconnectFieldInput = {
 
 export type TimeSlotUsersFieldInput = {
   connect?: InputMaybe<TimeSlotUsersConnectFieldInput>;
+  connectOrCreate?: InputMaybe<TimeSlotUsersConnectOrCreateFieldInput>;
   create?: InputMaybe<TimeSlotUsersCreateFieldInput>;
 };
 
@@ -2295,6 +2615,7 @@ export type TimeSlotUsersNodeAggregationWhereInput = {
   email_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
   email_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
   email_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  id_EQUAL?: InputMaybe<Scalars['ID']>;
   name_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
   name_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
   name_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
@@ -2315,6 +2636,26 @@ export type TimeSlotUsersNodeAggregationWhereInput = {
   name_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
   name_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
   name_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  password_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  password_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  password_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  password_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  password_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  password_EQUAL?: InputMaybe<Scalars['String']>;
+  password_GT?: InputMaybe<Scalars['Int']>;
+  password_GTE?: InputMaybe<Scalars['Int']>;
+  password_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  password_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  password_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  password_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  password_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  password_LT?: InputMaybe<Scalars['Int']>;
+  password_LTE?: InputMaybe<Scalars['Int']>;
+  password_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  password_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  password_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  password_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  password_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
   phonenumber_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
   phonenumber_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
   phonenumber_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
@@ -2349,6 +2690,7 @@ export type TimeSlotUsersUpdateConnectionInput = {
 
 export type TimeSlotUsersUpdateFieldInput = {
   connect?: InputMaybe<TimeSlotUsersConnectFieldInput>;
+  connectOrCreate?: InputMaybe<TimeSlotUsersConnectOrCreateFieldInput>;
   create?: InputMaybe<TimeSlotUsersCreateFieldInput>;
   delete?: InputMaybe<TimeSlotUsersDeleteFieldInput>;
   disconnect?: InputMaybe<TimeSlotUsersDisconnectFieldInput>;
@@ -2402,6 +2744,12 @@ export type UpdateAdminsMutationResponse = {
   info: UpdateInfo;
 };
 
+export type UpdateComponentsMutationResponse = {
+  __typename?: 'UpdateComponentsMutationResponse';
+  components: Array<Component>;
+  info: UpdateInfo;
+};
+
 export type UpdateDateSlotsMutationResponse = {
   __typename?: 'UpdateDateSlotsMutationResponse';
   dateSlots: Array<DateSlot>;
@@ -2435,6 +2783,18 @@ export type UpdateInfo = {
   relationshipsDeleted: Scalars['Int'];
 };
 
+export type UpdateLogosMutationResponse = {
+  __typename?: 'UpdateLogosMutationResponse';
+  info: UpdateInfo;
+  logos: Array<Logo>;
+};
+
+export type UpdatePagesMutationResponse = {
+  __typename?: 'UpdatePagesMutationResponse';
+  info: UpdateInfo;
+  pages: Array<Page>;
+};
+
 export type UpdatePartnersMutationResponse = {
   __typename?: 'UpdatePartnersMutationResponse';
   info: UpdateInfo;
@@ -2462,7 +2822,9 @@ export type UpdateUsersMutationResponse = {
 export type User = {
   __typename?: 'User';
   email: Scalars['String'];
+  id?: Maybe<Scalars['ID']>;
   name: Scalars['String'];
+  password: Scalars['String'];
   phonenumber: Scalars['String'];
   timeslots?: Maybe<Array<Maybe<TimeSlot>>>;
   timeslotsAggregate?: Maybe<UserTimeSlotTimeslotsAggregationSelection>;
@@ -2492,12 +2854,18 @@ export type UserAggregateSelection = {
   __typename?: 'UserAggregateSelection';
   count: Scalars['Int'];
   email: StringAggregateSelection;
+  id: IdAggregateSelection;
   name: StringAggregateSelection;
+  password: StringAggregateSelection;
   phonenumber: StringAggregateSelection;
 };
 
 export type UserConnectInput = {
   timeslots?: InputMaybe<Array<UserTimeslotsConnectFieldInput>>;
+};
+
+export type UserConnectOrCreateWhere = {
+  node: UserUniqueWhere;
 };
 
 export type UserConnectWhere = {
@@ -2507,6 +2875,7 @@ export type UserConnectWhere = {
 export type UserCreateInput = {
   email: Scalars['String'];
   name: Scalars['String'];
+  password: Scalars['String'];
   phonenumber: Scalars['String'];
   timeslots?: InputMaybe<UserTimeslotsFieldInput>;
 };
@@ -2533,7 +2902,9 @@ export type UserRelationInput = {
 /** Fields to sort Users by. The order in which sorts are applied is not guaranteed when specifying many fields in one UserSort object. */
 export type UserSort = {
   email?: InputMaybe<SortDirection>;
+  id?: InputMaybe<SortDirection>;
   name?: InputMaybe<SortDirection>;
+  password?: InputMaybe<SortDirection>;
   phonenumber?: InputMaybe<SortDirection>;
 };
 
@@ -2666,9 +3037,15 @@ export type UserTimeslotsUpdateFieldInput = {
   where?: InputMaybe<UserTimeslotsConnectionWhere>;
 };
 
+export type UserUniqueWhere = {
+  email?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
 export type UserUpdateInput = {
   email?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
   phonenumber?: InputMaybe<Scalars['String']>;
   timeslots?: InputMaybe<Array<UserTimeslotsUpdateFieldInput>>;
 };
@@ -2686,6 +3063,16 @@ export type UserWhere = {
   email_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   email_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
   email_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  id_NOT?: InputMaybe<Scalars['ID']>;
+  id_NOT_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_NOT_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  id_NOT_STARTS_WITH?: InputMaybe<Scalars['ID']>;
+  id_STARTS_WITH?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
   name_CONTAINS?: InputMaybe<Scalars['String']>;
   name_ENDS_WITH?: InputMaybe<Scalars['String']>;
@@ -2696,6 +3083,16 @@ export type UserWhere = {
   name_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   name_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
   name_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  password_CONTAINS?: InputMaybe<Scalars['String']>;
+  password_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  password_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  password_NOT?: InputMaybe<Scalars['String']>;
+  password_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  password_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  password_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  password_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  password_STARTS_WITH?: InputMaybe<Scalars['String']>;
   phonenumber?: InputMaybe<Scalars['String']>;
   phonenumber_CONTAINS?: InputMaybe<Scalars['String']>;
   phonenumber_ENDS_WITH?: InputMaybe<Scalars['String']>;
@@ -2721,7 +3118,7 @@ export type RegularHorseFragment = { __typename?: 'Horse', name: string, nicknam
 
 export type RegularTimeSlotFragment = { __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined };
 
-export type RegularUserFragment = { __typename?: 'User', name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined };
+export type RegularUserFragment = { __typename?: 'User', id?: string | null | undefined, password: string, name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined };
 
 export type CreateAdminMutationVariables = Exact<{
   input: Array<AdminCreateInput> | AdminCreateInput;
@@ -2752,6 +3149,13 @@ export type CreateHorseCategoriesMutationVariables = Exact<{
 
 export type CreateHorseCategoriesMutation = { __typename?: 'Mutation', createHorseCategories: { __typename?: 'CreateHorseCategoriesMutationResponse', horseCategories: Array<{ __typename?: 'HorseCategory', category: string, horses?: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, images: Array<string | null | undefined>, owner: string, after: string, birthyear: string, gender: string, color: string } | null | undefined> | null | undefined }> } };
 
+export type CreateLogoMutationVariables = Exact<{
+  input: Array<LogoCreateInput> | LogoCreateInput;
+}>;
+
+
+export type CreateLogoMutation = { __typename?: 'Mutation', createLogos: { __typename?: 'CreateLogosMutationResponse', logos: Array<{ __typename?: 'Logo', image: string }> } };
+
 export type CreateTimeSlotTypesMutationVariables = Exact<{
   input: Array<TimeSlotTypeCreateInput> | TimeSlotTypeCreateInput;
 }>;
@@ -2771,7 +3175,7 @@ export type CreateUsersMutationVariables = Exact<{
 }>;
 
 
-export type CreateUsersMutation = { __typename?: 'Mutation', createUsers: { __typename?: 'CreateUsersMutationResponse', users: Array<{ __typename?: 'User', name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> } };
+export type CreateUsersMutation = { __typename?: 'Mutation', createUsers: { __typename?: 'CreateUsersMutationResponse', users: Array<{ __typename?: 'User', id?: string | null | undefined, password: string, name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> } };
 
 export type DeleteDateSlotsMutationVariables = Exact<{
   where?: InputMaybe<DateSlotWhere>;
@@ -2811,6 +3215,14 @@ export type UpdateHorsesMutationVariables = Exact<{
 
 export type UpdateHorsesMutation = { __typename?: 'Mutation', updateHorses: { __typename?: 'UpdateHorsesMutationResponse', horses: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, images: Array<string | null | undefined>, owner: string, after: string, birthyear: string, gender: string, color: string, category: { __typename?: 'HorseCategory', category: string } }> } };
 
+export type UpdateLogoMutationVariables = Exact<{
+  where?: InputMaybe<LogoWhere>;
+  update?: InputMaybe<LogoUpdateInput>;
+}>;
+
+
+export type UpdateLogoMutation = { __typename?: 'Mutation', updateLogos: { __typename?: 'UpdateLogosMutationResponse', logos: Array<{ __typename?: 'Logo', image: string }> } };
+
 export type UpdateTimeSlotsMutationVariables = Exact<{
   where?: InputMaybe<TimeSlotWhere>;
   update?: InputMaybe<TimeSlotUpdateInput>;
@@ -2832,7 +3244,7 @@ export type UpdateUsersMutationVariables = Exact<{
 }>;
 
 
-export type UpdateUsersMutation = { __typename?: 'Mutation', updateUsers: { __typename?: 'UpdateUsersMutationResponse', users: Array<{ __typename?: 'User', name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> } };
+export type UpdateUsersMutation = { __typename?: 'Mutation', updateUsers: { __typename?: 'UpdateUsersMutationResponse', users: Array<{ __typename?: 'User', id?: string | null | undefined, password: string, name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> } };
 
 export type AdminQueryVariables = Exact<{
   where?: InputMaybe<AdminWhere>;
@@ -2885,6 +3297,11 @@ export type HorsesQueryVariables = Exact<{
 
 export type HorsesQuery = { __typename?: 'Query', horses: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, images: Array<string | null | undefined>, owner: string, after: string, birthyear: string, gender: string, color: string, category: { __typename?: 'HorseCategory', category: string } }> };
 
+export type LogoQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoQuery = { __typename?: 'Query', logos: Array<{ __typename?: 'Logo', image: string }> };
+
 export type TimeSlotQueryVariables = Exact<{
   where?: InputMaybe<TimeSlotWhere>;
 }>;
@@ -2914,12 +3331,12 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> };
+export type UserQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id?: string | null | undefined, password: string, name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> };
+export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id?: string | null | undefined, password: string, name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> };
 
 export const RegularAdminFragmentDoc = gql`
     fragment RegularAdmin on Admin {
@@ -2977,6 +3394,8 @@ export const RegularTimeSlotFragmentDoc = gql`
     `;
 export const RegularUserFragmentDoc = gql`
     fragment RegularUser on User {
+  id
+  password
   name
   phonenumber
   email
@@ -3143,6 +3562,41 @@ export function useCreateHorseCategoriesMutation(baseOptions?: Apollo.MutationHo
 export type CreateHorseCategoriesMutationHookResult = ReturnType<typeof useCreateHorseCategoriesMutation>;
 export type CreateHorseCategoriesMutationResult = Apollo.MutationResult<CreateHorseCategoriesMutation>;
 export type CreateHorseCategoriesMutationOptions = Apollo.BaseMutationOptions<CreateHorseCategoriesMutation, CreateHorseCategoriesMutationVariables>;
+export const CreateLogoDocument = gql`
+    mutation CreateLogo($input: [LogoCreateInput!]!) {
+  createLogos(input: $input) {
+    logos {
+      image
+    }
+  }
+}
+    `;
+export type CreateLogoMutationFn = Apollo.MutationFunction<CreateLogoMutation, CreateLogoMutationVariables>;
+
+/**
+ * __useCreateLogoMutation__
+ *
+ * To run a mutation, you first call `useCreateLogoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateLogoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createLogoMutation, { data, loading, error }] = useCreateLogoMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateLogoMutation(baseOptions?: Apollo.MutationHookOptions<CreateLogoMutation, CreateLogoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateLogoMutation, CreateLogoMutationVariables>(CreateLogoDocument, options);
+      }
+export type CreateLogoMutationHookResult = ReturnType<typeof useCreateLogoMutation>;
+export type CreateLogoMutationResult = Apollo.MutationResult<CreateLogoMutation>;
+export type CreateLogoMutationOptions = Apollo.BaseMutationOptions<CreateLogoMutation, CreateLogoMutationVariables>;
 export const CreateTimeSlotTypesDocument = gql`
     mutation CreateTimeSlotTypes($input: [TimeSlotTypeCreateInput!]!) {
   createTimeSlotTypes(input: $input) {
@@ -3431,6 +3885,42 @@ export function useUpdateHorsesMutation(baseOptions?: Apollo.MutationHookOptions
 export type UpdateHorsesMutationHookResult = ReturnType<typeof useUpdateHorsesMutation>;
 export type UpdateHorsesMutationResult = Apollo.MutationResult<UpdateHorsesMutation>;
 export type UpdateHorsesMutationOptions = Apollo.BaseMutationOptions<UpdateHorsesMutation, UpdateHorsesMutationVariables>;
+export const UpdateLogoDocument = gql`
+    mutation UpdateLogo($where: LogoWhere, $update: LogoUpdateInput) {
+  updateLogos(where: $where, update: $update) {
+    logos {
+      image
+    }
+  }
+}
+    `;
+export type UpdateLogoMutationFn = Apollo.MutationFunction<UpdateLogoMutation, UpdateLogoMutationVariables>;
+
+/**
+ * __useUpdateLogoMutation__
+ *
+ * To run a mutation, you first call `useUpdateLogoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateLogoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateLogoMutation, { data, loading, error }] = useUpdateLogoMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *      update: // value for 'update'
+ *   },
+ * });
+ */
+export function useUpdateLogoMutation(baseOptions?: Apollo.MutationHookOptions<UpdateLogoMutation, UpdateLogoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateLogoMutation, UpdateLogoMutationVariables>(UpdateLogoDocument, options);
+      }
+export type UpdateLogoMutationHookResult = ReturnType<typeof useUpdateLogoMutation>;
+export type UpdateLogoMutationResult = Apollo.MutationResult<UpdateLogoMutation>;
+export type UpdateLogoMutationOptions = Apollo.BaseMutationOptions<UpdateLogoMutation, UpdateLogoMutationVariables>;
 export const UpdateTimeSlotsDocument = gql`
     mutation UpdateTimeSlots($where: TimeSlotWhere, $update: TimeSlotUpdateInput) {
   updateTimeSlots(where: $where, update: $update) {
@@ -3826,6 +4316,40 @@ export function useHorsesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Hor
 export type HorsesQueryHookResult = ReturnType<typeof useHorsesQuery>;
 export type HorsesLazyQueryHookResult = ReturnType<typeof useHorsesLazyQuery>;
 export type HorsesQueryResult = Apollo.QueryResult<HorsesQuery, HorsesQueryVariables>;
+export const LogoDocument = gql`
+    query Logo {
+  logos {
+    image
+  }
+}
+    `;
+
+/**
+ * __useLogoQuery__
+ *
+ * To run a query within a React component, call `useLogoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLogoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLogoQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLogoQuery(baseOptions?: Apollo.QueryHookOptions<LogoQuery, LogoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LogoQuery, LogoQueryVariables>(LogoDocument, options);
+      }
+export function useLogoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LogoQuery, LogoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LogoQuery, LogoQueryVariables>(LogoDocument, options);
+        }
+export type LogoQueryHookResult = ReturnType<typeof useLogoQuery>;
+export type LogoLazyQueryHookResult = ReturnType<typeof useLogoLazyQuery>;
+export type LogoQueryResult = Apollo.QueryResult<LogoQuery, LogoQueryVariables>;
 export const TimeSlotDocument = gql`
     query TimeSlot($where: TimeSlotWhere) {
   timeSlots(where: $where) {

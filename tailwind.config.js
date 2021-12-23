@@ -18,5 +18,8 @@ module.exports = {
       height: ['hover'],
     },
   },
-  plugins: [require('tailwind-scrollbar')],
+  plugins: [
+    require('tailwind-scrollbar'),
+    require('@tailwindcss/aspect-ratio'),
+  ],
 };

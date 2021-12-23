@@ -12,7 +12,7 @@ const Home: NextPage = () => {
 
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className="relative flex justify-center overflow-hidden md:h-screen">
+      <header className="aspect-w-16 aspect-h-16 md:aspect-h-8 relative overflow-hidden md:h-screen">
         <video
           autoPlay
           loop
@@ -25,12 +25,14 @@ const Home: NextPage = () => {
           />
           Your browser does not support the video tag.
         </video>
-        <div className="flex absolute w-full bottom-0 items-center justify-evenly my-4 z-20">
-          {partners.map((partner, i: number) => (
-            <div key={i} className="w-2/12 md:w-1/12 z-20 filter grayscale invert brightness-0 opacity-30">
-              <Image src={partner.image} alt={partner.alt} width={partner.width} height={partner.height} layout="responsive" />
-            </div>
-          ))}
+        <div className="flex items-end md:pb-14">
+          <div className="flex w-full h-20 items-center justify-evenly z-20">
+            {partners.map((partner, i: number) => (
+              <div key={i} className="w-2/12 md:w-1/12 z-20 filter grayscale invert brightness-0 opacity-30">
+                <Image src={partner.image} alt={partner.alt} width={partner.width} height={partner.height} layout="responsive" />
+              </div>
+            ))}
+          </div>
         </div>
       </header>
     </div>

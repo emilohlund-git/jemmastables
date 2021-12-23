@@ -19,6 +19,13 @@ export const setAdmin = (payload: any) => {
   };
 };
 
+export const setUser = (payload: any) => {
+  return {
+    type: 'SET_USER',
+    payload: payload,
+  };
+};
+
 export const setTime = (payload: any) => {
   return {
     type: 'SET_TIME',
@@ -36,13 +43,6 @@ export const setIsOpen = (payload: any) => {
 export const setBookingIsOpen = (payload: any) => {
   return {
     type: 'SET_BOOKING_IS_OPEN',
-    payload: payload,
-  };
-};
-
-export const setDarkmode = (payload: any) => {
-  return {
-    type: 'SET_DARKMODE',
     payload: payload,
   };
 };

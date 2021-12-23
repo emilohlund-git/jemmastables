@@ -1,17 +1,19 @@
 import React from 'react'
 import JemmaCalendar from '../components/calendar/JemmaCalendar'
-import { withApollo } from '../utils/withApollo'
+import { RouteGuard } from '../utils/RouteGuard';
 
 interface Props {
 
 }
 
-const bokning = (props: Props) => {
+const Bokning = (props: Props) => {
     return (
         <div className="flex flex-col justify-center dark:bg-gray-900">
-            <JemmaCalendar />
+            <RouteGuard>
+                <JemmaCalendar />
+            </RouteGuard>
         </div>
     )
 }
 
-export default withApollo({ ssr: false })(bokning)
+export default Bokning
