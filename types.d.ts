@@ -7,6 +7,8 @@ declare module 'bcryptjs';
 declare module 'debounce';
 declare module 'redux-persist/lib/storage/createWebStorage';
 declare module 'redux-persist/integration/react';
+declare module '@themesberg/flowbite';
+declare module 'react-grid-gallery';
 
 interface Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;

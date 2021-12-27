@@ -1,59 +1,64 @@
-import React from "react";
+import { HORSE_CATEGORIES } from '../utils/constants';
 
 const navButtons: NavButton[] = [
   {
-    label: "startsida",
-    path: "/",
+    label: 'startsida',
+    path: '/',
     dropdown: [],
   },
   {
-    label: "anläggningen",
-    path: "/anlaggningen",
+    label: 'anläggningen',
+    path: '/anlaggningen',
     dropdown: [
       {
-        label: "stallet",
-        path: "/anlaggningen/stallet",
+        label: 'stallet',
+        path: '/anlaggningen/stallet',
       },
       {
-        label: "lösdriften",
-        path: "/anlaggningen/losdriften",
+        label: 'lösdriften',
+        path: '/anlaggningen/losdriften',
       },
       {
-        label: "hagarna",
-        path: "/anlaggningen/hagarna",
+        label: 'hagarna',
+        path: '/anlaggningen/hagarna',
       },
       {
-        label: "ridbanan",
-        path: "/anlaggningen/ridbanan",
+        label: 'ridbanan',
+        path: '/anlaggningen/ridbanan',
       },
     ],
   },
   {
-    label: "hästar",
-    path: "/hastar",
+    label: 'hästar',
+    path: '/hastar',
     dropdown: [
       {
-        label: "tävlingshästar",
-        path: "/anlaggningen/tavlingshastar",
+        label: HORSE_CATEGORIES.Tävlingshästar,
+        path: '/hastar/tavlingshastar',
       },
       {
-        label: "unghästar",
-        path: "/anlaggningen/unghastar",
+        label: HORSE_CATEGORIES.Unghästar,
+        path: '/hastar/unghastar',
       },
       {
-        label: "avelsto",
-        path: "/anlaggningen/avelsto",
+        label: HORSE_CATEGORIES.Avelsto,
+        path: '/hastar/avelsto',
       },
     ],
   },
   {
-    label: "samarbetspartners",
-    path: "/samarbetspartners",
+    label: 'samarbetspartners',
+    path: '/samarbetspartners',
     dropdown: [],
   },
   {
-    label: "bokning",
-    path: "/bokning",
+    label: 'mitt konto',
+    path: '/profile',
+    dropdown: [],
+  },
+  {
+    label: 'bokning',
+    path: '/bokning',
     dropdown: [],
   },
 ];

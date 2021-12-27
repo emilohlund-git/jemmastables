@@ -16,10 +16,12 @@ module.exports = {
     extend: {
       zIndex: ['hover'],
       height: ['hover'],
+      filter: ['hover'],
     },
   },
   plugins: [
     require('tailwind-scrollbar'),
     require('@tailwindcss/aspect-ratio'),
+    require('tailwindcss-text-fill'),
   ],
 };

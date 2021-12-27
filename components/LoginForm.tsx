@@ -64,19 +64,19 @@ const LoginForm = (props: Props) => {
                 <div className="flex flex-col justify-center items-center">
                     {!user ?
                         <form onSubmit={handleLogin} className="flex flex-col">
-                            <input className="shadow-sm transition-all outline-none bg-blue-50 appearance-none rounded-3xl px-4 py-2 mb-2 focus:ring-2 focus:ring-blue-400" value={formState.email} onChange={(e) => setFormState({
+                            <input className="text-fill-gray-500 text-gray-500 shadow-sm transition-all outline-none bg-blue-50 appearance-none rounded-3xl px-4 py-2 mb-2 focus:ring-2 focus:ring-blue-400" value={formState.email} onChange={(e) => setFormState({
                                 ...formState,
                                 [e.target.name]: e.target.value
                             })} name="email" type="email" placeholder="email" />
-                            <input className="shadow-sm transition-all outline-none bg-blue-50 appearance-none rounded-3xl px-4 py-2 mb-2 focus:ring-2 focus:ring-blue-400" value={formState.password} onChange={(e) => setFormState({
+                            <input className="text-fill-gray-500 text-gray-500 shadow-sm transition-all outline-none bg-blue-50 appearance-none rounded-3xl px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-400" value={formState.password} onChange={(e) => setFormState({
                                 ...formState,
                                 [e.target.name]: e.target.value
                             })} name="password" type="password" placeholder="password" />
-                            <button className="shadow-sm bg-blue-400 text-white rounded-3xl py-2 text-sm" type="submit">Logga in</button>
+                            <button className="shadow-sm bg-gradient-to-r from-black to-gray-800 text-white rounded-3xl py-2 text-sm" type="submit">logga in &rarr;</button>
                         </form>
                         :
                         <form onSubmit={handleLogout} className="flex flex-col">
-                            <button className="shadow-sm bg-blue-400 w-48 text-white rounded-3xl px-4 py-2 text-sm">Logga ut</button>
+                            <button className="shadow-sm bg-gradient-to-r from-black to-gray-800 w-48 text-white rounded-3xl px-4 py-2 text-sm">logga ut &rarr;</button>
                         </form>
                     }
                 </div>

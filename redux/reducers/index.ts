@@ -7,6 +7,8 @@ import adminReducer from './admin';
 import bookingIsOpenReducer from './bookingIsOpen';
 import timeReducer from './time';
 import userReducer from './user';
+import categoryReducer from './category';
+import horseReducer from './horse';
 
 const appReducer = combineReducers({
   authenticated: isAuthenticatedReducer,
@@ -17,6 +19,8 @@ const appReducer = combineReducers({
   bookingIsOpen: bookingIsOpenReducer,
   time: timeReducer,
   user: userReducer,
+  category: categoryReducer,
+  horse: horseReducer,
 });
 
 const rootReducer = (state: any, action: any) => {

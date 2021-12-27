@@ -6,7 +6,6 @@ import MobileTimeSlots from '../calendar/MobileTimeSlots';
 import BookedTimeSlot from './BookedTimeSlot';
 
 interface Props {
-    user: User;
 }
 
 const BookedTimeSlots = (props: Props) => {
@@ -16,9 +15,7 @@ const BookedTimeSlots = (props: Props) => {
         <>
             {user && user.timeslots?.map((timeslot, index) => {
                 return (
-                    <div key={index}>
-                        <BookedTimeSlot timeslot={timeslot!} />
-                    </div>
+                    <BookedTimeSlot key={index} timeslot={timeslot!} />
                 )
             })}
         </>

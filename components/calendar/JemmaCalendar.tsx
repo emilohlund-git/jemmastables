@@ -6,10 +6,12 @@ import { DateSlot, useDateSlotsQuery } from "../../generated/graphql";
 import { RootState } from "../../redux/reducers";
 import getDaysInMonth from "../../utils/calendar/getDaysInMonth";
 import getDaysInWeek from "../../utils/calendar/getDaysInWeek";
+import Spinner from "../Spinner";
 import { BookingModal } from "./BookingModal";
 import { DayBox } from "./DayBox";
 import EmptyTimeSlot from './EmptyTimeSlot';
 import MobileTimeSlots from "./MobileTimeSlots";
+import { MyModal } from "./Modal";
 
 interface Props {
 
@@ -41,7 +43,7 @@ const JemmaCalendar = (props: Props) => {
         <div className="flex flex-col bg-gray-900 md:bg-white">
             <div className="flex flex-col self-center z-20 w-full px-2 md:w-8/12 pb-4 md:pb-20 bg-gradient-to-b from-white via-gray-50 to-gray-50 rounded-b-3xl md:bg-none shadow-md md:shadow-none">
                 <div className="flex flex-col md:flex-col">
-                    <div className="mb-2 mt-4">
+                    <div className="mb-2 mt-4 flex justify-between">
                         <h1 className="text-black text-xl pl-2 md:text-4xl md:text-center">{currentDate.toFormat("yyyy")}</h1>
                     </div>
                     <div className="flex justify-around md:justify-center items-center md:gap-0 mb-4 md:m-2">
@@ -71,14 +73,14 @@ const JemmaCalendar = (props: Props) => {
                                     <DayBox day={day} dateSlot={data?.dateSlots.filter((d) => d.date === day.toSQLDate()) as [DateSlot]} key={i} />
                                 ))
                             }
-                        </div></>
+                        </div>
+                    </>
                     :
-                    <div className="w-full flex justify-center">
-                        <div style={{ borderTopColor: "transparent" }} className="w-16 h-16 border-4 border-blue-400 border-solid rounded-full animate-spin"></div>
-                    </div>}
+                    <Spinner />
+                }
             </div>
             <BookingModal />
-            <div className="bg-gradient-to-t from-gray-700 to-gray-900 divide-y-2 divide-gray-700 pb-4">
+            <div className="bg-gradient-to-t from-gray-800 to-gray-900 divide-y-2 divide-gray-700 pb-4">
                 <div className="flex justify-between text-gray-400 text-sm">
                     <div className="m-4">
                         <h2>{date.setLocale("sv").toFormat("yyyy LLL dd")}</h2>

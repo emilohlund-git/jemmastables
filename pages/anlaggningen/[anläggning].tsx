@@ -4,12 +4,12 @@ interface Props {
 
 }
 
-const anläggningen = (props: Props) => {
+const Anläggning = (props: Props) => {
     return (
         <div>
-
+            kek
         </div>
     )
 }
 
-export default anläggningen
+export default Anläggning

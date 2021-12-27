@@ -1,5 +1,6 @@
 query HorseCategory($where: HorseCategoryWhere) {
   horseCategories(where: $where) {
     category
+    image
   }
 }

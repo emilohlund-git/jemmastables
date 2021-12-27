@@ -46,7 +46,7 @@ export const DayBox = (props: Props) => {
                 </>
                     : <></>}
             </div>
-            {props.dateSlot[0] && props.dateSlot[0].timeslots!.length === 1 && getTimeSlotType(props.dateSlot[0].timeslots[0]!) != "Träning" &&
+            {props.dateSlot[0] && props.dateSlot[0].timeslots!.length === 1 && getTimeSlotType(props.dateSlot[0].timeslots![0]!) != "Träning" &&
                 <div className={`h-2 w-2 ${props.dateSlot[0] && getBackgroundColorByDateSlot(props.dateSlot[0])}`}></div>
             }
         </div >

@@ -12,6 +12,20 @@ export const setType = (payload: any) => {
   };
 };
 
+export const setCategory = (payload: any) => {
+  return {
+    type: 'SET_CATEGORY',
+    payload: payload,
+  };
+};
+
+export const setHorse = (payload: any) => {
+  return {
+    type: 'SET_HORSE',
+    payload: payload,
+  };
+};
+
 export const setAdmin = (payload: any) => {
   return {
     type: 'SET_ADMIN',

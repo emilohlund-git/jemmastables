@@ -3281,17 +3281,18 @@ export type HorseQuery = { __typename?: 'Query', horses: Array<{ __typename?: 'H
 export type HorseCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HorseCategoriesQuery = { __typename?: 'Query', horseCategories: Array<{ __typename?: 'HorseCategory', category: string, horses?: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, images: Array<string | null | undefined>, owner: string, after: string, birthyear: string, gender: string, color: string } | null | undefined> | null | undefined }> };
+export type HorseCategoriesQuery = { __typename?: 'Query', horseCategories: Array<{ __typename?: 'HorseCategory', category: string, image: string, horses?: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, images: Array<string | null | undefined>, owner: string, after: string, birthyear: string, gender: string, color: string } | null | undefined> | null | undefined }> };
 
 export type HorseCategoryQueryVariables = Exact<{
   where?: InputMaybe<HorseCategoryWhere>;
 }>;
 
 
-export type HorseCategoryQuery = { __typename?: 'Query', horseCategories: Array<{ __typename?: 'HorseCategory', category: string }> };
+export type HorseCategoryQuery = { __typename?: 'Query', horseCategories: Array<{ __typename?: 'HorseCategory', category: string, image: string }> };
 
 export type HorsesQueryVariables = Exact<{
   where?: InputMaybe<HorseCategoryWhere>;
+  horsesWhere?: InputMaybe<HorseWhere>;
 }>;
 
 
@@ -4206,6 +4207,7 @@ export const HorseCategoriesDocument = gql`
     query HorseCategories {
   horseCategories {
     category
+    image
     horses {
       name
       nickname
@@ -4250,6 +4252,7 @@ export const HorseCategoryDocument = gql`
     query HorseCategory($where: HorseCategoryWhere) {
   horseCategories(where: $where) {
     category
+    image
   }
 }
     `;
@@ -4282,8 +4285,8 @@ export type HorseCategoryQueryHookResult = ReturnType<typeof useHorseCategoryQue
 export type HorseCategoryLazyQueryHookResult = ReturnType<typeof useHorseCategoryLazyQuery>;
 export type HorseCategoryQueryResult = Apollo.QueryResult<HorseCategoryQuery, HorseCategoryQueryVariables>;
 export const HorsesDocument = gql`
-    query Horses($where: HorseCategoryWhere) {
-  horses {
+    query Horses($where: HorseCategoryWhere, $horsesWhere: HorseWhere) {
+  horses(where: $horsesWhere) {
     ...RegularHorse
   }
 }
@@ -4302,6 +4305,7 @@ export const HorsesDocument = gql`
  * const { data, loading, error } = useHorsesQuery({
  *   variables: {
  *      where: // value for 'where'
+ *      horsesWhere: // value for 'horsesWhere'
  *   },
  * });
  */

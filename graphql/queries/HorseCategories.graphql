@@ -1,6 +1,7 @@
 query HorseCategories {
   horseCategories {
     category
+    image
     horses {
       name
       nickname

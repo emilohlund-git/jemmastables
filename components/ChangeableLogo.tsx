@@ -89,8 +89,9 @@ const ChangeableLogo = (props: Props) => {
         <div className="relative">
             <input onChange={handleFile} className="absolute z-20 appearance-none" id="formId" type="file" hidden />
             <label ref={fileRef} htmlFor="formId">
-                {!loading && data?.logos[0] &&
+                {!loading && data?.logos[0] ?
                     <Image className="absolute" priority width={props.width} height={props.height} alt="Jemmastables Logo" layout="fixed" src={data?.logos[0].image} />
+                    : <></>
                 }
             </label>
         </div>
