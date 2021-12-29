@@ -1,7 +1,6 @@
 import { Rotate as Hamburger } from 'hamburger-react';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import ChangeableLogo from './ChangeableLogo';
 import NavButton from './NavButton';
 import Image from 'next/image';
 

@@ -5,6 +5,8 @@ import { useStore } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import "../styles/globals.css";
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { AuthProvider } from '../contexts/AuthContext';
+import SimpleReactLightbox from 'simple-react-lightbox'
 
 function MyApp({ Component, pageProps }: AppProps) {
   /* @ts-ignore */
@@ -19,21 +21,29 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return process.browser ? (
     <ApolloProvider client={client}>
-      {/* @ts-ignore */}
-      <PersistGate persistor={store.__persistor} loading={<div>...Loading</div>}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </PersistGate>
+      <SimpleReactLightbox>
+        <AuthProvider>
+          {/* @ts-ignore */}
+          <PersistGate persistor={store.__persistor} loading={<div>...Loading</div>}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </PersistGate>
+        </AuthProvider>
+      </SimpleReactLightbox>
     </ApolloProvider >
   ) : (
     <ApolloProvider client={client}>
-      {/* @ts-ignore */}
-      <PersistGate persistor={store.__persistor} loading={<div>...Loading</div>}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </PersistGate>
+      <SimpleReactLightbox>
+        <AuthProvider>
+          {/* @ts-ignore */}
+          <PersistGate persistor={store.__persistor} loading={<div>...Loading</div>}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </PersistGate>
+        </AuthProvider>
+      </SimpleReactLightbox>
     </ApolloProvider >
   )
 }

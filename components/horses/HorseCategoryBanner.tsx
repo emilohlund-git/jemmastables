@@ -27,7 +27,7 @@ const HorseCategoryBanner = (props: Props) => {
                     <p className={`text-white transform transition-all mr-2 ${!hovering ? "scale-0 -mr-4" : "scale-100"}`}>&rarr;</p>
                     <p className="text-lg font-semibold text-white transition-all">{props.category.category.toLowerCase()}</p>
                 </div>
-                <p className="font-thin text-sm text-white">{props.category!.horses!.length} hästar</p>
+                <p className="font-thin text-sm text-white">{props.category!.horses!.length === 1 ? props.category!.horses!.length + " häst" : props.category!.horses!.length + " hästar"}</p>
             </div>
         </div>
     )

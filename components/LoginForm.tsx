@@ -1,8 +1,7 @@
-import React, { FormEvent, useState } from 'react'
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import '../utils/firebase/initApp';
-import { User, useUsersQuery } from '../generated/graphql';
+import React, { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAuth } from '../contexts/AuthContext';
+import { User, useUsersQuery } from '../generated/graphql';
 import { setUser } from '../redux/actions';
 import { RootState } from '../redux/reducers';
 
@@ -12,40 +11,44 @@ interface Props {
 
 const LoginForm = (props: Props) => {
     const user: User = useSelector((state: RootState) => state.user);
+    const { signin, signout }: any = useAuth();
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const [formState, setFormState] = useState({
         email: '',
         password: '',
     })
-
-    const { data, loading } = useUsersQuery();
     const dispatch = useDispatch();
+    const { data, loading } = useUsersQuery();
 
-    const auth = getAuth();
-
-    const handleLogin = (e: FormEvent) => {
+    const handleLogin = async (e: FormEvent) => {
         e.preventDefault();
-        signInWithEmailAndPassword(auth, formState.email, formState.password)
-            .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-                dispatch(setUser(data!.users.find(u => u.email === user.email)));
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
-                // ..
-            });
+        if (!loading) {
+            try {
+                setError('');
+                await signin(formState.email, formState.password);
+                setIsLoading(true);
+                dispatch(setUser(data?.users.find((u) => u.email.toLowerCase() === formState.email.toLowerCase())))
+            } catch (err) {
+                console.log(err);
+                setError("Inloggningen misslyckades.");
+            }
+            setIsLoading(false);
+        }
     }
 
-    const handleLogout = () => {
-        signOut(auth).then(() => {
+    const handleLogout = async (e: FormEvent) => {
+        e.preventDefault();
+        try {
+            setError('');
+            await signout();
+            setIsLoading(true);
             dispatch(setUser(null));
-            // Sign-out successful.
-        }).catch((error) => {
-            // An error happened.
-        });
+        } catch (err) {
+            console.log(err);
+            setError('Utloggningen misslyckades');
+        }
+        setIsLoading(false);
     }
 
     return (
@@ -68,11 +71,14 @@ const LoginForm = (props: Props) => {
                                 ...formState,
                                 [e.target.name]: e.target.value
                             })} name="email" type="email" placeholder="email" />
-                            <input className="text-fill-gray-500 text-gray-500 shadow-sm transition-all outline-none bg-blue-50 appearance-none rounded-3xl px-4 py-2 mb-4 focus:ring-2 focus:ring-blue-400" value={formState.password} onChange={(e) => setFormState({
+                            <input className="text-fill-gray-500 text-gray-500 shadow-sm transition-all outline-none bg-blue-50 appearance-none rounded-3xl px-4 py-2 mb-2 focus:ring-2 focus:ring-blue-400" value={formState.password} onChange={(e) => setFormState({
                                 ...formState,
                                 [e.target.name]: e.target.value
                             })} name="password" type="password" placeholder="password" />
-                            <button className="shadow-sm bg-gradient-to-r from-black to-gray-800 text-white rounded-3xl py-2 text-sm" type="submit">logga in &rarr;</button>
+                            <div className={`${error === '' ? "hidden" : ""} text-fill-gray-500 text-gray-500 shadow-sm transition-all outline-none bg-red-100 appearance-none rounded-3xl px-4 py-3 mb-2 text-sm`}>
+                                {error}
+                            </div>
+                            <button disabled={isLoading} className="shadow-sm bg-gradient-to-r from-black to-gray-800 text-white rounded-3xl py-2 text-sm" type="submit">logga in &rarr;</button>
                         </form>
                         :
                         <form onSubmit={handleLogout} className="flex flex-col">

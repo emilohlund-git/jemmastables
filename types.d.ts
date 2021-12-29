@@ -9,6 +9,8 @@ declare module 'redux-persist/lib/storage/createWebStorage';
 declare module 'redux-persist/integration/react';
 declare module '@themesberg/flowbite';
 declare module 'react-grid-gallery';
+declare module 'fslightbox-react';
+declare module 'simple-react-lightbox';
 
 interface Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;

@@ -1,6 +1,7 @@
 fragment RegularHorse on Horse {
   name
   nickname
+  profile
   images
   owner
   after

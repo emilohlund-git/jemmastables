@@ -10,6 +10,7 @@ module.exports = {
       'instagram.fmmx1-1.fna.fbcdn.net',
       'jemmastables-bucket.s3.amazonaws.com',
       'jemmastables.com',
+      'cdn.image4.io',
     ],
   },
   async rewrites() {
