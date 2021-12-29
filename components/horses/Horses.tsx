@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Horse, useHorsesQuery } from '../../generated/graphql';
 import { RootState } from '../../redux/reducers';
 import Spinner from '../Spinner';
+import AddHorseBanner from './AddHorseBanner';
 import HorseBanner from './HorseBanner';
 
 interface Props {
@@ -32,6 +33,7 @@ const Horses = (props: Props) => {
                 :
                 <Spinner />
             }
+            <AddHorseBanner />
         </div>
     )
 }

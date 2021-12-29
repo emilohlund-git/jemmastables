@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Horse } from '../../generated/graphql';
 import { setHorse } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
+import DeleteHorseButton from './DeleteHorseButton';
 
 interface Props {
     horse: Horse
@@ -23,7 +24,8 @@ const HorseBanner = (props: Props) => {
     }
 
     return (
-        <div onClick={handleClick} className={`flex z-20 w-full relative h-56 filter grayscale transition-all hover:filter-none`} onMouseLeave={() => setHovering(false)} onMouseEnter={() => setHovering(true)} style={{ backgroundImage: `url(${props.horse.images[0]})`, backgroundPosition: "center", backgroundSize: "cover" }}>
+        <div onClick={handleClick} className={`flex z-20 w-full relative h-56 filter grayscale transition-all hover:filter-none`} onMouseLeave={() => setHovering(false)} onMouseEnter={() => setHovering(true)} style={{ backgroundImage: `url(${props.horse.profile})`, backgroundPosition: "center", backgroundSize: "cover" }}>
+            <DeleteHorseButton name={props.horse.name} />
             <div className="text-left ml-4 self-end mb-4">
                 <div className="flex items-center">
                     <p className={`text-white transform transition-all mr-2 ${!hovering ? "scale-0 -mr-4" : "scale-100"}`}>&rarr;</p>

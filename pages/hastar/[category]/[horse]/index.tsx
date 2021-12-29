@@ -7,6 +7,7 @@ import { useHorseQuery, useUpdateHorsesMutation } from '../../../../generated/gr
 import { RootState } from '../../../../redux/reducers';
 import Image from 'next/image';
 import UploadControl from '../../../../components/UploadControl';
+import AddHorseImage from '../../../../components/horses/AddHorseImage';
 
 interface Props {
 
@@ -143,13 +144,14 @@ const Horse = (props: Props) => {
                             </div>
                             <SRLWrapper>
                                 <div className="flex mt-4">
-                                    {data!.horses[0].images.map((image, index) => {
+                                    {data!.horses[0].images[0] !== "" && data!.horses[0].images.map((image, index) => {
                                         return (
-                                            <div key={index} className="relative h-52 w-52 mr-2 cursor-pointer">
+                                            <div key={index} className="relative h-52 w-1/3 mr-2 cursor-pointer">
                                                 <Image alt={name} src={image!} layout="fill" objectFit="cover" />
                                             </div>
                                         )
                                     })}
+                                    <AddHorseImage/>
                                 </div>
                             </SRLWrapper>
                         </div>

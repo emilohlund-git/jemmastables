@@ -1,15 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHorseQuery, useUpdateHorsesMutation } from '../generated/graphql';
 import { RootState } from '../redux/reducers';
-import axios from 'axios';
 
-interface Props {
-    path: string
-    currentImage?: string;
-}
-
-const UploadControl = (props: Props) => {
+const UploadControlImages = ({ children, path }: any) => {
     const [UpdateHorse] = useUpdateHorsesMutation();
     const name: string = useSelector((state: RootState) => state.horse);
     const { data, loading } = useHorseQuery({
@@ -23,7 +17,7 @@ const UploadControl = (props: Props) => {
         if (e.target.files.length > 0) {
             const body = new FormData();
             body.append("file", e.target.files[0]);
-            body.append("path", props.path);
+            body.append("path", path);
 
             const response = await fetch("http://localhost:4000/image4io/image", {
                 method: "POST",
@@ -38,7 +32,7 @@ const UploadControl = (props: Props) => {
                         name: name
                     },
                     update: {
-                        profile: uploadedFile
+                        images: [...images, uploadedFile]
                     }
                 },
                 update: (cache) => {
@@ -54,8 +48,9 @@ const UploadControl = (props: Props) => {
     return (
         <label htmlFor="formId" className="w-full">
             <input name="" type="file" id="formId" hidden onChange={handleUpload} />
+            {children}
         </label>
     )
 }
 
-export default UploadControl
+export default UploadControlImages
