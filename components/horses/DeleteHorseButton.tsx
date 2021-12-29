@@ -8,6 +8,11 @@ interface Props {
 }
 
 const DeleteHorseButton = (props: Props) => {
+    /**
+     * TODO:
+     * Delete button overlaps horse banner,
+     * deleting a horse simultaneously redirects you to horse page.
+     */
     const [DeleteHorse] = useDeleteHorsesMutation();
 
     const handleDelete = async () => {

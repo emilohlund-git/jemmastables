@@ -514,7 +514,7 @@ export type Horse = {
   categoryConnection: HorseCategoryConnection;
   color: Scalars['String'];
   gender: Scalars['String'];
-  images: Array<Maybe<Scalars['String']>>;
+  images?: Maybe<Array<Maybe<Scalars['String']>>>;
   movie?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   nickname?: Maybe<Scalars['String']>;
@@ -1072,7 +1072,7 @@ export type HorseCreateInput = {
   category?: InputMaybe<HorseCategoryFieldInput>;
   color: Scalars['String'];
   gender: Scalars['String'];
-  images: Array<InputMaybe<Scalars['String']>>;
+  images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   movie?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   nickname?: InputMaybe<Scalars['String']>;
@@ -3150,7 +3150,7 @@ export type RegularAdminFragment = { __typename?: 'Admin', username: string };
 
 export type RegularDateSlotFragment = { __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: { __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined } | null | undefined> | null | undefined };
 
-export type RegularHorseFragment = { __typename?: 'Horse', name: string, nickname?: string | null | undefined, profile?: string | null | undefined, images: Array<string | null | undefined>, owner: string, after: string, birthyear: string, gender: string, color: string, category: { __typename?: 'HorseCategory', category: string } };
+export type RegularHorseFragment = { __typename?: 'Horse', name: string, nickname?: string | null | undefined, profile?: string | null | undefined, images?: Array<string | null | undefined> | null | undefined, owner: string, after: string, birthyear: string, gender: string, color: string, category: { __typename?: 'HorseCategory', category: string } };
 
 export type RegularTimeSlotFragment = { __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined };
 
@@ -3176,14 +3176,14 @@ export type CreateHorseMutationVariables = Exact<{
 }>;
 
 
-export type CreateHorseMutation = { __typename?: 'Mutation', createHorses: { __typename?: 'CreateHorsesMutationResponse', horses: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, profile?: string | null | undefined, images: Array<string | null | undefined>, owner: string, after: string, birthyear: string, gender: string, color: string, category: { __typename?: 'HorseCategory', category: string } }> } };
+export type CreateHorseMutation = { __typename?: 'Mutation', createHorses: { __typename?: 'CreateHorsesMutationResponse', horses: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, profile?: string | null | undefined, images?: Array<string | null | undefined> | null | undefined, owner: string, after: string, birthyear: string, gender: string, color: string, category: { __typename?: 'HorseCategory', category: string } }> } };
 
 export type CreateHorseCategoriesMutationVariables = Exact<{
   input: Array<HorseCategoryCreateInput> | HorseCategoryCreateInput;
 }>;
 
 
-export type CreateHorseCategoriesMutation = { __typename?: 'Mutation', createHorseCategories: { __typename?: 'CreateHorseCategoriesMutationResponse', horseCategories: Array<{ __typename?: 'HorseCategory', category: string, horses?: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, images: Array<string | null | undefined>, owner: string, after: string, birthyear: string, gender: string, color: string } | null | undefined> | null | undefined }> } };
+export type CreateHorseCategoriesMutation = { __typename?: 'Mutation', createHorseCategories: { __typename?: 'CreateHorseCategoriesMutationResponse', horseCategories: Array<{ __typename?: 'HorseCategory', category: string, horses?: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, images?: Array<string | null | undefined> | null | undefined, owner: string, after: string, birthyear: string, gender: string, color: string } | null | undefined> | null | undefined }> } };
 
 export type CreateLogoMutationVariables = Exact<{
   input: Array<LogoCreateInput> | LogoCreateInput;
@@ -3249,7 +3249,7 @@ export type UpdateHorsesMutationVariables = Exact<{
 }>;
 
 
-export type UpdateHorsesMutation = { __typename?: 'Mutation', updateHorses: { __typename?: 'UpdateHorsesMutationResponse', horses: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, images: Array<string | null | undefined>, owner: string, after: string, birthyear: string, gender: string, color: string, category: { __typename?: 'HorseCategory', category: string } }> } };
+export type UpdateHorsesMutation = { __typename?: 'Mutation', updateHorses: { __typename?: 'UpdateHorsesMutationResponse', horses: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, images?: Array<string | null | undefined> | null | undefined, owner: string, after: string, birthyear: string, gender: string, color: string, category: { __typename?: 'HorseCategory', category: string } }> } };
 
 export type UpdateLogoMutationVariables = Exact<{
   where?: InputMaybe<LogoWhere>;
@@ -3312,12 +3312,12 @@ export type HorseQueryVariables = Exact<{
 }>;
 
 
-export type HorseQuery = { __typename?: 'Query', horses: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, profile?: string | null | undefined, images: Array<string | null | undefined>, owner: string, after: string, birthyear: string, gender: string, color: string, category: { __typename?: 'HorseCategory', category: string } }> };
+export type HorseQuery = { __typename?: 'Query', horses: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, profile?: string | null | undefined, images?: Array<string | null | undefined> | null | undefined, owner: string, after: string, birthyear: string, gender: string, color: string, category: { __typename?: 'HorseCategory', category: string } }> };
 
 export type HorseCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HorseCategoriesQuery = { __typename?: 'Query', horseCategories: Array<{ __typename?: 'HorseCategory', category: string, image: string, horses?: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, images: Array<string | null | undefined>, owner: string, after: string, birthyear: string, gender: string, color: string } | null | undefined> | null | undefined }> };
+export type HorseCategoriesQuery = { __typename?: 'Query', horseCategories: Array<{ __typename?: 'HorseCategory', category: string, image: string, horses?: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, images?: Array<string | null | undefined> | null | undefined, owner: string, after: string, birthyear: string, gender: string, color: string } | null | undefined> | null | undefined }> };
 
 export type HorseCategoryQueryVariables = Exact<{
   where?: InputMaybe<HorseCategoryWhere>;
@@ -3332,7 +3332,7 @@ export type HorsesQueryVariables = Exact<{
 }>;
 
 
-export type HorsesQuery = { __typename?: 'Query', horses: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, profile?: string | null | undefined, images: Array<string | null | undefined>, owner: string, after: string, birthyear: string, gender: string, color: string, category: { __typename?: 'HorseCategory', category: string } }> };
+export type HorsesQuery = { __typename?: 'Query', horses: Array<{ __typename?: 'Horse', name: string, nickname?: string | null | undefined, profile?: string | null | undefined, images?: Array<string | null | undefined> | null | undefined, owner: string, after: string, birthyear: string, gender: string, color: string, category: { __typename?: 'HorseCategory', category: string } }> };
 
 export type LogoQueryVariables = Exact<{ [key: string]: never; }>;
 

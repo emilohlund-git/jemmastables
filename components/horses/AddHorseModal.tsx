@@ -59,7 +59,7 @@ export const AddHorseModal = React.memo((props: Props) => {
                     nickname: formState.nickname,
                     movie: formState.movie,
                     profile: uploadedFile,
-                    images: [],
+                    images: formState.images,
                     owner: formState.owner,
                     after: formState.after,
                     birthyear: formState.birthyear,
@@ -80,6 +80,10 @@ export const AddHorseModal = React.memo((props: Props) => {
                 cache.evict({ fieldName: "horses" });
             }
         });
+
+        if (!errors) {
+            closeModal();
+        }
     }
 
     const invalidHandler = (e: any) => {
