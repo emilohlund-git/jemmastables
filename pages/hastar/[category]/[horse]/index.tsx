@@ -4,9 +4,10 @@ import { IoIosArrowForward } from 'react-icons/io';
 import { useSelector } from 'react-redux';
 import { SRLWrapper } from "simple-react-lightbox";
 import AddHorseImage from '../../../../components/horses/AddHorseImage';
+import DeleteHorseImageButton from '../../../../components/horses/DeleteHorseImageButton';
 import Spinner from '../../../../components/Spinner';
 import UploadControlImages from '../../../../components/UploadControlImages';
-import { useHorseQuery, useUpdateHorsesMutation } from '../../../../generated/graphql';
+import { HorseImage, useHorseQuery, useUpdateHorsesMutation } from '../../../../generated/graphql';
 import { RootState } from '../../../../redux/reducers';
 
 interface Props {
@@ -125,7 +126,7 @@ const Horse = (props: Props) => {
                                         }} className="w-full text-center md:text-left md:w-20 appearance-none outline-none bg-black bg-opacity-0 text-lg font-thin" value={formState.birthyear || ''} />
                                     </div>
                                 </div>
-                                <div className="flex flex-col mt-10">
+                                <div className="flex md:flex-col md:mt-10 my-10">
                                     <div className="flex flex-col">
                                         <p className="md:mr-10 text-sm text-center md:text-left text-gray-400 lowercase">ägare</p>
                                         <input onChange={(e) => {
@@ -147,11 +148,12 @@ const Horse = (props: Props) => {
                                 </div>
                             </div>
                             <SRLWrapper>
-                                <div className="flex mt-4">
+                                <div className="grid max-h-96 bg-white grid-cols-2 md:grid-cols-4 mt-4 overflow-y-scroll md:overscroll-contain shadow-lg">
                                     {data!.horses[0].images && data!.horses[0].images.map((image, index) => {
                                         return (
-                                            <div key={index} className="relative h-52 w-1/3 mr-2 cursor-pointer">
-                                                <Image alt={name} src={image!.url} layout="fill" objectFit="cover" />
+                                            <div key={index} className="relative w-full mr-2 cursor-pointer">
+                                                <DeleteHorseImageButton image={image as HorseImage} name={name} />
+                                                <Image alt={name} src={image!.url} layout="responsive" width={image!.width} height={image!.height} />
                                             </div>
                                         )
                                     })}
@@ -159,7 +161,7 @@ const Horse = (props: Props) => {
                                 </div>
                             </SRLWrapper>
                         </div>
-                        <div style={{ backgroundImage: `url("${profilePicture}")`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }} className="w-full ml-20 hidden md:flex">
+                        <div style={{ backgroundImage: `url("${profilePicture}")`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }} className="w-full h-screen ml-20 hidden md:flex">
                             <UploadControlImages id="profile_upload" path={`/horses/${name}`} profile={true}>
                             </UploadControlImages>
                         </div>

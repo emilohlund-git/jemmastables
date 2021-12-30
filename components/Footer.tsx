@@ -9,7 +9,7 @@ interface Props {
 
 const Footer = (props: Props) => {
     return (
-        <div>
+        <div className="mt-14">
             <footer id="footer" className="relative z-20 bg-gray-800">
                 <div className="dark:border-gray-700 py-16">
                     <div className="mx-auto container px-4 xl:px-12 2xl:px-4">

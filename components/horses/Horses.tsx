@@ -16,7 +16,7 @@ const Horses = (props: Props) => {
         variables: {
             where: {
                 category: {
-                    category: "Tävlingshästar"
+                    category: category
                 }
             }
         }

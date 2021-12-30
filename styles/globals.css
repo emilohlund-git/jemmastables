@@ -14,8 +14,13 @@
     format('woff');
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Roboto';
+  background: rgb(31, 41, 55);
 }
 
 /* width */
