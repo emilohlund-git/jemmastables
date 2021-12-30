@@ -1,9 +1,7 @@
 import React from 'react';
 import { HorseCategory, useHorseCategoriesQuery } from '../../generated/graphql';
-import HorseCategoryBanner from './HorseCategoryBanner';
 import Spinner from '../Spinner';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/reducers';
+import HorseCategoryBanner from './HorseCategoryBanner';
 
 interface Props {
 

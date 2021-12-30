@@ -14,7 +14,7 @@ const DeleteHorseImageButton = (props: Props) => {
     const handleDelete = async (e: any) => {
         e.stopPropagation();
 
-        await axios.delete("http://localhost:4000/image4io/image", {
+        await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/image4io/image`, {
             data: { path: '/' + props.image.path.split("/jemmastables/")[1] }
         })
 

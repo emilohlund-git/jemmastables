@@ -1,8 +1,6 @@
-import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Horse, Partner } from '../../generated/graphql';
-import { setHorse } from '../../redux/actions';
+import { useSelector } from 'react-redux';
+import { Partner } from '../../generated/graphql';
 import { RootState } from '../../redux/reducers';
 import DeletePartnerButton from './DeletePartnerButton';
 

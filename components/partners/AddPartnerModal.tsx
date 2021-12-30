@@ -40,7 +40,7 @@ export const AddPartnerModal = React.memo((props: Props) => {
         body.append("file", image);
         body.append("path", path);
 
-        const response = await fetch("http://localhost:4000/image4io/image", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/image4io/image`, {
             method: "POST",
             body
         })
