@@ -171,7 +171,7 @@ const Horse = (props: Props) => {
                                 </div>
                             </div>
                             <SRLWrapper>
-                                <div className="grid max-h-96 bg-white grid-cols-2 md:grid-cols-4 mt-4 overflow-y-scroll md:overscroll-contain shadow-lg">
+                                <div className="grid max-h-96 bg-gray-800 grid-cols-2 md:grid-cols-4 mt-4 overflow-y-scroll md:overscroll-contain shadow-2xl">
                                     {data!.horses[0].images && data!.horses[0].images.map((image, index) =>
                                         !image!.profile &&
                                         <div className={`relative w-full mr-2 cursor-pointer`}>

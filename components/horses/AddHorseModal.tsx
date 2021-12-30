@@ -54,7 +54,7 @@ export const AddHorseModal = React.memo((props: Props) => {
         const body = new FormData();
         body.append("file", image);
         body.append("path", "/horses/" + formState.name);
-        const response = await fetch("http://localhost:4000/image4io/image", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/image4io/image`, {
             method: "POST",
             body
         })
