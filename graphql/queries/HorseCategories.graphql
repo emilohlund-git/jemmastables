@@ -3,14 +3,7 @@ query HorseCategories {
     category
     image
     horses {
-      name
-      nickname
-      images
-      owner
-      after
-      birthyear
-      gender
-      color
+      ...RegularHorse
     }
   }
 }

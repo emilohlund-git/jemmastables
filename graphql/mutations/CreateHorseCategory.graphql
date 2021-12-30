@@ -3,14 +3,7 @@ mutation CreateHorseCategories($input: [HorseCategoryCreateInput!]!) {
     horseCategories {
       category
       horses {
-        name
-        nickname
-        images
-        owner
-        after
-        birthyear
-        gender
-        color
+        ...RegularHorse
       }
     }
   }

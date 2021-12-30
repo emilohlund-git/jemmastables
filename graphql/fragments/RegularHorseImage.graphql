@@ -1,0 +1,10 @@
+fragment RegularHorseImage on HorseImage {
+  url
+  path
+  width
+  height
+  profile
+  owner {
+    ...RegularHorse
+  }
+}

@@ -1,14 +1,21 @@
 fragment RegularHorse on Horse {
   name
   nickname
-  profile
-  images
+  movie
+  images {
+    url
+    path
+    width
+    height
+    profile
+  }
   owner
   after
   birthyear
   gender
   color
-  category(where: $where) {
+  category {
     category
+    image
   }
 }

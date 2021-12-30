@@ -1,0 +1,10 @@
+mutation UpdateHorseImages(
+  $where: HorseImageWhere
+  $update: HorseImageUpdateInput
+) {
+  updateHorseImages(where: $where, update: $update) {
+    horseImages {
+      ...RegularHorseImage
+    }
+  }
+}

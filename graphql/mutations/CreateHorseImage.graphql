@@ -1,0 +1,7 @@
+mutation CreateHorseImages($input: [HorseImageCreateInput!]!) {
+  createHorseImages(input: $input) {
+    horseImages {
+      ...RegularHorseImage
+    }
+  }
+}

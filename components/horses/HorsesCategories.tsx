@@ -9,7 +9,6 @@ interface Props {
 
 const Horses = (props: Props) => {
     const { data, loading } = useHorseCategoriesQuery();
-    console.log("Horse categories: " + data);
 
     return (
         <div className="flex flex-col justify-center items-center">

@@ -1,13 +1,13 @@
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import { useSelector } from 'react-redux';
 import { SRLWrapper } from "simple-react-lightbox";
+import AddHorseImage from '../../../../components/horses/AddHorseImage';
 import Spinner from '../../../../components/Spinner';
+import UploadControlImages from '../../../../components/UploadControlImages';
 import { useHorseQuery, useUpdateHorsesMutation } from '../../../../generated/graphql';
 import { RootState } from '../../../../redux/reducers';
-import Image from 'next/image';
-import UploadControl from '../../../../components/UploadControl';
-import AddHorseImage from '../../../../components/horses/AddHorseImage';
 
 interface Props {
 
@@ -16,16 +16,16 @@ interface Props {
 const Horse = (props: Props) => {
     const category: string = useSelector((state: RootState) => state.category);
     const name: string = useSelector((state: RootState) => state.horse);
+    const [profilePicture, setProfilePicture] = useState(null as any);
     const { data, loading } = useHorseQuery({
         variables: {
-            horsesWhere: {
+            where: {
                 name: name
             }
         }
     });
     const [UpdateHorse] = useUpdateHorsesMutation();
     const [formState, setFormState] = useState({} as any);
-    const [toggler, setToggler] = useState(false);
 
     useEffect(() => {
         if (!loading) {
@@ -37,6 +37,10 @@ const Horse = (props: Props) => {
                 owner: data?.horses[0].owner,
                 after: data?.horses[0].after
             });
+            if (data?.horses[0].images?.find((image) => image!.profile)) {
+                /* @ts-ignore */
+                setProfilePicture(data?.horses[0].images?.find((image) => image!.profile).url);
+            }
         }
     }, [data, loading])
 
@@ -144,19 +148,20 @@ const Horse = (props: Props) => {
                             </div>
                             <SRLWrapper>
                                 <div className="flex mt-4">
-                                    {data!.horses[0].images[0] !== "" && data!.horses[0].images.map((image, index) => {
+                                    {data!.horses[0].images && data!.horses[0].images.map((image, index) => {
                                         return (
                                             <div key={index} className="relative h-52 w-1/3 mr-2 cursor-pointer">
-                                                <Image alt={name} src={image!} layout="fill" objectFit="cover" />
+                                                <Image alt={name} src={image!.url} layout="fill" objectFit="cover" />
                                             </div>
                                         )
                                     })}
-                                    <AddHorseImage/>
+                                    <AddHorseImage profile={false} />
                                 </div>
                             </SRLWrapper>
                         </div>
-                        <div style={{ backgroundImage: `url("${data!.horses[0].profile}")`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }} className="w-full ml-20 hidden md:flex">
-                            <UploadControl path={`/horses/${name}/profile`} currentImage={data!.horses[0].profile!.split("https://cdn.image4.io/jemmastables/")[1]} />
+                        <div style={{ backgroundImage: `url("${profilePicture}")`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }} className="w-full ml-20 hidden md:flex">
+                            <UploadControlImages id="profile_upload" path={`/horses/${name}`} profile={true}>
+                            </UploadControlImages>
                         </div>
 
                     </div>

@@ -11,7 +11,6 @@ const AddHorseBanner = (props: Props) => {
 
     const handleClick = () => {
         setModalOpen(true);
-        console.log("Hej");
     }
 
     return (

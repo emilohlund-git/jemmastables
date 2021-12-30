@@ -1,0 +1,5 @@
+query HorseImage($where: HorseImageWhere) {
+  horseImages(where: $where) {
+    ...RegularHorseImage
+  }
+}

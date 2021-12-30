@@ -1,6 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, useState } from 'react';
-import { useCreateHorseMutation } from '../../generated/graphql';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useCreateHorseMutation, useHorsesQuery } from '../../generated/graphql';
+import { RootState } from '../../redux/reducers';
 import { HORSE_CATEGORIES } from '../../utils/constants';
 
 interface Props {
@@ -15,6 +17,7 @@ function classNames(...classes: string[]) {
 // eslint-disable-next-line react/display-name
 export const AddHorseModal = React.memo((props: Props) => {
     const [image, setImage] = useState() as any;
+    const category: string = useSelector((state: RootState) => state.category);
 
     const [formState, setFormState] = useState({
         name: '',
@@ -27,10 +30,19 @@ export const AddHorseModal = React.memo((props: Props) => {
         birthyear: '',
         gender: '',
         color: '',
-        category: ''
+        category: category
     });
 
+    useEffect(() => {
+        setFormState({
+            ...formState,
+            category: category
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [category])
+
     const [CreateHorse] = useCreateHorseMutation();
+    const { data, loading } = useHorsesQuery();
 
     function closeModal() {
         props.setModalOpen(false);
@@ -47,8 +59,13 @@ export const AddHorseModal = React.memo((props: Props) => {
             body
         })
         const json = await response.json();
-        const uploadedFile = json.uploadedFiles[0].url;
-
+        const _image = {
+            url: json.uploadedFiles[0].url,
+            path: json.uploadedFiles[0].imagePath,
+            width: json.uploadedFiles[0].width,
+            height: json.uploadedFiles[0].height,
+            profile: true
+        }
         const { errors } = await CreateHorse({
             variables: {
                 where: {
@@ -58,8 +75,13 @@ export const AddHorseModal = React.memo((props: Props) => {
                     name: formState.name,
                     nickname: formState.nickname,
                     movie: formState.movie,
-                    profile: uploadedFile,
-                    images: formState.images,
+                    images: {
+                        create: [
+                            {
+                                node: _image
+                            }
+                        ]
+                    },
                     owner: formState.owner,
                     after: formState.after,
                     birthyear: formState.birthyear,
@@ -83,6 +105,8 @@ export const AddHorseModal = React.memo((props: Props) => {
 
         if (!errors) {
             closeModal();
+        } else {
+            console.log(errors);
         }
     }
 

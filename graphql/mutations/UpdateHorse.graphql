@@ -1,17 +1,7 @@
 mutation UpdateHorses($where: HorseWhere, $update: HorseUpdateInput) {
   updateHorses(where: $where, update: $update) {
     horses {
-      name
-      nickname
-      images
-      owner
-      after
-      birthyear
-      gender
-      color
-      category {
-        category
-      }
+      ...RegularHorse
     }
   }
 }

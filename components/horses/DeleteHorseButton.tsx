@@ -15,7 +15,9 @@ const DeleteHorseButton = (props: Props) => {
      */
     const [DeleteHorse] = useDeleteHorsesMutation();
 
-    const handleDelete = async () => {
+    const handleDelete = async (e: any) => {
+        e.stopPropagation();
+
         await axios.delete("http://localhost:4000/image4io/folders", {
             data: { path: 'horses/' + props.name }
         })

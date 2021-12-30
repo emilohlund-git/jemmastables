@@ -1,19 +1,23 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useHorseQuery, useUpdateHorsesMutation } from '../generated/graphql';
+import { useCreateHorseImagesMutation, useDeleteHorseImagesMutation } from '../generated/graphql';
 import { RootState } from '../redux/reducers';
 
-const UploadControlImages = ({ children, path }: any) => {
-    const [UpdateHorse] = useUpdateHorsesMutation();
+interface Props {
+    children: any
+    path: string
+    profile: boolean
+    id: string
+}
+
+const UploadControlImages = ({ children, path, profile, id }: Props) => {
+    const [CreateHorseImages] = useCreateHorseImagesMutation();
+    const [DeleteHorseImages] = useDeleteHorseImagesMutation();
     const name: string = useSelector((state: RootState) => state.horse);
-    const { data, loading } = useHorseQuery({
-        variables: {
-            horsesWhere: {
-                name: name
-            }
-        }
-    });
+
     const handleUpload = async (e: any) => {
+        console.log(profile);
+
         if (e.target.files.length > 0) {
             const body = new FormData();
             body.append("file", e.target.files[0]);
@@ -24,16 +28,44 @@ const UploadControlImages = ({ children, path }: any) => {
                 body
             })
             const json = await response.json();
-            const uploadedFile = json.uploadedFiles[0].url;
-            const images = data!.horses[0].images;
-            const { errors } = await UpdateHorse({
-                variables: {
-                    where: {
-                        name: name
-                    },
-                    update: {
-                        images: [...images, uploadedFile]
+
+            if (profile) {
+                await DeleteHorseImages({
+                    variables: {
+                        where: {
+                            owner: {
+                                name: name
+                            },
+                            AND: [
+                                {
+                                    profile: true
+                                }
+                            ]
+                        }
                     }
+                })
+            }
+
+            const { errors } = await CreateHorseImages({
+                variables: {
+                    input: [
+                        {
+                            url: json.uploadedFiles[0].url,
+                            path: json.uploadedFiles[0].imagePath,
+                            width: json.uploadedFiles[0].width,
+                            height: json.uploadedFiles[0].height,
+                            profile: profile,
+                            owner: {
+                                connect: {
+                                    where: {
+                                        node: {
+                                            name: name
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
                 },
                 update: (cache) => {
                     cache.evict({ fieldName: "horses" });
@@ -46,8 +78,8 @@ const UploadControlImages = ({ children, path }: any) => {
         }
     }
     return (
-        <label htmlFor="formId" className="w-full">
-            <input name="" type="file" id="formId" hidden onChange={handleUpload} />
+        <label htmlFor={id} className="w-full">
+            <input name="" type="file" id={id} hidden onChange={handleUpload} />
             {children}
         </label>
     )

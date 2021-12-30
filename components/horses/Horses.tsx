@@ -14,9 +14,9 @@ const Horses = (props: Props) => {
     const category: string = useSelector((state: RootState) => state.category);
     const { data, loading } = useHorsesQuery({
         variables: {
-            horsesWhere: {
+            where: {
                 category: {
-                    category: category
+                    category: "Tävlingshästar"
                 }
             }
         }
@@ -26,7 +26,7 @@ const Horses = (props: Props) => {
 
     return (
         <div className="flex flex-col justify-center items-center">
-            {!loading && data! ?
+            {!loading || data! ?
                 data?.horses.map((horse, index) => {
                     return (<HorseBanner horse={horse as Horse} key={index} />)
                 })

@@ -1,0 +1,6 @@
+mutation DeleteHorseImages($where: HorseImageWhere) {
+  deleteHorseImages(where: $where) {
+    nodesDeleted
+    relationshipsDeleted
+  }
+}
