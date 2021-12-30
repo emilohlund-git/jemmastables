@@ -37,10 +37,12 @@ export function AuthProvider({ children }: any) {
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user: any) => {
-            if (user.email === "emil@emilohlund.se") {
-                dispatch(setAdmin(true));
-            } else {
-                dispatch(setAdmin(false));
+            if (user) {
+                if (user.email === "emil@emilohlund.se") {
+                    dispatch(setAdmin(true));
+                } else {
+                    dispatch(setAdmin(false));
+                }
             }
             setCurrentUser(user)
             setLoading(false)
