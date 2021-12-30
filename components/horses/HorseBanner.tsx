@@ -14,6 +14,7 @@ const HorseBanner = (props: Props) => {
     const [hovering, setHovering] = useState(false);
     /* @ts-ignore */
     const profilePhoto = props.horse.images.find(image => image.profile).url;
+    const admin: boolean = useSelector((state: RootState) => state.admin);
     const dispatch = useDispatch();
     const router = useRouter();
     const category: string = useSelector((state: RootState) => state.category);
@@ -27,7 +28,9 @@ const HorseBanner = (props: Props) => {
 
     return (
         <div onClick={handleClick} className={`flex z-20 w-full relative h-56 filter grayscale transition-all hover:filter-none`} onMouseLeave={() => setHovering(false)} onMouseEnter={() => setHovering(true)} style={{ backgroundImage: `url(${profilePhoto})`, backgroundPosition: "center", backgroundSize: "cover" }}>
-            <DeleteHorseButton name={props.horse.name} />
+            {admin &&
+                <DeleteHorseButton name={props.horse.name} />
+            }
             <div className="text-left ml-4 self-end mb-4">
                 <div className="flex items-center">
                     <p className={`text-white transform transition-all mr-2 ${!hovering ? "scale-0 -mr-4" : "scale-100"}`}>&rarr;</p>

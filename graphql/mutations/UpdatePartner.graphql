@@ -1,0 +1,7 @@
+mutation UpdatePartner($where: PartnerWhere) {
+  updatePartners(where: $where) {
+    partners {
+      ...RegularPartner
+    }
+  }
+}

@@ -1,9 +1,11 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import partners from '../config/partners'
+import { usePartnersQuery } from '../generated/graphql';
 
 const Home: NextPage = () => {
+  const { data, loading } = usePartnersQuery();
+
   return (
     <div>
       <Head>
@@ -27,9 +29,9 @@ const Home: NextPage = () => {
         </video>
         <div className="flex items-end md:pb-14">
           <div className="flex w-full h-20 items-center justify-evenly z-20">
-            {partners.map((partner, i: number) => (
+            {!loading && data?.partners.map((partner, i: number) => (
               <div key={i} className="w-2/12 md:w-1/12 z-20 filter grayscale invert brightness-0 opacity-30">
-                <Image src={partner.image} alt={partner.alt} width={partner.width} height={partner.height} layout="responsive" />
+                <Image src={partner.logo!.url} alt={partner.name} width={partner.logo!.width} height={partner.logo!.height} layout="responsive" />
               </div>
             ))}
           </div>

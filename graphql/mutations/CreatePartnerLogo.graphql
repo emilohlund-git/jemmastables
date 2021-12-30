@@ -1,0 +1,7 @@
+mutation CreatePartnerLogo($input: [PartnerLogoCreateInput!]!) {
+  createPartnerLogos(input: $input) {
+    partnerLogos {
+      ...RegularPartnerLogo
+    }
+  }
+}

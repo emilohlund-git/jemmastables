@@ -1,0 +1,7 @@
+mutation UpdatePartnerLogo($where: PartnerLogoWhere) {
+  updatePartnerLogos(where: $where) {
+    partnerLogos {
+      ...RegularPartnerLogo
+    }
+  }
+}

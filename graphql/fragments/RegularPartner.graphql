@@ -1,0 +1,11 @@
+fragment RegularPartner on Partner {
+  name
+  description
+  website
+  logo {
+    url
+    path
+    width
+    height
+  }
+}

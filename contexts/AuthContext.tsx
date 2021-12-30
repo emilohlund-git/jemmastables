@@ -1,6 +1,8 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import React, { createContext, useContext, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { useCreateUsersMutation, User } from '../generated/graphql';
+import { setAdmin } from '../redux/actions';
 import { auth } from '../utils/firebase/firebase';
 
 const AuthContext = createContext(null);
@@ -8,6 +10,7 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }: any) {
     const [CreateUser] = useCreateUsersMutation();
     const [currentUser, setCurrentUser] = useState();
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
 
     async function signup(user: User) {
@@ -34,6 +37,11 @@ export function AuthProvider({ children }: any) {
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user: any) => {
+            if (user.email === "emil@emilohlund.se") {
+                dispatch(setAdmin(true));
+            } else {
+                dispatch(setAdmin(false));
+            }
             setCurrentUser(user)
             setLoading(false)
         });

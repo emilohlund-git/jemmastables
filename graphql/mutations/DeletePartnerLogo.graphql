@@ -1,0 +1,6 @@
+mutation DeletePartnerLogo($where: PartnerLogoWhere) {
+  deletePartnerLogos(where: $where) {
+    nodesDeleted
+    relationshipsDeleted
+  }
+}

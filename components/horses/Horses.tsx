@@ -11,6 +11,7 @@ interface Props {
 }
 
 const Horses = (props: Props) => {
+    const admin: boolean = useSelector((state: RootState) => state.admin);
     const category: string = useSelector((state: RootState) => state.category);
     const { data, loading } = useHorsesQuery({
         variables: {
@@ -22,8 +23,6 @@ const Horses = (props: Props) => {
         }
     });
 
-    console.log(data);
-
     return (
         <div className="flex flex-col justify-center items-center">
             {!loading || data! ?
@@ -33,7 +32,9 @@ const Horses = (props: Props) => {
                 :
                 <Spinner />
             }
-            <AddHorseBanner />
+            {admin &&
+                <AddHorseBanner />
+            }
         </div>
     )
 }

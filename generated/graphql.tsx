@@ -188,10 +188,16 @@ export type CreatePagesMutationResponse = {
   pages: Array<Page>;
 };
 
+export type CreatePartnerLogosMutationResponse = {
+  __typename?: 'CreatePartnerLogosMutationResponse';
+  info: CreateInfo;
+  partnerLogos: Array<PartnerLogo>;
+};
+
 export type CreatePartnersMutationResponse = {
   __typename?: 'CreatePartnersMutationResponse';
   info: CreateInfo;
-  partners: Array<Partners>;
+  partners: Array<Partner>;
 };
 
 export type CreateTimeSlotTypesMutationResponse = {
@@ -1887,6 +1893,7 @@ export type Mutation = {
   createHorses: CreateHorsesMutationResponse;
   createLogos: CreateLogosMutationResponse;
   createPages: CreatePagesMutationResponse;
+  createPartnerLogos: CreatePartnerLogosMutationResponse;
   createPartners: CreatePartnersMutationResponse;
   createTimeSlotTypes: CreateTimeSlotTypesMutationResponse;
   createTimeSlots: CreateTimeSlotsMutationResponse;
@@ -1900,6 +1907,7 @@ export type Mutation = {
   deleteHorses: DeleteInfo;
   deleteLogos: DeleteInfo;
   deletePages: DeleteInfo;
+  deletePartnerLogos: DeleteInfo;
   deletePartners: DeleteInfo;
   deleteTimeSlotTypes: DeleteInfo;
   deleteTimeSlots: DeleteInfo;
@@ -1913,6 +1921,7 @@ export type Mutation = {
   updateHorses: UpdateHorsesMutationResponse;
   updateLogos: UpdateLogosMutationResponse;
   updatePages: UpdatePagesMutationResponse;
+  updatePartnerLogos: UpdatePartnerLogosMutationResponse;
   updatePartners: UpdatePartnersMutationResponse;
   updateTimeSlotTypes: UpdateTimeSlotTypesMutationResponse;
   updateTimeSlots: UpdateTimeSlotsMutationResponse;
@@ -1965,8 +1974,13 @@ export type MutationCreatePagesArgs = {
 };
 
 
+export type MutationCreatePartnerLogosArgs = {
+  input: Array<PartnerLogoCreateInput>;
+};
+
+
 export type MutationCreatePartnersArgs = {
-  input: Array<PartnersCreateInput>;
+  input: Array<PartnerCreateInput>;
 };
 
 
@@ -2034,8 +2048,15 @@ export type MutationDeletePagesArgs = {
 };
 
 
+export type MutationDeletePartnerLogosArgs = {
+  delete?: InputMaybe<PartnerLogoDeleteInput>;
+  where?: InputMaybe<PartnerLogoWhere>;
+};
+
+
 export type MutationDeletePartnersArgs = {
-  where?: InputMaybe<PartnersWhere>;
+  delete?: InputMaybe<PartnerDeleteInput>;
+  where?: InputMaybe<PartnerWhere>;
 };
 
 
@@ -2127,9 +2148,23 @@ export type MutationUpdatePagesArgs = {
 };
 
 
+export type MutationUpdatePartnerLogosArgs = {
+  connect?: InputMaybe<PartnerLogoConnectInput>;
+  create?: InputMaybe<PartnerLogoRelationInput>;
+  delete?: InputMaybe<PartnerLogoDeleteInput>;
+  disconnect?: InputMaybe<PartnerLogoDisconnectInput>;
+  update?: InputMaybe<PartnerLogoUpdateInput>;
+  where?: InputMaybe<PartnerLogoWhere>;
+};
+
+
 export type MutationUpdatePartnersArgs = {
-  update?: InputMaybe<PartnersUpdateInput>;
-  where?: InputMaybe<PartnersWhere>;
+  connect?: InputMaybe<PartnerConnectInput>;
+  create?: InputMaybe<PartnerRelationInput>;
+  delete?: InputMaybe<PartnerDeleteInput>;
+  disconnect?: InputMaybe<PartnerDisconnectInput>;
+  update?: InputMaybe<PartnerUpdateInput>;
+  where?: InputMaybe<PartnerWhere>;
 };
 
 
@@ -2240,55 +2275,561 @@ export type PageWhere = {
   name_STARTS_WITH?: InputMaybe<Scalars['String']>;
 };
 
-export type Partners = {
-  __typename?: 'Partners';
+export type Partner = {
+  __typename?: 'Partner';
   description: Scalars['String'];
-  image: Scalars['String'];
+  logo?: Maybe<PartnerLogo>;
+  logoAggregate?: Maybe<PartnerPartnerLogoLogoAggregationSelection>;
+  logoConnection: PartnerLogoConnection;
   name: Scalars['String'];
   website?: Maybe<Scalars['String']>;
 };
 
-export type PartnersAggregateSelection = {
-  __typename?: 'PartnersAggregateSelection';
+
+export type PartnerLogoArgs = {
+  options?: InputMaybe<PartnerLogoOptions>;
+  where?: InputMaybe<PartnerLogoWhere>;
+};
+
+
+export type PartnerLogoAggregateArgs = {
+  where?: InputMaybe<PartnerLogoWhere>;
+};
+
+
+export type PartnerLogoConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<PartnerLogoConnectionSort>>;
+  where?: InputMaybe<PartnerLogoConnectionWhere>;
+};
+
+export type PartnerAggregateSelection = {
+  __typename?: 'PartnerAggregateSelection';
   count: Scalars['Int'];
   description: StringAggregateSelection;
-  image: StringAggregateSelection;
   name: StringAggregateSelection;
   website: StringAggregateSelection;
 };
 
-export type PartnersCreateInput = {
+export type PartnerConnectInput = {
+  logo?: InputMaybe<PartnerLogoConnectFieldInput>;
+};
+
+export type PartnerConnectWhere = {
+  node: PartnerWhere;
+};
+
+export type PartnerCreateInput = {
   description: Scalars['String'];
-  image: Scalars['String'];
+  logo?: InputMaybe<PartnerLogoFieldInput>;
   name: Scalars['String'];
   website?: InputMaybe<Scalars['String']>;
 };
 
-export type PartnersOptions = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  /** Specify one or more PartnersSort objects to sort Partners by. The sorts will be applied in the order in which they are arranged in the array. */
-  sort?: InputMaybe<Array<InputMaybe<PartnersSort>>>;
+export type PartnerDeleteInput = {
+  logo?: InputMaybe<PartnerLogoDeleteFieldInput>;
 };
 
-/** Fields to sort Partners by. The order in which sorts are applied is not guaranteed when specifying many fields in one PartnersSort object. */
-export type PartnersSort = {
+export type PartnerDisconnectInput = {
+  logo?: InputMaybe<PartnerLogoDisconnectFieldInput>;
+};
+
+export type PartnerLogo = {
+  __typename?: 'PartnerLogo';
+  height: Scalars['Int'];
+  owner?: Maybe<Partner>;
+  ownerAggregate?: Maybe<PartnerLogoPartnerOwnerAggregationSelection>;
+  ownerConnection: PartnerLogoOwnerConnection;
+  path: Scalars['String'];
+  url: Scalars['String'];
+  width: Scalars['Int'];
+};
+
+
+export type PartnerLogoOwnerArgs = {
+  options?: InputMaybe<PartnerOptions>;
+  where?: InputMaybe<PartnerWhere>;
+};
+
+
+export type PartnerLogoOwnerAggregateArgs = {
+  where?: InputMaybe<PartnerWhere>;
+};
+
+
+export type PartnerLogoOwnerConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<PartnerLogoOwnerConnectionSort>>;
+  where?: InputMaybe<PartnerLogoOwnerConnectionWhere>;
+};
+
+export type PartnerLogoAggregateInput = {
+  AND?: InputMaybe<Array<PartnerLogoAggregateInput>>;
+  OR?: InputMaybe<Array<PartnerLogoAggregateInput>>;
+  count?: InputMaybe<Scalars['Int']>;
+  count_GT?: InputMaybe<Scalars['Int']>;
+  count_GTE?: InputMaybe<Scalars['Int']>;
+  count_LT?: InputMaybe<Scalars['Int']>;
+  count_LTE?: InputMaybe<Scalars['Int']>;
+  node?: InputMaybe<PartnerLogoNodeAggregationWhereInput>;
+};
+
+export type PartnerLogoAggregateSelection = {
+  __typename?: 'PartnerLogoAggregateSelection';
+  count: Scalars['Int'];
+  height: IntAggregateSelection;
+  path: StringAggregateSelection;
+  url: StringAggregateSelection;
+  width: IntAggregateSelection;
+};
+
+export type PartnerLogoConnectFieldInput = {
+  connect?: InputMaybe<PartnerLogoConnectInput>;
+  where?: InputMaybe<PartnerLogoConnectWhere>;
+};
+
+export type PartnerLogoConnectInput = {
+  owner?: InputMaybe<PartnerLogoOwnerConnectFieldInput>;
+};
+
+export type PartnerLogoConnectWhere = {
+  node: PartnerLogoWhere;
+};
+
+export type PartnerLogoConnection = {
+  __typename?: 'PartnerLogoConnection';
+  edges: Array<PartnerLogoRelationship>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type PartnerLogoConnectionSort = {
+  node?: InputMaybe<PartnerLogoSort>;
+};
+
+export type PartnerLogoConnectionWhere = {
+  AND?: InputMaybe<Array<PartnerLogoConnectionWhere>>;
+  OR?: InputMaybe<Array<PartnerLogoConnectionWhere>>;
+  node?: InputMaybe<PartnerLogoWhere>;
+  node_NOT?: InputMaybe<PartnerLogoWhere>;
+};
+
+export type PartnerLogoCreateFieldInput = {
+  node: PartnerLogoCreateInput;
+};
+
+export type PartnerLogoCreateInput = {
+  height: Scalars['Int'];
+  owner?: InputMaybe<PartnerLogoOwnerFieldInput>;
+  path: Scalars['String'];
+  url: Scalars['String'];
+  width: Scalars['Int'];
+};
+
+export type PartnerLogoDeleteFieldInput = {
+  delete?: InputMaybe<PartnerLogoDeleteInput>;
+  where?: InputMaybe<PartnerLogoConnectionWhere>;
+};
+
+export type PartnerLogoDeleteInput = {
+  owner?: InputMaybe<PartnerLogoOwnerDeleteFieldInput>;
+};
+
+export type PartnerLogoDisconnectFieldInput = {
+  disconnect?: InputMaybe<PartnerLogoDisconnectInput>;
+  where?: InputMaybe<PartnerLogoConnectionWhere>;
+};
+
+export type PartnerLogoDisconnectInput = {
+  owner?: InputMaybe<PartnerLogoOwnerDisconnectFieldInput>;
+};
+
+export type PartnerLogoFieldInput = {
+  connect?: InputMaybe<PartnerLogoConnectFieldInput>;
+  create?: InputMaybe<PartnerLogoCreateFieldInput>;
+};
+
+export type PartnerLogoNodeAggregationWhereInput = {
+  AND?: InputMaybe<Array<PartnerLogoNodeAggregationWhereInput>>;
+  OR?: InputMaybe<Array<PartnerLogoNodeAggregationWhereInput>>;
+  height_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  height_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  height_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  height_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  height_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  height_EQUAL?: InputMaybe<Scalars['Int']>;
+  height_GT?: InputMaybe<Scalars['Int']>;
+  height_GTE?: InputMaybe<Scalars['Int']>;
+  height_LT?: InputMaybe<Scalars['Int']>;
+  height_LTE?: InputMaybe<Scalars['Int']>;
+  height_MAX_EQUAL?: InputMaybe<Scalars['Int']>;
+  height_MAX_GT?: InputMaybe<Scalars['Int']>;
+  height_MAX_GTE?: InputMaybe<Scalars['Int']>;
+  height_MAX_LT?: InputMaybe<Scalars['Int']>;
+  height_MAX_LTE?: InputMaybe<Scalars['Int']>;
+  height_MIN_EQUAL?: InputMaybe<Scalars['Int']>;
+  height_MIN_GT?: InputMaybe<Scalars['Int']>;
+  height_MIN_GTE?: InputMaybe<Scalars['Int']>;
+  height_MIN_LT?: InputMaybe<Scalars['Int']>;
+  height_MIN_LTE?: InputMaybe<Scalars['Int']>;
+  height_SUM_EQUAL?: InputMaybe<Scalars['Int']>;
+  height_SUM_GT?: InputMaybe<Scalars['Int']>;
+  height_SUM_GTE?: InputMaybe<Scalars['Int']>;
+  height_SUM_LT?: InputMaybe<Scalars['Int']>;
+  height_SUM_LTE?: InputMaybe<Scalars['Int']>;
+  path_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  path_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  path_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  path_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  path_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  path_EQUAL?: InputMaybe<Scalars['String']>;
+  path_GT?: InputMaybe<Scalars['Int']>;
+  path_GTE?: InputMaybe<Scalars['Int']>;
+  path_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  path_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  path_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  path_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  path_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  path_LT?: InputMaybe<Scalars['Int']>;
+  path_LTE?: InputMaybe<Scalars['Int']>;
+  path_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  path_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  path_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  path_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  path_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  url_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  url_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  url_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  url_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  url_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  url_EQUAL?: InputMaybe<Scalars['String']>;
+  url_GT?: InputMaybe<Scalars['Int']>;
+  url_GTE?: InputMaybe<Scalars['Int']>;
+  url_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  url_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  url_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  url_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  url_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  url_LT?: InputMaybe<Scalars['Int']>;
+  url_LTE?: InputMaybe<Scalars['Int']>;
+  url_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  url_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  url_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  url_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  url_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  width_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  width_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  width_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  width_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  width_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  width_EQUAL?: InputMaybe<Scalars['Int']>;
+  width_GT?: InputMaybe<Scalars['Int']>;
+  width_GTE?: InputMaybe<Scalars['Int']>;
+  width_LT?: InputMaybe<Scalars['Int']>;
+  width_LTE?: InputMaybe<Scalars['Int']>;
+  width_MAX_EQUAL?: InputMaybe<Scalars['Int']>;
+  width_MAX_GT?: InputMaybe<Scalars['Int']>;
+  width_MAX_GTE?: InputMaybe<Scalars['Int']>;
+  width_MAX_LT?: InputMaybe<Scalars['Int']>;
+  width_MAX_LTE?: InputMaybe<Scalars['Int']>;
+  width_MIN_EQUAL?: InputMaybe<Scalars['Int']>;
+  width_MIN_GT?: InputMaybe<Scalars['Int']>;
+  width_MIN_GTE?: InputMaybe<Scalars['Int']>;
+  width_MIN_LT?: InputMaybe<Scalars['Int']>;
+  width_MIN_LTE?: InputMaybe<Scalars['Int']>;
+  width_SUM_EQUAL?: InputMaybe<Scalars['Int']>;
+  width_SUM_GT?: InputMaybe<Scalars['Int']>;
+  width_SUM_GTE?: InputMaybe<Scalars['Int']>;
+  width_SUM_LT?: InputMaybe<Scalars['Int']>;
+  width_SUM_LTE?: InputMaybe<Scalars['Int']>;
+};
+
+export type PartnerLogoOptions = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  /** Specify one or more PartnerLogoSort objects to sort PartnerLogos by. The sorts will be applied in the order in which they are arranged in the array. */
+  sort?: InputMaybe<Array<InputMaybe<PartnerLogoSort>>>;
+};
+
+export type PartnerLogoOwnerAggregateInput = {
+  AND?: InputMaybe<Array<PartnerLogoOwnerAggregateInput>>;
+  OR?: InputMaybe<Array<PartnerLogoOwnerAggregateInput>>;
+  count?: InputMaybe<Scalars['Int']>;
+  count_GT?: InputMaybe<Scalars['Int']>;
+  count_GTE?: InputMaybe<Scalars['Int']>;
+  count_LT?: InputMaybe<Scalars['Int']>;
+  count_LTE?: InputMaybe<Scalars['Int']>;
+  node?: InputMaybe<PartnerLogoOwnerNodeAggregationWhereInput>;
+};
+
+export type PartnerLogoOwnerConnectFieldInput = {
+  connect?: InputMaybe<PartnerConnectInput>;
+  where?: InputMaybe<PartnerConnectWhere>;
+};
+
+export type PartnerLogoOwnerConnection = {
+  __typename?: 'PartnerLogoOwnerConnection';
+  edges: Array<PartnerLogoOwnerRelationship>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type PartnerLogoOwnerConnectionSort = {
+  node?: InputMaybe<PartnerSort>;
+};
+
+export type PartnerLogoOwnerConnectionWhere = {
+  AND?: InputMaybe<Array<PartnerLogoOwnerConnectionWhere>>;
+  OR?: InputMaybe<Array<PartnerLogoOwnerConnectionWhere>>;
+  node?: InputMaybe<PartnerWhere>;
+  node_NOT?: InputMaybe<PartnerWhere>;
+};
+
+export type PartnerLogoOwnerCreateFieldInput = {
+  node: PartnerCreateInput;
+};
+
+export type PartnerLogoOwnerDeleteFieldInput = {
+  delete?: InputMaybe<PartnerDeleteInput>;
+  where?: InputMaybe<PartnerLogoOwnerConnectionWhere>;
+};
+
+export type PartnerLogoOwnerDisconnectFieldInput = {
+  disconnect?: InputMaybe<PartnerDisconnectInput>;
+  where?: InputMaybe<PartnerLogoOwnerConnectionWhere>;
+};
+
+export type PartnerLogoOwnerFieldInput = {
+  connect?: InputMaybe<PartnerLogoOwnerConnectFieldInput>;
+  create?: InputMaybe<PartnerLogoOwnerCreateFieldInput>;
+};
+
+export type PartnerLogoOwnerNodeAggregationWhereInput = {
+  AND?: InputMaybe<Array<PartnerLogoOwnerNodeAggregationWhereInput>>;
+  OR?: InputMaybe<Array<PartnerLogoOwnerNodeAggregationWhereInput>>;
+  description_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  description_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  description_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  description_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  description_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  description_EQUAL?: InputMaybe<Scalars['String']>;
+  description_GT?: InputMaybe<Scalars['Int']>;
+  description_GTE?: InputMaybe<Scalars['Int']>;
+  description_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  description_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  description_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  description_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  description_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  description_LT?: InputMaybe<Scalars['Int']>;
+  description_LTE?: InputMaybe<Scalars['Int']>;
+  description_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  description_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  description_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  description_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  description_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  name_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  name_EQUAL?: InputMaybe<Scalars['String']>;
+  name_GT?: InputMaybe<Scalars['Int']>;
+  name_GTE?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  name_LT?: InputMaybe<Scalars['Int']>;
+  name_LTE?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  website_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  website_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  website_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  website_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  website_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  website_EQUAL?: InputMaybe<Scalars['String']>;
+  website_GT?: InputMaybe<Scalars['Int']>;
+  website_GTE?: InputMaybe<Scalars['Int']>;
+  website_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  website_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  website_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  website_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  website_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  website_LT?: InputMaybe<Scalars['Int']>;
+  website_LTE?: InputMaybe<Scalars['Int']>;
+  website_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  website_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  website_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  website_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  website_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+};
+
+export type PartnerLogoOwnerRelationship = {
+  __typename?: 'PartnerLogoOwnerRelationship';
+  cursor: Scalars['String'];
+  node: Partner;
+};
+
+export type PartnerLogoOwnerUpdateConnectionInput = {
+  node?: InputMaybe<PartnerUpdateInput>;
+};
+
+export type PartnerLogoOwnerUpdateFieldInput = {
+  connect?: InputMaybe<PartnerLogoOwnerConnectFieldInput>;
+  create?: InputMaybe<PartnerLogoOwnerCreateFieldInput>;
+  delete?: InputMaybe<PartnerLogoOwnerDeleteFieldInput>;
+  disconnect?: InputMaybe<PartnerLogoOwnerDisconnectFieldInput>;
+  update?: InputMaybe<PartnerLogoOwnerUpdateConnectionInput>;
+  where?: InputMaybe<PartnerLogoOwnerConnectionWhere>;
+};
+
+export type PartnerLogoPartnerOwnerAggregationSelection = {
+  __typename?: 'PartnerLogoPartnerOwnerAggregationSelection';
+  count: Scalars['Int'];
+  node?: Maybe<PartnerLogoPartnerOwnerNodeAggregateSelection>;
+};
+
+export type PartnerLogoPartnerOwnerNodeAggregateSelection = {
+  __typename?: 'PartnerLogoPartnerOwnerNodeAggregateSelection';
+  description: StringAggregateSelection;
+  name: StringAggregateSelection;
+  website: StringAggregateSelection;
+};
+
+export type PartnerLogoRelationInput = {
+  owner?: InputMaybe<PartnerLogoOwnerCreateFieldInput>;
+};
+
+export type PartnerLogoRelationship = {
+  __typename?: 'PartnerLogoRelationship';
+  cursor: Scalars['String'];
+  node: PartnerLogo;
+};
+
+/** Fields to sort PartnerLogos by. The order in which sorts are applied is not guaranteed when specifying many fields in one PartnerLogoSort object. */
+export type PartnerLogoSort = {
+  height?: InputMaybe<SortDirection>;
+  path?: InputMaybe<SortDirection>;
+  url?: InputMaybe<SortDirection>;
+  width?: InputMaybe<SortDirection>;
+};
+
+export type PartnerLogoUpdateConnectionInput = {
+  node?: InputMaybe<PartnerLogoUpdateInput>;
+};
+
+export type PartnerLogoUpdateFieldInput = {
+  connect?: InputMaybe<PartnerLogoConnectFieldInput>;
+  create?: InputMaybe<PartnerLogoCreateFieldInput>;
+  delete?: InputMaybe<PartnerLogoDeleteFieldInput>;
+  disconnect?: InputMaybe<PartnerLogoDisconnectFieldInput>;
+  update?: InputMaybe<PartnerLogoUpdateConnectionInput>;
+  where?: InputMaybe<PartnerLogoConnectionWhere>;
+};
+
+export type PartnerLogoUpdateInput = {
+  height?: InputMaybe<Scalars['Int']>;
+  owner?: InputMaybe<PartnerLogoOwnerUpdateFieldInput>;
+  path?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+  width?: InputMaybe<Scalars['Int']>;
+};
+
+export type PartnerLogoWhere = {
+  AND?: InputMaybe<Array<PartnerLogoWhere>>;
+  OR?: InputMaybe<Array<PartnerLogoWhere>>;
+  height?: InputMaybe<Scalars['Int']>;
+  height_GT?: InputMaybe<Scalars['Int']>;
+  height_GTE?: InputMaybe<Scalars['Int']>;
+  height_IN?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  height_LT?: InputMaybe<Scalars['Int']>;
+  height_LTE?: InputMaybe<Scalars['Int']>;
+  height_NOT?: InputMaybe<Scalars['Int']>;
+  height_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  owner?: InputMaybe<PartnerWhere>;
+  ownerAggregate?: InputMaybe<PartnerLogoOwnerAggregateInput>;
+  ownerConnection?: InputMaybe<PartnerLogoOwnerConnectionWhere>;
+  ownerConnection_NOT?: InputMaybe<PartnerLogoOwnerConnectionWhere>;
+  owner_NOT?: InputMaybe<PartnerWhere>;
+  path?: InputMaybe<Scalars['String']>;
+  path_CONTAINS?: InputMaybe<Scalars['String']>;
+  path_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  path_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  path_NOT?: InputMaybe<Scalars['String']>;
+  path_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  path_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  path_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  path_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  path_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+  url_CONTAINS?: InputMaybe<Scalars['String']>;
+  url_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  url_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  url_NOT?: InputMaybe<Scalars['String']>;
+  url_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  url_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  url_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  url_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  url_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  width?: InputMaybe<Scalars['Int']>;
+  width_GT?: InputMaybe<Scalars['Int']>;
+  width_GTE?: InputMaybe<Scalars['Int']>;
+  width_IN?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  width_LT?: InputMaybe<Scalars['Int']>;
+  width_LTE?: InputMaybe<Scalars['Int']>;
+  width_NOT?: InputMaybe<Scalars['Int']>;
+  width_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+};
+
+export type PartnerOptions = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  /** Specify one or more PartnerSort objects to sort Partners by. The sorts will be applied in the order in which they are arranged in the array. */
+  sort?: InputMaybe<Array<InputMaybe<PartnerSort>>>;
+};
+
+export type PartnerPartnerLogoLogoAggregationSelection = {
+  __typename?: 'PartnerPartnerLogoLogoAggregationSelection';
+  count: Scalars['Int'];
+  node?: Maybe<PartnerPartnerLogoLogoNodeAggregateSelection>;
+};
+
+export type PartnerPartnerLogoLogoNodeAggregateSelection = {
+  __typename?: 'PartnerPartnerLogoLogoNodeAggregateSelection';
+  height: IntAggregateSelection;
+  path: StringAggregateSelection;
+  url: StringAggregateSelection;
+  width: IntAggregateSelection;
+};
+
+export type PartnerRelationInput = {
+  logo?: InputMaybe<PartnerLogoCreateFieldInput>;
+};
+
+/** Fields to sort Partners by. The order in which sorts are applied is not guaranteed when specifying many fields in one PartnerSort object. */
+export type PartnerSort = {
   description?: InputMaybe<SortDirection>;
-  image?: InputMaybe<SortDirection>;
   name?: InputMaybe<SortDirection>;
   website?: InputMaybe<SortDirection>;
 };
 
-export type PartnersUpdateInput = {
+export type PartnerUpdateInput = {
   description?: InputMaybe<Scalars['String']>;
-  image?: InputMaybe<Scalars['String']>;
+  logo?: InputMaybe<PartnerLogoUpdateFieldInput>;
   name?: InputMaybe<Scalars['String']>;
   website?: InputMaybe<Scalars['String']>;
 };
 
-export type PartnersWhere = {
-  AND?: InputMaybe<Array<PartnersWhere>>;
-  OR?: InputMaybe<Array<PartnersWhere>>;
+export type PartnerWhere = {
+  AND?: InputMaybe<Array<PartnerWhere>>;
+  OR?: InputMaybe<Array<PartnerWhere>>;
   description?: InputMaybe<Scalars['String']>;
   description_CONTAINS?: InputMaybe<Scalars['String']>;
   description_ENDS_WITH?: InputMaybe<Scalars['String']>;
@@ -2299,16 +2840,11 @@ export type PartnersWhere = {
   description_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   description_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
   description_STARTS_WITH?: InputMaybe<Scalars['String']>;
-  image?: InputMaybe<Scalars['String']>;
-  image_CONTAINS?: InputMaybe<Scalars['String']>;
-  image_ENDS_WITH?: InputMaybe<Scalars['String']>;
-  image_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  image_NOT?: InputMaybe<Scalars['String']>;
-  image_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
-  image_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
-  image_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  image_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
-  image_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  logo?: InputMaybe<PartnerLogoWhere>;
+  logoAggregate?: InputMaybe<PartnerLogoAggregateInput>;
+  logoConnection?: InputMaybe<PartnerLogoConnectionWhere>;
+  logoConnection_NOT?: InputMaybe<PartnerLogoConnectionWhere>;
+  logo_NOT?: InputMaybe<PartnerLogoWhere>;
   name?: InputMaybe<Scalars['String']>;
   name_CONTAINS?: InputMaybe<Scalars['String']>;
   name_ENDS_WITH?: InputMaybe<Scalars['String']>;
@@ -2360,8 +2896,11 @@ export type Query = {
   pages: Array<Page>;
   pagesAggregate: PageAggregateSelection;
   pagesCount: Scalars['Int'];
-  partners: Array<Partners>;
-  partnersAggregate: PartnersAggregateSelection;
+  partnerLogos: Array<PartnerLogo>;
+  partnerLogosAggregate: PartnerLogoAggregateSelection;
+  partnerLogosCount: Scalars['Int'];
+  partners: Array<Partner>;
+  partnersAggregate: PartnerAggregateSelection;
   partnersCount: Scalars['Int'];
   timeSlotTypes: Array<TimeSlotType>;
   timeSlotTypesAggregate: TimeSlotTypeAggregateSelection;
@@ -2519,19 +3058,35 @@ export type QueryPagesCountArgs = {
 };
 
 
+export type QueryPartnerLogosArgs = {
+  options?: InputMaybe<PartnerLogoOptions>;
+  where?: InputMaybe<PartnerLogoWhere>;
+};
+
+
+export type QueryPartnerLogosAggregateArgs = {
+  where?: InputMaybe<PartnerLogoWhere>;
+};
+
+
+export type QueryPartnerLogosCountArgs = {
+  where?: InputMaybe<PartnerLogoWhere>;
+};
+
+
 export type QueryPartnersArgs = {
-  options?: InputMaybe<PartnersOptions>;
-  where?: InputMaybe<PartnersWhere>;
+  options?: InputMaybe<PartnerOptions>;
+  where?: InputMaybe<PartnerWhere>;
 };
 
 
 export type QueryPartnersAggregateArgs = {
-  where?: InputMaybe<PartnersWhere>;
+  where?: InputMaybe<PartnerWhere>;
 };
 
 
 export type QueryPartnersCountArgs = {
-  where?: InputMaybe<PartnersWhere>;
+  where?: InputMaybe<PartnerWhere>;
 };
 
 
@@ -3462,10 +4017,16 @@ export type UpdatePagesMutationResponse = {
   pages: Array<Page>;
 };
 
+export type UpdatePartnerLogosMutationResponse = {
+  __typename?: 'UpdatePartnerLogosMutationResponse';
+  info: UpdateInfo;
+  partnerLogos: Array<PartnerLogo>;
+};
+
 export type UpdatePartnersMutationResponse = {
   __typename?: 'UpdatePartnersMutationResponse';
   info: UpdateInfo;
-  partners: Array<Partners>;
+  partners: Array<Partner>;
 };
 
 export type UpdateTimeSlotTypesMutationResponse = {
@@ -3785,6 +4346,10 @@ export type RegularHorseFragment = { __typename?: 'Horse', name: string, nicknam
 
 export type RegularHorseImageFragment = { __typename?: 'HorseImage', url: string, path: string, width: number, height: number, profile: boolean, owner?: { __typename?: 'Horse', name: string, nickname?: string | null | undefined, movie?: string | null | undefined, owner: string, after: string, birthyear: string, gender: string, color: string, images?: Array<{ __typename?: 'HorseImage', url: string, path: string, width: number, height: number, profile: boolean } | null | undefined> | null | undefined, category: { __typename?: 'HorseCategory', category: string, image: string } } | null | undefined };
 
+export type RegularPartnerFragment = { __typename?: 'Partner', name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined };
+
+export type RegularPartnerLogoFragment = { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number, owner?: { __typename?: 'Partner', name: string, description: string, website?: string | null | undefined } | null | undefined };
+
 export type RegularTimeSlotFragment = { __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined };
 
 export type RegularUserFragment = { __typename?: 'User', id?: string | null | undefined, password: string, name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined };
@@ -3832,6 +4397,20 @@ export type CreateLogoMutationVariables = Exact<{
 
 export type CreateLogoMutation = { __typename?: 'Mutation', createLogos: { __typename?: 'CreateLogosMutationResponse', logos: Array<{ __typename?: 'Logo', image: string }> } };
 
+export type CreatePartnerMutationVariables = Exact<{
+  input: Array<PartnerCreateInput> | PartnerCreateInput;
+}>;
+
+
+export type CreatePartnerMutation = { __typename?: 'Mutation', createPartners: { __typename?: 'CreatePartnersMutationResponse', partners: Array<{ __typename?: 'Partner', name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined }> } };
+
+export type CreatePartnerLogoMutationVariables = Exact<{
+  input: Array<PartnerLogoCreateInput> | PartnerLogoCreateInput;
+}>;
+
+
+export type CreatePartnerLogoMutation = { __typename?: 'Mutation', createPartnerLogos: { __typename?: 'CreatePartnerLogosMutationResponse', partnerLogos: Array<{ __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number, owner?: { __typename?: 'Partner', name: string, description: string, website?: string | null | undefined } | null | undefined }> } };
+
 export type CreateTimeSlotTypesMutationVariables = Exact<{
   input: Array<TimeSlotTypeCreateInput> | TimeSlotTypeCreateInput;
 }>;
@@ -3875,6 +4454,20 @@ export type DeleteHorseImagesMutationVariables = Exact<{
 
 export type DeleteHorseImagesMutation = { __typename?: 'Mutation', deleteHorseImages: { __typename?: 'DeleteInfo', nodesDeleted: number, relationshipsDeleted: number } };
 
+export type DeletePartnerMutationVariables = Exact<{
+  where?: InputMaybe<PartnerWhere>;
+}>;
+
+
+export type DeletePartnerMutation = { __typename?: 'Mutation', deletePartners: { __typename?: 'DeleteInfo', nodesDeleted: number, relationshipsDeleted: number } };
+
+export type DeletePartnerLogoMutationVariables = Exact<{
+  where?: InputMaybe<PartnerLogoWhere>;
+}>;
+
+
+export type DeletePartnerLogoMutation = { __typename?: 'Mutation', deletePartnerLogos: { __typename?: 'DeleteInfo', nodesDeleted: number, relationshipsDeleted: number } };
+
 export type DeleteTimeSlotsMutationVariables = Exact<{
   where?: InputMaybe<TimeSlotWhere>;
 }>;
@@ -3913,6 +4506,20 @@ export type UpdateLogoMutationVariables = Exact<{
 
 
 export type UpdateLogoMutation = { __typename?: 'Mutation', updateLogos: { __typename?: 'UpdateLogosMutationResponse', logos: Array<{ __typename?: 'Logo', image: string }> } };
+
+export type UpdatePartnerMutationVariables = Exact<{
+  where?: InputMaybe<PartnerWhere>;
+}>;
+
+
+export type UpdatePartnerMutation = { __typename?: 'Mutation', updatePartners: { __typename?: 'UpdatePartnersMutationResponse', partners: Array<{ __typename?: 'Partner', name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined }> } };
+
+export type UpdatePartnerLogoMutationVariables = Exact<{
+  where?: InputMaybe<PartnerLogoWhere>;
+}>;
+
+
+export type UpdatePartnerLogoMutation = { __typename?: 'Mutation', updatePartnerLogos: { __typename?: 'UpdatePartnerLogosMutationResponse', partnerLogos: Array<{ __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number, owner?: { __typename?: 'Partner', name: string, description: string, website?: string | null | undefined } | null | undefined }> } };
 
 export type UpdateTimeSlotsMutationVariables = Exact<{
   where?: InputMaybe<TimeSlotWhere>;
@@ -4003,6 +4610,30 @@ export type LogoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type LogoQuery = { __typename?: 'Query', logos: Array<{ __typename?: 'Logo', image: string }> };
+
+export type PartnerQueryVariables = Exact<{
+  where?: InputMaybe<PartnerWhere>;
+}>;
+
+
+export type PartnerQuery = { __typename?: 'Query', partners: Array<{ __typename?: 'Partner', name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined }> };
+
+export type PartnerLogoQueryVariables = Exact<{
+  where?: InputMaybe<PartnerLogoWhere>;
+}>;
+
+
+export type PartnerLogoQuery = { __typename?: 'Query', partnerLogos: Array<{ __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number, owner?: { __typename?: 'Partner', name: string, description: string, website?: string | null | undefined } | null | undefined }> };
+
+export type PartnerLogosQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PartnerLogosQuery = { __typename?: 'Query', partnerLogos: Array<{ __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number, owner?: { __typename?: 'Partner', name: string, description: string, website?: string | null | undefined } | null | undefined }> };
+
+export type PartnersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PartnersQuery = { __typename?: 'Query', partners: Array<{ __typename?: 'Partner', name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined }> };
 
 export type TimeSlotQueryVariables = Exact<{
   where?: InputMaybe<TimeSlotWhere>;
@@ -4097,6 +4728,32 @@ export const RegularHorseImageFragmentDoc = gql`
   }
 }
     ${RegularHorseFragmentDoc}`;
+export const RegularPartnerFragmentDoc = gql`
+    fragment RegularPartner on Partner {
+  name
+  description
+  website
+  logo {
+    url
+    path
+    width
+    height
+  }
+}
+    `;
+export const RegularPartnerLogoFragmentDoc = gql`
+    fragment RegularPartnerLogo on PartnerLogo {
+  url
+  path
+  width
+  height
+  owner {
+    name
+    description
+    website
+  }
+}
+    `;
 export const RegularTimeSlotFragmentDoc = gql`
     fragment RegularTimeSlot on TimeSlot {
   to
@@ -4347,6 +5004,76 @@ export function useCreateLogoMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateLogoMutationHookResult = ReturnType<typeof useCreateLogoMutation>;
 export type CreateLogoMutationResult = Apollo.MutationResult<CreateLogoMutation>;
 export type CreateLogoMutationOptions = Apollo.BaseMutationOptions<CreateLogoMutation, CreateLogoMutationVariables>;
+export const CreatePartnerDocument = gql`
+    mutation CreatePartner($input: [PartnerCreateInput!]!) {
+  createPartners(input: $input) {
+    partners {
+      ...RegularPartner
+    }
+  }
+}
+    ${RegularPartnerFragmentDoc}`;
+export type CreatePartnerMutationFn = Apollo.MutationFunction<CreatePartnerMutation, CreatePartnerMutationVariables>;
+
+/**
+ * __useCreatePartnerMutation__
+ *
+ * To run a mutation, you first call `useCreatePartnerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePartnerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPartnerMutation, { data, loading, error }] = useCreatePartnerMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreatePartnerMutation(baseOptions?: Apollo.MutationHookOptions<CreatePartnerMutation, CreatePartnerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePartnerMutation, CreatePartnerMutationVariables>(CreatePartnerDocument, options);
+      }
+export type CreatePartnerMutationHookResult = ReturnType<typeof useCreatePartnerMutation>;
+export type CreatePartnerMutationResult = Apollo.MutationResult<CreatePartnerMutation>;
+export type CreatePartnerMutationOptions = Apollo.BaseMutationOptions<CreatePartnerMutation, CreatePartnerMutationVariables>;
+export const CreatePartnerLogoDocument = gql`
+    mutation CreatePartnerLogo($input: [PartnerLogoCreateInput!]!) {
+  createPartnerLogos(input: $input) {
+    partnerLogos {
+      ...RegularPartnerLogo
+    }
+  }
+}
+    ${RegularPartnerLogoFragmentDoc}`;
+export type CreatePartnerLogoMutationFn = Apollo.MutationFunction<CreatePartnerLogoMutation, CreatePartnerLogoMutationVariables>;
+
+/**
+ * __useCreatePartnerLogoMutation__
+ *
+ * To run a mutation, you first call `useCreatePartnerLogoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePartnerLogoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPartnerLogoMutation, { data, loading, error }] = useCreatePartnerLogoMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreatePartnerLogoMutation(baseOptions?: Apollo.MutationHookOptions<CreatePartnerLogoMutation, CreatePartnerLogoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePartnerLogoMutation, CreatePartnerLogoMutationVariables>(CreatePartnerLogoDocument, options);
+      }
+export type CreatePartnerLogoMutationHookResult = ReturnType<typeof useCreatePartnerLogoMutation>;
+export type CreatePartnerLogoMutationResult = Apollo.MutationResult<CreatePartnerLogoMutation>;
+export type CreatePartnerLogoMutationOptions = Apollo.BaseMutationOptions<CreatePartnerLogoMutation, CreatePartnerLogoMutationVariables>;
 export const CreateTimeSlotTypesDocument = gql`
     mutation CreateTimeSlotTypes($input: [TimeSlotTypeCreateInput!]!) {
   createTimeSlotTypes(input: $input) {
@@ -4554,6 +5281,74 @@ export function useDeleteHorseImagesMutation(baseOptions?: Apollo.MutationHookOp
 export type DeleteHorseImagesMutationHookResult = ReturnType<typeof useDeleteHorseImagesMutation>;
 export type DeleteHorseImagesMutationResult = Apollo.MutationResult<DeleteHorseImagesMutation>;
 export type DeleteHorseImagesMutationOptions = Apollo.BaseMutationOptions<DeleteHorseImagesMutation, DeleteHorseImagesMutationVariables>;
+export const DeletePartnerDocument = gql`
+    mutation DeletePartner($where: PartnerWhere) {
+  deletePartners(where: $where) {
+    nodesDeleted
+    relationshipsDeleted
+  }
+}
+    `;
+export type DeletePartnerMutationFn = Apollo.MutationFunction<DeletePartnerMutation, DeletePartnerMutationVariables>;
+
+/**
+ * __useDeletePartnerMutation__
+ *
+ * To run a mutation, you first call `useDeletePartnerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePartnerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePartnerMutation, { data, loading, error }] = useDeletePartnerMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useDeletePartnerMutation(baseOptions?: Apollo.MutationHookOptions<DeletePartnerMutation, DeletePartnerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeletePartnerMutation, DeletePartnerMutationVariables>(DeletePartnerDocument, options);
+      }
+export type DeletePartnerMutationHookResult = ReturnType<typeof useDeletePartnerMutation>;
+export type DeletePartnerMutationResult = Apollo.MutationResult<DeletePartnerMutation>;
+export type DeletePartnerMutationOptions = Apollo.BaseMutationOptions<DeletePartnerMutation, DeletePartnerMutationVariables>;
+export const DeletePartnerLogoDocument = gql`
+    mutation DeletePartnerLogo($where: PartnerLogoWhere) {
+  deletePartnerLogos(where: $where) {
+    nodesDeleted
+    relationshipsDeleted
+  }
+}
+    `;
+export type DeletePartnerLogoMutationFn = Apollo.MutationFunction<DeletePartnerLogoMutation, DeletePartnerLogoMutationVariables>;
+
+/**
+ * __useDeletePartnerLogoMutation__
+ *
+ * To run a mutation, you first call `useDeletePartnerLogoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePartnerLogoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePartnerLogoMutation, { data, loading, error }] = useDeletePartnerLogoMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useDeletePartnerLogoMutation(baseOptions?: Apollo.MutationHookOptions<DeletePartnerLogoMutation, DeletePartnerLogoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeletePartnerLogoMutation, DeletePartnerLogoMutationVariables>(DeletePartnerLogoDocument, options);
+      }
+export type DeletePartnerLogoMutationHookResult = ReturnType<typeof useDeletePartnerLogoMutation>;
+export type DeletePartnerLogoMutationResult = Apollo.MutationResult<DeletePartnerLogoMutation>;
+export type DeletePartnerLogoMutationOptions = Apollo.BaseMutationOptions<DeletePartnerLogoMutation, DeletePartnerLogoMutationVariables>;
 export const DeleteTimeSlotsDocument = gql`
     mutation DeleteTimeSlots($where: TimeSlotWhere) {
   deleteTimeSlots(where: $where) {
@@ -4731,6 +5526,76 @@ export function useUpdateLogoMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UpdateLogoMutationHookResult = ReturnType<typeof useUpdateLogoMutation>;
 export type UpdateLogoMutationResult = Apollo.MutationResult<UpdateLogoMutation>;
 export type UpdateLogoMutationOptions = Apollo.BaseMutationOptions<UpdateLogoMutation, UpdateLogoMutationVariables>;
+export const UpdatePartnerDocument = gql`
+    mutation UpdatePartner($where: PartnerWhere) {
+  updatePartners(where: $where) {
+    partners {
+      ...RegularPartner
+    }
+  }
+}
+    ${RegularPartnerFragmentDoc}`;
+export type UpdatePartnerMutationFn = Apollo.MutationFunction<UpdatePartnerMutation, UpdatePartnerMutationVariables>;
+
+/**
+ * __useUpdatePartnerMutation__
+ *
+ * To run a mutation, you first call `useUpdatePartnerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePartnerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePartnerMutation, { data, loading, error }] = useUpdatePartnerMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useUpdatePartnerMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePartnerMutation, UpdatePartnerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePartnerMutation, UpdatePartnerMutationVariables>(UpdatePartnerDocument, options);
+      }
+export type UpdatePartnerMutationHookResult = ReturnType<typeof useUpdatePartnerMutation>;
+export type UpdatePartnerMutationResult = Apollo.MutationResult<UpdatePartnerMutation>;
+export type UpdatePartnerMutationOptions = Apollo.BaseMutationOptions<UpdatePartnerMutation, UpdatePartnerMutationVariables>;
+export const UpdatePartnerLogoDocument = gql`
+    mutation UpdatePartnerLogo($where: PartnerLogoWhere) {
+  updatePartnerLogos(where: $where) {
+    partnerLogos {
+      ...RegularPartnerLogo
+    }
+  }
+}
+    ${RegularPartnerLogoFragmentDoc}`;
+export type UpdatePartnerLogoMutationFn = Apollo.MutationFunction<UpdatePartnerLogoMutation, UpdatePartnerLogoMutationVariables>;
+
+/**
+ * __useUpdatePartnerLogoMutation__
+ *
+ * To run a mutation, you first call `useUpdatePartnerLogoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePartnerLogoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePartnerLogoMutation, { data, loading, error }] = useUpdatePartnerLogoMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useUpdatePartnerLogoMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePartnerLogoMutation, UpdatePartnerLogoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePartnerLogoMutation, UpdatePartnerLogoMutationVariables>(UpdatePartnerLogoDocument, options);
+      }
+export type UpdatePartnerLogoMutationHookResult = ReturnType<typeof useUpdatePartnerLogoMutation>;
+export type UpdatePartnerLogoMutationResult = Apollo.MutationResult<UpdatePartnerLogoMutation>;
+export type UpdatePartnerLogoMutationOptions = Apollo.BaseMutationOptions<UpdatePartnerLogoMutation, UpdatePartnerLogoMutationVariables>;
 export const UpdateTimeSlotsDocument = gql`
     mutation UpdateTimeSlots($where: TimeSlotWhere, $update: TimeSlotUpdateInput) {
   updateTimeSlots(where: $where, update: $update) {
@@ -5223,6 +6088,144 @@ export function useLogoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LogoQ
 export type LogoQueryHookResult = ReturnType<typeof useLogoQuery>;
 export type LogoLazyQueryHookResult = ReturnType<typeof useLogoLazyQuery>;
 export type LogoQueryResult = Apollo.QueryResult<LogoQuery, LogoQueryVariables>;
+export const PartnerDocument = gql`
+    query Partner($where: PartnerWhere) {
+  partners(where: $where) {
+    ...RegularPartner
+  }
+}
+    ${RegularPartnerFragmentDoc}`;
+
+/**
+ * __usePartnerQuery__
+ *
+ * To run a query within a React component, call `usePartnerQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePartnerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePartnerQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function usePartnerQuery(baseOptions?: Apollo.QueryHookOptions<PartnerQuery, PartnerQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PartnerQuery, PartnerQueryVariables>(PartnerDocument, options);
+      }
+export function usePartnerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PartnerQuery, PartnerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PartnerQuery, PartnerQueryVariables>(PartnerDocument, options);
+        }
+export type PartnerQueryHookResult = ReturnType<typeof usePartnerQuery>;
+export type PartnerLazyQueryHookResult = ReturnType<typeof usePartnerLazyQuery>;
+export type PartnerQueryResult = Apollo.QueryResult<PartnerQuery, PartnerQueryVariables>;
+export const PartnerLogoDocument = gql`
+    query PartnerLogo($where: PartnerLogoWhere) {
+  partnerLogos(where: $where) {
+    ...RegularPartnerLogo
+  }
+}
+    ${RegularPartnerLogoFragmentDoc}`;
+
+/**
+ * __usePartnerLogoQuery__
+ *
+ * To run a query within a React component, call `usePartnerLogoQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePartnerLogoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePartnerLogoQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function usePartnerLogoQuery(baseOptions?: Apollo.QueryHookOptions<PartnerLogoQuery, PartnerLogoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PartnerLogoQuery, PartnerLogoQueryVariables>(PartnerLogoDocument, options);
+      }
+export function usePartnerLogoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PartnerLogoQuery, PartnerLogoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PartnerLogoQuery, PartnerLogoQueryVariables>(PartnerLogoDocument, options);
+        }
+export type PartnerLogoQueryHookResult = ReturnType<typeof usePartnerLogoQuery>;
+export type PartnerLogoLazyQueryHookResult = ReturnType<typeof usePartnerLogoLazyQuery>;
+export type PartnerLogoQueryResult = Apollo.QueryResult<PartnerLogoQuery, PartnerLogoQueryVariables>;
+export const PartnerLogosDocument = gql`
+    query PartnerLogos {
+  partnerLogos {
+    ...RegularPartnerLogo
+  }
+}
+    ${RegularPartnerLogoFragmentDoc}`;
+
+/**
+ * __usePartnerLogosQuery__
+ *
+ * To run a query within a React component, call `usePartnerLogosQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePartnerLogosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePartnerLogosQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePartnerLogosQuery(baseOptions?: Apollo.QueryHookOptions<PartnerLogosQuery, PartnerLogosQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PartnerLogosQuery, PartnerLogosQueryVariables>(PartnerLogosDocument, options);
+      }
+export function usePartnerLogosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PartnerLogosQuery, PartnerLogosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PartnerLogosQuery, PartnerLogosQueryVariables>(PartnerLogosDocument, options);
+        }
+export type PartnerLogosQueryHookResult = ReturnType<typeof usePartnerLogosQuery>;
+export type PartnerLogosLazyQueryHookResult = ReturnType<typeof usePartnerLogosLazyQuery>;
+export type PartnerLogosQueryResult = Apollo.QueryResult<PartnerLogosQuery, PartnerLogosQueryVariables>;
+export const PartnersDocument = gql`
+    query Partners {
+  partners {
+    ...RegularPartner
+  }
+}
+    ${RegularPartnerFragmentDoc}`;
+
+/**
+ * __usePartnersQuery__
+ *
+ * To run a query within a React component, call `usePartnersQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePartnersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePartnersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePartnersQuery(baseOptions?: Apollo.QueryHookOptions<PartnersQuery, PartnersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PartnersQuery, PartnersQueryVariables>(PartnersDocument, options);
+      }
+export function usePartnersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PartnersQuery, PartnersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PartnersQuery, PartnersQueryVariables>(PartnersDocument, options);
+        }
+export type PartnersQueryHookResult = ReturnType<typeof usePartnersQuery>;
+export type PartnersLazyQueryHookResult = ReturnType<typeof usePartnersLazyQuery>;
+export type PartnersQueryResult = Apollo.QueryResult<PartnersQuery, PartnersQueryVariables>;
 export const TimeSlotDocument = gql`
     query TimeSlot($where: TimeSlotWhere) {
   timeSlots(where: $where) {

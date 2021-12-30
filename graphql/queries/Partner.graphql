@@ -1,0 +1,5 @@
+query Partner($where: PartnerWhere) {
+  partners(where: $where) {
+    ...RegularPartner
+  }
+}

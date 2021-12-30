@@ -9,12 +9,15 @@ import Spinner from '../../../../components/Spinner';
 import UploadControlImages from '../../../../components/UploadControlImages';
 import { HorseImage, useHorseQuery, useUpdateHorsesMutation } from '../../../../generated/graphql';
 import { RootState } from '../../../../redux/reducers';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Props {
 
 }
 
 const Horse = (props: Props) => {
+    const admin: boolean = useSelector((state: RootState) => state.admin);
     const category: string = useSelector((state: RootState) => state.category);
     const name: string = useSelector((state: RootState) => state.horse);
     const [profilePicture, setProfilePicture] = useState(null as any);
@@ -27,6 +30,15 @@ const Horse = (props: Props) => {
     });
     const [UpdateHorse] = useUpdateHorsesMutation();
     const [formState, setFormState] = useState({} as any);
+    const notify = () => toast.success('Uppdaterad!', {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
 
     useEffect(() => {
         if (!loading) {
@@ -46,7 +58,7 @@ const Horse = (props: Props) => {
     }, [data, loading])
 
     const handleSubmit = async (e: any) => {
-        if (e.code === "Enter") {
+        if (e.code === "Enter" && admin) {
             const { errors } = await UpdateHorse({
                 variables: {
                     where: {
@@ -67,7 +79,7 @@ const Horse = (props: Props) => {
             });
 
             if (!errors) {
-                alert("Saved");
+                notify();
             } else {
 
             }
@@ -78,14 +90,25 @@ const Horse = (props: Props) => {
     return (
         <div className="flex flex-col justify-center bg-gray-900">
             <div className="h-screen bg-gradient-to-b from-gray-900 to-gray-800">
+                <ToastContainer
+                    position="top-left"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
                 {!loading && data! ?
                     <div className="flex w-full">
                         <div className="text-white md:ml-10 mt-10 md:my-20 w-full">
                             <div className="hidden md:flex mb-10">
                                 <p className="text-lg text-gray-600 lowercase">hästar</p>
-                                <IoIosArrowForward className="mt-2 text-gray-600 text-opacity-70" />
+                                <IoIosArrowForward className="mt-2 text-gray-600 text-sm text-opacity-70" />
                                 <p className="text-lg text-gray-600 lowercase">{category}</p>
-                                <IoIosArrowForward className="mt-2 text-gray-600 text-opacity-70" />
+                                <IoIosArrowForward className="mt-2 text-gray-600 text-sm text-opacity-70" />
                                 <p className="text-lg text-gray-600 lowercase">{name}</p>
 
                             </div>
@@ -96,7 +119,7 @@ const Horse = (props: Props) => {
                                             ...formState,
                                             name: e.target.value
                                         })
-                                    }} className="text-4xl w-full text-center md:text-left uppercase bg-black bg-opacity-0 outline-none font-thin text-white" value={formState.name || ''} />
+                                    }} disabled className="text-4xl w-full text-center md:text-left uppercase bg-black bg-opacity-0 outline-none font-thin text-white" value={formState.name || ''} />
                                 </div>
                                 <div className="flex justify-center md:justify-start w-full">
                                     <input onChange={(e) => {
@@ -104,7 +127,7 @@ const Horse = (props: Props) => {
                                             ...formState,
                                             nickname: e.target.value
                                         })
-                                    }} className="bg-black text-center md:text-left bg-opacity-0 outline-none font-thin" value={formState.nickname || ''} />
+                                    }} disabled={!admin} className="bg-black text-center md:text-left bg-opacity-0 outline-none font-thin" value={formState.nickname || ''} />
                                 </div>
                                 <div className="flex text-center md:text-left mt-10">
                                     <div className="flex flex-col w-full md:w-1/3">
@@ -114,7 +137,7 @@ const Horse = (props: Props) => {
                                                 ...formState,
                                                 gender: e.target.value
                                             })
-                                        }} className="w-full appearance-none text-center md:text-left outline-none bg-black bg-opacity-0 text-lg font-thin" value={formState.gender || ''} />
+                                        }} disabled={!admin} className="w-full appearance-none text-center md:text-left outline-none bg-black bg-opacity-0 text-lg font-thin" value={formState.gender || ''} />
                                     </div>
                                     <div className="flex flex-col w-full">
                                         <p className="text-sm text-gray-400 lowercase">FÖDELSEÅR</p>
@@ -123,7 +146,7 @@ const Horse = (props: Props) => {
                                                 ...formState,
                                                 birthyear: e.target.value
                                             })
-                                        }} className="w-full text-center md:text-left md:w-20 appearance-none outline-none bg-black bg-opacity-0 text-lg font-thin" value={formState.birthyear || ''} />
+                                        }} disabled={!admin} className="w-full text-center md:text-left md:w-20 appearance-none outline-none bg-black bg-opacity-0 text-lg font-thin" value={formState.birthyear || ''} />
                                     </div>
                                 </div>
                                 <div className="flex md:flex-col md:mt-10 my-10">
@@ -134,7 +157,7 @@ const Horse = (props: Props) => {
                                                 ...formState,
                                                 owner: e.target.value
                                             })
-                                        }} className="appearance-none text-center md:text-left outline-none bg-black bg-opacity-0 text-lg font-thin" value={formState.owner || ''} />
+                                        }} disabled={!admin} className="appearance-none text-center md:text-left outline-none bg-black bg-opacity-0 text-lg font-thin" value={formState.owner || ''} />
                                     </div>
                                     <div className="flex flex-col">
                                         <p className="text-sm text-center md:text-left text-gray-400 lowercase">efter</p>
@@ -143,27 +166,32 @@ const Horse = (props: Props) => {
                                                 ...formState,
                                                 after: e.target.value
                                             })
-                                        }} className="appearance-none text-center md:text-left outline-none bg-black bg-opacity-0 text-lg font-thin" value={formState.after || ''} />
+                                        }} disabled={!admin} className="appearance-none text-center md:text-left outline-none bg-black bg-opacity-0 text-lg font-thin" value={formState.after || ''} />
                                     </div>
                                 </div>
                             </div>
                             <SRLWrapper>
                                 <div className="grid max-h-96 bg-white grid-cols-2 md:grid-cols-4 mt-4 overflow-y-scroll md:overscroll-contain shadow-lg">
-                                    {data!.horses[0].images && data!.horses[0].images.map((image, index) => {
-                                        return (
-                                            <div key={index} className="relative w-full mr-2 cursor-pointer">
+                                    {data!.horses[0].images && data!.horses[0].images.map((image, index) =>
+                                        !image!.profile &&
+                                        <div className={`relative w-full mr-2 cursor-pointer`}>
+                                            {admin &&
                                                 <DeleteHorseImageButton image={image as HorseImage} name={name} />
-                                                <Image alt={name} src={image!.url} layout="responsive" width={image!.width} height={image!.height} />
-                                            </div>
-                                        )
-                                    })}
-                                    <AddHorseImage profile={false} />
+                                            }
+                                            <Image alt={name} src={image!.url} layout="responsive" width={image!.width} height={image!.height} />
+                                        </div>
+                                    )}
+                                    {admin &&
+                                        <AddHorseImage profile={false} />
+                                    }
                                 </div>
                             </SRLWrapper>
                         </div>
                         <div style={{ backgroundImage: `url("${profilePicture}")`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }} className="w-full h-screen ml-20 hidden md:flex">
-                            <UploadControlImages id="profile_upload" path={`/horses/${name}`} profile={true}>
-                            </UploadControlImages>
+                            {admin &&
+                                <UploadControlImages id="profile_upload" path={`/horses/${name}`} profile={true}>
+                                </UploadControlImages>
+                            }
                         </div>
 
                     </div>

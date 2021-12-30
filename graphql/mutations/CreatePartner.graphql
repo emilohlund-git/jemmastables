@@ -1,0 +1,7 @@
+mutation CreatePartner($input: [PartnerCreateInput!]!) {
+  createPartners(input: $input) {
+    partners {
+      ...RegularPartner
+    }
+  }
+}

@@ -1,0 +1,11 @@
+fragment RegularPartnerLogo on PartnerLogo {
+  url
+  path
+  width
+  height
+  owner {
+    name
+    description
+    website
+  }
+}
