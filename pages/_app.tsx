@@ -9,11 +9,12 @@ import { AuthProvider } from '../contexts/AuthContext';
 import SimpleReactLightbox from 'simple-react-lightbox'
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const env = process.env.NODE_ENV;
   /* @ts-ignore */
   const store = useStore((state: any) => state);
 
   const client = new ApolloClient({
-    uri: "http://localhost:4000/graphql",
+    uri: env == "development" ? "http://localhost:4000/graphql" : "https://jemmastables.herokuapp.com/graphql",
     credentials: "include",
     cache: new InMemoryCache(),
     connectToDevTools: true,
