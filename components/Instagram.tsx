@@ -16,7 +16,7 @@ const Instagram = (props: Props) => {
             return image.tags.indexOf("JEMMAstables") >= 0;
         }),
         template: '<img alt="{{caption}}" src="{{image}}" style="padding: 4px; width: 100%; height: 400px; object-fit: cover;"/>',
-        accessToken: process.env.INSTAGRAM_ACCESS_TOKEN
+        accessToken: process.env.NEXT_PUBLIC_INSTAGRAM_ACCESS_TOKEN
     });
 
     useEffect(() => {
