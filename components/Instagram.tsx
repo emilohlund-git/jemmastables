@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
 import Instafeed from 'instafeed.js';
+import React, { useEffect } from 'react';
 
 interface Props {
 
@@ -7,8 +7,6 @@ interface Props {
 
 
 const Instagram = (props: Props) => {
-    const [insta, setInsta] = useState([]);
-
     const userFeed = new Instafeed({
         get: "user",
         target: "instafeed-container",
@@ -18,7 +16,7 @@ const Instagram = (props: Props) => {
             return image.tags.indexOf("JEMMAstables") >= 0;
         }),
         template: '<img alt="{{caption}}" src="{{image}}" style="padding: 4px; width: 100%; height: 400px; object-fit: cover;"/>',
-        accessToken: "IGQVJXZAE81cEluTTd6WGdTelpmU0gzdHhaYUdhS1FIbXoyQVREaXE3WnV3SU03aFFtek1nVUc4RnpnZAUxrVlNRZAS1VSjloNkJiTk1sbF93bjZAIMXp6NmZAJLWhyTWFGcjBsdTFJMkdDbFp4QVpMMlB3SAZDZD"
+        accessToken: process.env.INSTAGRAM_ACCESS_TOKEN
     });
 
     useEffect(() => {
