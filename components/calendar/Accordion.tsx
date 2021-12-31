@@ -8,6 +8,8 @@ import MobileBookTimeForm from './MobileBookTimeForm'
 interface AccordionProps {
     timeslot: TimeSlot
     dateslot: DateSlot
+    bottomBar: any
+    setBottomBarHeight: any
 }
 
 export const Accordion = (props: AccordionProps) => {
@@ -25,6 +27,8 @@ export const Accordion = (props: AccordionProps) => {
             // @ts-ignore
             setHeight(active ? '0px' : `${contentSpace.current.scrollHeight}px`)
             setRotate(active ? 'transform duration-700 ease' : 'transform duration-700 ease rotate-180')
+            /* @ts-ignore */
+            props.setBottomBarHeight(`${props.bottomBar.scrollHeight + contentSpace.current.scrollHeight + 1}px`)
         }
     }
 

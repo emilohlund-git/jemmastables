@@ -7,11 +7,6 @@ import { RootState } from '../../redux/reducers';
 import { setIsOpen, setType } from '../../redux/actions';
 import { useCreateDateSlotsMutation, useDateSlotQuery, useUpdateDateSlotsMutation } from '../../generated/graphql';
 
-/**
- * TODO: 
- * Add list of available times underneath the date & time input.
- */
-
 interface Props {
 }
 
@@ -20,7 +15,7 @@ function classNames(...classes: string[]) {
 }
 
 // eslint-disable-next-line react/display-name
-export const MyModal = React.memo((props: Props) => {
+export const AdminModal = React.memo((props: Props) => {
     const date: DateTime = useSelector((state: RootState) => state.date);
     const open: Boolean = useSelector((state: RootState) => state.isOpen);
     const type: string = useSelector((state: RootState) => state.type);
@@ -166,9 +161,9 @@ export const MyModal = React.memo((props: Props) => {
                             <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                                 <Dialog.Title
                                     as="h3"
-                                    className="text-lg font-medium leading-6 text-gray-900 mb-6"
+                                    className="md:text-lg font-medium leading-6 text-gray-900 mb-6"
                                 >
-                                    <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400" value={title} type="text" onChange={((e) => { setTitle(e.target.value) })} placeholder="Lägg till titel" aria-label="Title" />
+                                    <div className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none transition focus:border-blue-400" aria-label="Title">Lägg till tid</div>
                                 </Dialog.Title>
                                 <Tab.Group defaultIndex={1} onChange={(index) => {
                                     if (index === 0) dispatch(setType("Självhushållning"))
@@ -180,7 +175,7 @@ export const MyModal = React.memo((props: Props) => {
                                             key={1}
                                             className={({ selected }) =>
                                                 classNames(
-                                                    'w-full py-2.5 text-sm leading-5 font-medium text-blue-400 rounded-lg',
+                                                    'w-full py-2.5 text-xs md:text-sm leading-5 font-medium text-blue-400 rounded-lg',
                                                     'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60',
                                                     selected
                                                         ? 'bg-white shadow'
@@ -194,7 +189,7 @@ export const MyModal = React.memo((props: Props) => {
                                             key={2}
                                             className={({ selected }) =>
                                                 classNames(
-                                                    'w-full py-2.5 text-sm leading-5 font-medium text-blue-400 rounded-lg',
+                                                    'w-full py-2.5 text-xs md:text-sm leading-5 font-medium text-blue-400 rounded-lg',
                                                     'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60',
                                                     selected
                                                         ? 'bg-white shadow'
@@ -208,7 +203,7 @@ export const MyModal = React.memo((props: Props) => {
                                             key={3}
                                             className={({ selected }) =>
                                                 classNames(
-                                                    'w-full py-2.5 text-sm leading-5 font-medium text-blue-400 rounded-lg',
+                                                    'w-full py-2.5 text-xs md:text-sm leading-5 font-medium text-blue-400 rounded-lg',
                                                     'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60',
                                                     selected
                                                         ? 'bg-white shadow'
@@ -228,10 +223,9 @@ export const MyModal = React.memo((props: Props) => {
                                             )}
                                         >
                                             <div className="flex flex-row items-center">
-                                                <FiClock className="text-gray-500 mr-2" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
                                             <div className="flex w-full justify-end">
                                                 <button onClick={createDateSlot} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
@@ -247,10 +241,9 @@ export const MyModal = React.memo((props: Props) => {
                                             )}
                                         >
                                             <div className="flex flex-row items-center">
-                                                <FiClock className="text-gray-500 mr-2" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
                                             <div className="flex w-full justify-end">
                                                 <button onClick={createDateSlot} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
@@ -266,10 +259,9 @@ export const MyModal = React.memo((props: Props) => {
                                             )}
                                         >
                                             <div className="flex flex-row items-center">
-                                                <FiClock className="text-gray-500 mr-2" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
                                             <div className="flex w-full justify-end">
                                                 <button onClick={createDateSlot} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">

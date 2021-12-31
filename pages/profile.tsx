@@ -1,8 +1,11 @@
 import { LineProgressBar } from '@frogress/line';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ProfileContent from '../components/profile/ProfileContent';
+import { useAuth } from '../contexts/AuthContext';
 import { User } from '../generated/graphql';
+import { setUser } from '../redux/actions';
 import { RootState } from '../redux/reducers';
 import { RouteGuard } from '../utils/RouteGuard';
 
@@ -14,6 +17,18 @@ interface Props {
 const User = (props: Props) => {
     const user: User = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
+    const { signout }: any = useAuth();
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        try {
+            await signout();
+            dispatch(setUser(null));
+            router.push("/");
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
         <div>
@@ -23,6 +38,7 @@ const User = (props: Props) => {
                         <div className="flex justify-center text-center flex-col mt-4 mx-6">
                             <h1 className="font-bold text-xl">{user.name.toLowerCase()}</h1>
                             <p className="text-sm">{user.email}</p>
+                            <button onClick={handleLogout} className="shadow-sm bg-gradient-to-r from-black to-gray-800 w-48 text-white self-center rounded-3xl px-4 py-2 text-sm">logga ut &rarr;</button>
                             <LineProgressBar
                                 className="mt-4"
                                 progressColor="linear-gradient(to right, #00ffab, #00fee3, #00dd99)"

@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon';
 import React, { FormEvent } from 'react';
 import { FiMail, FiPhone, FiUser } from 'react-icons/fi';
-import { useSelector } from 'react-redux';
-import { User, useUpdateUsersMutation } from '../../generated/graphql';
+import { useDispatch, useSelector } from 'react-redux';
+import { User, useUpdateUsersMutation, useUsersQuery } from '../../generated/graphql';
+import { setUser } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
 
 interface Props {
@@ -16,12 +17,12 @@ const MobileBookTimeForm = (props: Props) => {
         to: string,
         from: string
     } = useSelector((state: RootState) => state.time);
-
+    const dispatch = useDispatch();
     const [UpdateUser] = useUpdateUsersMutation();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        const { errors } = await UpdateUser({
+        const { data, errors } = await UpdateUser({
             variables: {
                 where: {
                     email: user.email
@@ -53,6 +54,7 @@ const MobileBookTimeForm = (props: Props) => {
         });
 
         if (!errors) {
+            dispatch(setUser(data?.updateUsers.users[0]))
             props.toggleAccordion();
         }
     }

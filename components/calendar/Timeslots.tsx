@@ -19,6 +19,7 @@ export const Timeslot = (props: Props) => {
             from: props.from,
             to: props.to
         }))
+        e.stopPropagation();
     }
 
     return (

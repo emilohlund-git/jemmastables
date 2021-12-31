@@ -17,7 +17,7 @@ const BookedTimeSlot = (props: Props) => {
                     <div className={`w-20 h-full bg-gradient-to-r flex justify-center items-center from-green-300 to-green-500 rounded-l-lg`}>
                         <div className="h-16 py-2 rounded-md text-center text-white">
                             <p className="font-bold text-2xl">{props.timeslot.date.date.split("-")[2]}</p>
-                            <p className="text-xs">{DateTime.fromSQL(props.timeslot.date.date).monthLong.toLowerCase()}</p>
+                            <p className="text-xs">{DateTime.fromSQL(props.timeslot.date.date).setLocale("sv").monthLong.toLowerCase()}</p>
                         </div>
                     </div>
                 </div>

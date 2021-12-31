@@ -13,7 +13,7 @@ const BookedTimeSlots = (props: Props) => {
 
     return (
         <>
-            {user && user.timeslots?.map((timeslot, index) => {
+            {user && user.timeslots!.map((timeslot, index) => {
                 return (
                     <BookedTimeSlot key={index} timeslot={timeslot!} />
                 )

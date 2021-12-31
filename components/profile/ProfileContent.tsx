@@ -1,11 +1,11 @@
-import { Tab } from '@headlessui/react'
+import { Tab } from '@headlessui/react';
+import { FormEvent, useState } from 'react';
 import { FiMail, FiPhone, FiUser } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, FormEvent } from 'react';
 import { User, useUpdateUsersMutation } from '../../generated/graphql';
+import { setUser } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
 import BookedTimeSlots from './BookedTimeSlots';
-import { setUser } from '../../redux/actions';
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')

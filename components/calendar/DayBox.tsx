@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { ClassAttributes, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { TIMESLOT_TYPE } from '../../config/constants';
 import { DateSlot } from '../../generated/graphql';
-import { setDate, setIsOpen } from '../../redux/actions';
-import { RootState } from '../../redux/reducers';
+import { setDate } from '../../redux/actions';
 import { getBackgroundColorByDateSlot } from '../../utils/calendar/getBackgroundColorByDateSlot';
 import { getTimeSlotType } from '../../utils/calendar/getTimeSlotType';
 import { isBeforeToday } from '../../utils/calendar/isBeforeToday';
@@ -13,20 +13,23 @@ import { Timeslot } from './Timeslots';
 interface Props {
     day: DateTime;
     dateSlot: [DateSlot];
+    active: boolean;
+    setActive: React.Dispatch<React.SetStateAction<boolean>>;
+    height: string;
+    setHeight: React.Dispatch<React.SetStateAction<string>>;
+    bottomBarRef: any;
 }
 
 export const DayBox = (props: Props) => {
-    const admin: boolean = useSelector((state: RootState) => state.admin);
     const dispatch = useDispatch();
 
     const handleClick = () => {
         if (!isBeforeToday(props.day)) {
             dispatch(setDate(props.day));
-        }
-        if (!admin) {
-            if (!isBeforeToday(props.day)) {
-                dispatch(setIsOpen(true));
-            }
+            setTimeout(() => {
+                props.setActive(true);
+                props.setHeight(`${props.bottomBarRef.current.scrollHeight}px`);
+            }, 50);
         }
     }
 
@@ -39,14 +42,16 @@ export const DayBox = (props: Props) => {
             <div className="hidden md:flex md:flex-col">
                 {props.dateSlot[0] && !isBeforeToday(props.day) ? <>
                     {props.dateSlot[0].timeslots!.map((timeslot, i) => {
-                        return (<Timeslot type={timeslot!.type.type} to={timeslot!.to} from={timeslot!.from} key={i} />)
+                        return (
+                            timeslot?.type.type !== TIMESLOT_TYPE.Träning && timeslot?.users == null && <Timeslot type={timeslot!.type.type} to={timeslot!.to} from={timeslot!.from} key={i} />
+                        )
                     }
                         /* @ts-ignore */
                     ).sort((timeslot1, timeslot2) => timeslot1.from < timeslot2.from)}
                 </>
                     : <></>}
             </div>
-            {props.dateSlot[0] && props.dateSlot[0].timeslots!.length === 1 && getTimeSlotType(props.dateSlot[0].timeslots![0]!) != "Träning" &&
+            {props.dateSlot[0] && props.dateSlot[0].timeslots!.length >= 0 && getTimeSlotType(props.dateSlot[0].timeslots![0]!) != TIMESLOT_TYPE.Träning &&
                 <div className={`h-2 w-2 ${props.dateSlot[0] && getBackgroundColorByDateSlot(props.dateSlot[0])}`}></div>
             }
         </div >

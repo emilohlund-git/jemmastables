@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import React, { Fragment, useState } from 'react';
 import { FiClock, FiMail, FiPhone, FiUser } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { useUpdateUsersMutation, useUsersQuery } from '../../generated/graphql';
+import { User, useUpdateUsersMutation, useUsersQuery } from '../../generated/graphql';
 import { setBookingIsOpen } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
 
@@ -18,12 +18,13 @@ function classNames(...classes: string[]) {
 // eslint-disable-next-line react/display-name
 export const BookingModal = React.memo((props: Props) => {
     const date: DateTime = useSelector((state: RootState) => state.date);
+    const user: User = useSelector((state: RootState) => state.user);
     const time: { to: string, from: string } = useSelector((state: RootState) => state.time);
     const bookingOpen: Boolean = useSelector((state: RootState) => state.bookingIsOpen);
     const [formState, setFormState] = useState({
-        name: '',
-        phonenumber: '',
-        email: ''
+        name: user.name,
+        phonenumber: user.phonenumber,
+        email: user.email
     });
 
     const dispatch = useDispatch();
@@ -141,7 +142,7 @@ export const BookingModal = React.memo((props: Props) => {
                                         as="h1"
                                         className="text-lg font-medium leading-6 text-gray-900 mb-6"
                                     >
-                                        <div className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none transition focus:border-blue-400" aria-label="Title">Fyll i kontaktuppgifter</div>
+                                        <div className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none transition focus:border-blue-400" aria-label="Title">Boka tiden</div>
                                     </Dialog.Title>
                                     <div className="flex flex-row items-center mb-6">
                                         <FiClock className="text-gray-500 mr-2" />
@@ -158,7 +159,7 @@ export const BookingModal = React.memo((props: Props) => {
                                                         ...formState,
                                                         name: e.target.value
                                                     })
-                                                } name="name" required className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="text" placeholder="Namn" />
+                                                } name="name" disabled required className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="text" placeholder="Namn" />
                                         </div>
                                         <div className="flex flex-row items-center mb-6">
                                             <FiPhone className="text-gray-500 mr-2" />
@@ -168,7 +169,7 @@ export const BookingModal = React.memo((props: Props) => {
                                                         ...formState,
                                                         phonenumber: e.target.value
                                                     })
-                                                } name="phonenumber" required className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="text" placeholder="Telefonnummer" />
+                                                } name="phonenumber" disabled required className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="text" placeholder="Telefonnummer" />
                                         </div>
                                         <div className="flex flex-row items-center mb-6">
                                             <FiMail className="text-gray-500 mr-2" />
@@ -178,7 +179,7 @@ export const BookingModal = React.memo((props: Props) => {
                                                         ...formState,
                                                         email: e.target.value
                                                     })
-                                                } name="email" required className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="email" placeholder="Epost" />
+                                                } name="email" disabled required className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="email" placeholder="Epost" />
                                         </div>
                                         <div className="flex w-full justify-end">
                                             <button className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
