@@ -11,6 +11,7 @@ import { HorseImage, useHorseQuery, useUpdateHorsesMutation } from '../../../../
 import { RootState } from '../../../../redux/reducers';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { withApollo } from '../../../../utils/withApollo';
 
 interface Props {
 
@@ -174,7 +175,7 @@ const Horse = (props: Props) => {
                                 <div className="grid max-h-96 bg-gray-800 grid-cols-2 md:grid-cols-4 mt-4 overflow-y-scroll md:overscroll-contain shadow-2xl">
                                     {data!.horses[0].images && data!.horses[0].images.map((image, index) =>
                                         !image!.profile &&
-                                        <div className={`relative w-full mr-2 cursor-pointer`}>
+                                        <div key={index} className={`relative w-full mr-2 cursor-pointer`}>
                                             {admin &&
                                                 <DeleteHorseImageButton image={image as HorseImage} name={name} />
                                             }
@@ -203,4 +204,4 @@ const Horse = (props: Props) => {
     )
 }
 
-export default Horse
+export default withApollo({ ssr: true })(Horse)

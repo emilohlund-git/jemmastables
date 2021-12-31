@@ -1,17 +1,29 @@
 import { Tab } from '@headlessui/react';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { FiMail, FiPhone, FiUser } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { User, useUpdateUsersMutation } from '../../generated/graphql';
 import { setUser } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
 import BookedTimeSlots from './BookedTimeSlots';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
 
 export default function ProfileContent() {
+    const notify = () => toast.success('Uppdaterad!', {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
+
     const user: User = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
 
@@ -19,6 +31,17 @@ export default function ProfileContent() {
         phonenumber: user.phonenumber,
         name: user.name
     });
+
+    const [disabled, setDisabled] = useState(true);
+
+    useEffect(() => {
+        if (formState.name === user.name && formState.phonenumber === user.phonenumber) {
+            setDisabled(true);
+        } else {
+            setDisabled(false);
+        }
+        return
+    }, [formState, user.name, user.phonenumber])
 
     const [UpdateUser] = useUpdateUsersMutation();
 
@@ -40,11 +63,24 @@ export default function ProfileContent() {
             }
         })
 
+        notify();
+
         dispatch(setUser(updatedUser.data?.updateUsers.users[0]));
     }
 
     return (
-        <div className="w-full max-w-md px-2 py-16 sm:px-0">
+        <div className="w-full max-w-md px-2 sm:px-0 shadow-2xl">
+            <ToastContainer
+                position="top-left"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <Tab.Group>
                 <Tab.List className="flex p-1 space-x-1 bg-blue-900/20 rounded-xl">
                     <Tab
@@ -79,7 +115,7 @@ export default function ProfileContent() {
                 <Tab.Panels className="mt-2">
                     <Tab.Panel
                         className={classNames(
-                            'bg-white rounded-xl p-3',
+                            'bg-white rounded-xl p-3 max-h-96 overflow-y-scroll',
                             'focus:outline-none'
                         )}
                     >
@@ -91,7 +127,7 @@ export default function ProfileContent() {
                             'focus:outline-none'
                         )}
                     >
-                        <form onSubmit={handleSubmit} className={`transition transform origin-top duration-100 ease-in-out}`}>
+                        <div className={`transition transform origin-top duration-100 ease-in-out}`}>
                             <div className="flex flex-row items-center mt-4 mb-6">
                                 <FiUser className="text-gray-500 mr-2" />
                                 <input value={formState.name} onChange={(e) => setFormState({
@@ -112,11 +148,11 @@ export default function ProfileContent() {
                                 <input value={user.email} name="email" disabled className="w-full appearance-none bg-transparent text-gray-500 mr-2 py-1 px-2 leading-tight focus:outline-none transition text-sm" type="email" placeholder="Epost" />
                             </div>
                             <div className="flex w-full justify-end">
-                                <button className="transition-all w-full bg-gray-900 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
+                                <button onClick={handleSubmit} disabled={disabled} className="disabled:bg-gray-300 disabled:cursor-default transition-all w-full bg-gray-900 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
                                     ändra
                                 </button>
                             </div>
-                        </form>
+                        </div>
                     </Tab.Panel>
                 </Tab.Panels>
             </Tab.Group>

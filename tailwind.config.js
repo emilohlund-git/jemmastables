@@ -16,6 +16,8 @@ module.exports = {
       zIndex: ['hover'],
       height: ['hover'],
       filter: ['hover'],
+      backgroundColor: ['disabled'],
+      cursor: ['disabled'],
     },
   },
   plugins: [

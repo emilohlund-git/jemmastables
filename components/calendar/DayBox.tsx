@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import React, { ClassAttributes, useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { TIMESLOT_TYPE } from '../../config/constants';
 import { DateSlot } from '../../generated/graphql';

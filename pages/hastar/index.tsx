@@ -1,5 +1,6 @@
 import React from 'react'
 import Horses from '../../components/horses/HorsesCategories'
+import { withApollo } from '../../utils/withApollo'
 
 interface Props {
 
@@ -11,4 +12,4 @@ const hästar = (props: Props) => {
     )
 }
 
-export default hästar
+export default withApollo({ ssr: true })(hästar)
