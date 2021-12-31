@@ -1,3 +1,4 @@
+import router, { useRouter } from 'next/router';
 import React, { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../contexts/AuthContext';
@@ -11,6 +12,7 @@ interface Props {
 
 const LoginForm = (props: Props) => {
     const user: User = useSelector((state: RootState) => state.user);
+    const rouer = useRouter();
     const { signin, signout }: any = useAuth();
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +30,8 @@ const LoginForm = (props: Props) => {
                 setError('');
                 await signin(formState.email, formState.password);
                 setIsLoading(true);
-                dispatch(setUser(data?.users.find((u) => u.email.toLowerCase() === formState.email.toLowerCase())))
+                dispatch(setUser(data?.users.find((u) => u.email.toLowerCase() === formState.email.toLowerCase())));
+                router.back();
             } catch (err) {
                 console.log(err);
                 setError("Inloggningen misslyckades.");

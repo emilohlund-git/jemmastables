@@ -158,7 +158,7 @@ const Horse = (props: Props) => {
                                                 ...formState,
                                                 owner: e.target.value
                                             })
-                                        }} disabled={!admin} className="appearance-none text-center md:text-left outline-none bg-black bg-opacity-0 text-lg font-thin" value={formState.owner || ''} />
+                                        }} disabled={!admin} className="w-full appearance-none text-center md:text-left outline-none bg-black bg-opacity-0 text-lg font-thin" value={formState.owner || ''} />
                                     </div>
                                     <div className="flex flex-col">
                                         <p className="text-sm text-center md:text-left text-gray-400 lowercase">efter</p>
@@ -167,7 +167,7 @@ const Horse = (props: Props) => {
                                                 ...formState,
                                                 after: e.target.value
                                             })
-                                        }} disabled={!admin} className="appearance-none text-center md:text-left outline-none bg-black bg-opacity-0 text-lg font-thin" value={formState.after || ''} />
+                                        }} disabled={!admin} className="w-full appearance-none text-center md:text-left outline-none bg-black bg-opacity-0 text-lg font-thin" value={formState.after || ''} />
                                     </div>
                                 </div>
                             </div>

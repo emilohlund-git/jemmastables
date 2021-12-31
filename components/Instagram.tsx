@@ -25,7 +25,7 @@ const Instagram = (props: Props) => {
     }, []);
 
     return (
-        <div id="instafeed-container" className="grid grid-cols-4 relative w-full mr-2">
+        <div id="instafeed-container" className="grid grid-cols-2 md:grid-cols-4 relative w-full mr-2">
 
         </div>
     )

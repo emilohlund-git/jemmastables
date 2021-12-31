@@ -20,7 +20,7 @@ const Navbar = (props: Props) => {
                 </div>
                 <div className="flex flex-col w-full md:-space-y-8">
                     <div className="self-end mt-8 md:hidden z-40">
-                        <Hamburger toggled={toggle} toggle={setToggle} color={"#000"} />
+                        <Hamburger toggled={toggle} toggle={setToggle} color={router.pathname === "/" && !toggle ? "#FFF" : "#000"} />
                     </div>
                     <div className={`z-30 absolute justify-center items-center md:justify-end md:pt-10 top-0 left-0 md:relative h-screen md:h-auto transform md:right-3 w-full origin-top-right transition-all duration-50 ease-in-out ${!toggle ? "scale-x-0" : ""} md:scale-100 space-y-5 md:space-y-0 md:top-12 bg-gray-50 p-5 md:rounded-b-xl md:rounded-tl-xl shadow-md md:shadow-none flex flex-col md:bg-transparent md:flex-row items-end md:space-x-20`}>
                         {props.navButtons.map(button => (

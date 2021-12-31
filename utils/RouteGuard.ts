@@ -10,7 +10,7 @@ function RouteGuard({ children }: any) {
   const user: User = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if (!user) router.push('/admin/login');
+    if (!user) router.push('/login');
     if (user) setAuthorized(true);
   }, []);
 
