@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, FacebookAuthProvider, signOut, signInWithPopup } from 'firebase/auth';
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useCreateUsersMutation, User } from '../generated/graphql';
@@ -9,11 +9,13 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }: any) {
     const [CreateUser] = useCreateUsersMutation();
+    const provider = new FacebookAuthProvider();
     const [currentUser, setCurrentUser] = useState();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
 
     async function signup(user: User) {
+
         await CreateUser({
             variables: {
                 input: {
@@ -28,6 +30,7 @@ export function AuthProvider({ children }: any) {
     }
 
     function signin(email: string, password: string) {
+
         return signInWithEmailAndPassword(auth, email, password);
     }
 
@@ -47,6 +50,16 @@ export function AuthProvider({ children }: any) {
             setCurrentUser(user)
             setLoading(false)
         });
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                // The signed-in user info.
+                const user = result.user;
+
+                // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+                const credential = FacebookAuthProvider.credentialFromResult(result);
+                const accessToken = credential!.accessToken;
+
+            })
         return unsubscribe;
     }, [])
 
