@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, FacebookAut
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useCreateUsersMutation, User } from '../generated/graphql';
-import { setAdmin } from '../redux/actions';
+import { setAdmin, setUser } from '../redux/actions';
 import { auth } from '../utils/firebase/firebase';
 
 const AuthContext = createContext(null);
@@ -54,11 +54,11 @@ export function AuthProvider({ children }: any) {
             .then((result) => {
                 // The signed-in user info.
                 const user = result.user;
+                dispatch(setUser(user));
 
                 // This gives you a Facebook Access Token. You can use it to access the Facebook API.
                 const credential = FacebookAuthProvider.credentialFromResult(result);
                 const accessToken = credential!.accessToken;
-
             })
         return unsubscribe;
     }, [])
