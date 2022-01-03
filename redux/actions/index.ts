@@ -37,7 +37,7 @@ export const setAdmin = (payload: boolean) => {
   };
 };
 
-export const setUser = (payload: User) => {
+export const setUser = (payload: User | null) => {
   return {
     type: actions.setUser,
     payload: payload,
