@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { DateSlot, TimeSlot } from '../../generated/graphql'
 import { RootState } from '../../redux/reducers'
 import { isTodaySQL } from '../../utils/calendar/isTodaySQL'
+import EmptyTimeSlot from './EmptyTimeSlot'
 import MobileTimeSlots from './MobileTimeSlots'
 
 interface Props {
@@ -23,11 +24,11 @@ const TimeSlotsContainer = (props: Props) => {
 
     return (
         <>
-            {isTodaySQL(props.dateSlot, date) && props.dateSlot.timeslots!.length > 0 &&
+            {isTodaySQL(props.dateSlot, date) && props.dateSlot.timeslots!.length > 0 ?
                 props.dateSlot.timeslots?.map((timeslot, index: number) =>
                     <MobileTimeSlots count={props.count} setBottomBarHeight={props.setHeight} bottomBar={props.bottomBar.current} dateslot={props.dateSlot as DateSlot} timeslot={timeslot as TimeSlot} key={index} />
                 )
-            }
+                : <EmptyTimeSlot />}
         </>
     )
 }

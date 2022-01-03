@@ -56,20 +56,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     connectToDevTools: true,
   });
 
-  return process.browser ? (
-    <ApolloProvider client={client}>
-      <SimpleReactLightbox>
-        <AuthProvider>
-          {/* @ts-ignore */}
-          <PersistGate persistor={store.__persistor} loading={<div>...Loading</div>}>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </PersistGate>
-        </AuthProvider>
-      </SimpleReactLightbox>
-    </ApolloProvider >
-  ) : (
+  console.log(client);
+
+  return (
     <ApolloProvider client={client}>
       <SimpleReactLightbox>
         <AuthProvider>

@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { TIMESLOT_TYPE } from '../../config/constants';
 import { DateSlot } from '../../generated/graphql';
-import { setCount, setDate } from '../../redux/actions';
+import { setDate } from '../../redux/actions';
 import { getBackgroundColorByDateSlot } from '../../utils/calendar/getBackgroundColorByDateSlot';
 import { isBeforeToday } from '../../utils/calendar/isBeforeToday';
 import { isToday } from '../../utils/calendar/isToday';
@@ -22,13 +22,13 @@ interface Props {
 export const DayBox = (props: Props) => {
     const dispatch = useDispatch();
 
+    useEffect(()=> {
+        console.log(props.dateSlot);
+        return;
+    }, [props.dateSlot])
+
     const handleClick = () => {
         if (!isBeforeToday(props.day)) {
-            if (props.dateSlot && props.dateSlot.timeslots) {
-                dispatch(setCount(props.dateSlot!.timeslots!.length))
-            } else {
-                dispatch(setCount(0));
-            }
             dispatch(setDate(props.day));
             setTimeout(() => {
                 props.setActive(true);

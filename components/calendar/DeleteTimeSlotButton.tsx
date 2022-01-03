@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiTrash2 } from 'react-icons/fi';
-import { DateSlotsDocument, TimeSlotsDocument, useDeleteDateSlotsMutation, useDeleteTimeSlotsMutation, UserDocument, UsersDocument } from '../../generated/graphql';
+import { useDeleteDateSlotsMutation, useDeleteTimeSlotsMutation } from '../../generated/graphql';
 
 interface Props {
     date: string
@@ -35,7 +35,6 @@ const DeleteTimeSlotButton = (props: Props) => {
         })
 
         if (!errors) {
-            console.log(props.count);
             if (props.count === 1) {
                 const { errors } = await DeleteDateSlot({
                     variables: {
@@ -52,11 +51,9 @@ const DeleteTimeSlotButton = (props: Props) => {
                 })
 
                 if (!errors) {
-                    console.log("Deleted");
                 }
             }
         } else {
-            console.log("Failed to delete TimeSlot");
         }
     }
 

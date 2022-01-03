@@ -2,8 +2,9 @@ import { DateTime } from "luxon";
 import React, { useEffect, useRef, useState } from 'react';
 import { FiChevronLeft, FiChevronRight, FiMinus, FiPlus } from 'react-icons/fi';
 import { useSelector } from "react-redux";
-import { DateSlot, useDateSlotsQuery } from "../../generated/graphql";
+import { DateSlot, DateSlotsQuery, useDateSlotsQuery } from "../../generated/graphql";
 import { RootState } from "../../redux/reducers";
+import { containsDateSlotsAndAtleastOneTimeSlot, containsDateSlotsAndNoTimeSlots, containsNoDateSlotsAndNoTimeSlots } from "../../utils/calendar/containsDateSlots,";
 import getDaysInMonth from "../../utils/calendar/getDaysInMonth";
 import getDaysInWeek from "../../utils/calendar/getDaysInWeek";
 import Spinner from "../Spinner";
@@ -115,7 +116,7 @@ const JemmaCalendar = (props: Props) => {
                     {!loading && data?.dateSlots && data!.dateSlots!.map((dateSlot, index) =>
                         <TimeSlotsContainer count={count} setCount={setCount} key={index} setHeight={setHeight} bottomBar={bottomBarRef} dateSlot={dateSlot as DateSlot} />
                     )}
-                    {!loading && data?.dateSlots!.filter((d) => d.date === date.toSQLDate()).length === 0 &&
+                    {!loading && containsDateSlotsAndNoTimeSlots(data!) || containsNoDateSlotsAndNoTimeSlots(data!) &&
                         <EmptyTimeSlot />}
                     {admin &&
                         <AddTimeSlotBanner />
