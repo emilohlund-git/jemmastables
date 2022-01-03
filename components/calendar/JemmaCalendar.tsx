@@ -82,14 +82,14 @@ const JemmaCalendar = (props: Props) => {
                 </div>
                 {!loading ?
                     <>
-                        <div {...handlers} className="grid grid-cols-7 gap-1">
+                        <div className="grid grid-cols-7 gap-1">
                             {weekDays &&
                                 weekDays.map((day, i) => (
                                     <h2 className="md:text-black text-gray-400 text-center" key={i}>{day.weekdayShort}</h2>
                                 ))
                             }
                         </div>
-                        <div className="my-2 grid grid-cols-7 gap-1">
+                        <div {...handlers} style={{ touchAction: "pan-x" }} className="my-2 grid grid-cols-7 gap-1">
                             {days && !loading &&
                                 days.map((day, i) => (
                                     <DayBox active={active} setActive={setActive} bottomBarRef={bottomBarRef} height={height} setHeight={setHeight} day={day} dateSlot={data?.dateSlots.find((d) => d.date === day.toSQLDate()) as DateSlot} key={i} />
