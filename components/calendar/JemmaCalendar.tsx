@@ -2,9 +2,9 @@ import { DateTime } from "luxon";
 import React, { useEffect, useRef, useState } from 'react';
 import { FiChevronLeft, FiChevronRight, FiMinus, FiPlus } from 'react-icons/fi';
 import { useSelector } from "react-redux";
-import { DateSlot, DateSlotsQuery, useDateSlotsQuery } from "../../generated/graphql";
+import { DateSlot, useDateSlotsQuery } from "../../generated/graphql";
 import { RootState } from "../../redux/reducers";
-import { containsDateSlotsAndAtleastOneTimeSlot, containsDateSlotsAndNoTimeSlots, containsNoDateSlotsAndNoTimeSlots } from "../../utils/calendar/containsDateSlots,";
+import { containsDateSlotsAndNoTimeSlots, containsNoDateSlotsAndNoTimeSlots } from "../../utils/calendar/containsDateSlots,";
 import getDaysInMonth from "../../utils/calendar/getDaysInMonth";
 import getDaysInWeek from "../../utils/calendar/getDaysInWeek";
 import Spinner from "../Spinner";
@@ -14,6 +14,7 @@ import { BookingModal } from "./BookingModal";
 import { DayBox } from "./DayBox";
 import EmptyTimeSlot from './EmptyTimeSlot';
 import TimeSlotsContainer from "./TimeSlotsContainer";
+import { useSwipeable } from 'react-swipeable';
 
 interface Props {
 
@@ -32,6 +33,14 @@ const JemmaCalendar = (props: Props) => {
     const { data, loading } = useDateSlotsQuery();
     const bottomBarRef = useRef<HTMLDivElement>(null);
     const [count, setCount] = useState(0);
+    const handlers = useSwipeable({
+        onSwipedRight: (eventData) => setCurrentDate(currentDate.set({ month: currentDate.month - 1 })),
+        onSwipedLeft: (eventData) => setCurrentDate(currentDate.set({ month: currentDate.month + 1 })),
+        delta: 10,
+        trackMouse: true,
+        preventDefaultTouchmoveEvent: false,
+        trackTouch: true,
+    })
 
     const changeCalendar = (value: string) => {
         if (value == "minus") {
@@ -73,7 +82,7 @@ const JemmaCalendar = (props: Props) => {
                 </div>
                 {!loading ?
                     <>
-                        <div className="grid grid-cols-7 gap-1">
+                        <div {...handlers} className="grid grid-cols-7 gap-1">
                             {weekDays &&
                                 weekDays.map((day, i) => (
                                     <h2 className="md:text-black text-gray-400 text-center" key={i}>{day.weekdayShort}</h2>
