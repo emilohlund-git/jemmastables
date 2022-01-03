@@ -1,8 +1,7 @@
-import router, { useRouter } from 'next/router';
 import React, { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../contexts/AuthContext';
-import { User, useUsersQuery } from '../generated/graphql';
+import { User } from '../generated/graphql';
 import { setUser } from '../redux/actions';
 import { RootState } from '../redux/reducers';
 
@@ -12,26 +11,17 @@ interface Props {
 
 const LoginForm = (props: Props) => {
     const user: User = useSelector((state: RootState) => state.user);
-    const rouer = useRouter();
     const { signin, signout }: any = useAuth();
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [formState, setFormState] = useState({
-        email: '',
-        password: '',
-    })
     const dispatch = useDispatch();
-    const { data, loading } = useUsersQuery();
-
+    
     const handleLogin = async (e: FormEvent) => {
         e.preventDefault();
-        if (!loading) {
+        if (!isLoading) {
             try {
                 setError('');
-                await signin(formState.email, formState.password);
-                setIsLoading(true);
-                dispatch(setUser(data?.users.find((u) => u.email.toLowerCase() === formState.email.toLowerCase())));
-                router.back();
+                await signin();
             } catch (err) {
                 console.log(err);
                 setError("Inloggningen misslyckades.");
@@ -69,24 +59,9 @@ const LoginForm = (props: Props) => {
                 </div>
                 <div className="flex flex-col justify-center items-center">
                     {!user ?
-                        <form onSubmit={handleLogin} className="flex flex-col">
-                            <input className="text-fill-gray-500 text-gray-500 shadow-sm transition-all outline-none bg-blue-50 appearance-none rounded-3xl px-4 py-2 mb-2 focus:ring-2 focus:ring-blue-400" value={formState.email} onChange={(e) => setFormState({
-                                ...formState,
-                                [e.target.name]: e.target.value
-                            })} name="email" type="email" placeholder="email" />
-                            <input className="text-fill-gray-500 text-gray-500 shadow-sm transition-all outline-none bg-blue-50 appearance-none rounded-3xl px-4 py-2 mb-2 focus:ring-2 focus:ring-blue-400" value={formState.password} onChange={(e) => setFormState({
-                                ...formState,
-                                [e.target.name]: e.target.value
-                            })} name="password" type="password" placeholder="password" />
-                            <div className={`${error === '' ? "hidden" : ""} text-fill-gray-500 text-gray-500 shadow-sm transition-all outline-none bg-red-100 appearance-none rounded-3xl px-4 py-3 mb-2 text-sm`}>
-                                {error}
-                            </div>
-                            <button disabled={isLoading} className="shadow-sm bg-gradient-to-r from-black to-gray-800 text-white rounded-3xl py-2 text-sm" type="submit">logga in &rarr;</button>
-                        </form>
+                        <button onClick={handleLogin} className="shadow-sm bg-gradient-to-r from-blue-500 to-blue-800 w-48 text-white rounded-3xl px-4 py-2 text-sm">logga in med Facebook</button>
                         :
-                        <form onSubmit={handleLogout} className="flex flex-col">
-                            <button className="shadow-sm bg-gradient-to-r from-black to-gray-800 w-48 text-white rounded-3xl px-4 py-2 text-sm">logga ut &rarr;</button>
-                        </form>
+                        <button onClick={handleLogout} className="shadow-sm bg-gradient-to-r from-black to-gray-800 w-48 text-white rounded-3xl px-4 py-2 text-sm">logga ut &rarr;</button>
                     }
                 </div>
             </div>

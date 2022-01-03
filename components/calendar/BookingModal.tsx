@@ -48,7 +48,7 @@ export const BookingModal = React.memo((props: Props) => {
             const { errors } = await UpdateUser({
                 variables: {
                     where: {
-                        email: user.email
+                        uid: user.uid
                     },
                     update: {
                         timeslots: [
@@ -163,7 +163,7 @@ export const BookingModal = React.memo((props: Props) => {
                                         </div>
                                         <div className="flex flex-row items-center mb-6">
                                             <FiPhone className="text-gray-500 mr-2" />
-                                            <input value={formState.phonenumber}
+                                            <input value={formState.phonenumber || ""}
                                                 onChange={(e) =>
                                                     setFormState({
                                                         ...formState,

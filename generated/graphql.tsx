@@ -297,6 +297,7 @@ export type DateSlotTimeSlotTimeslotsAggregationSelection = {
 export type DateSlotTimeSlotTimeslotsNodeAggregateSelection = {
   __typename?: 'DateSlotTimeSlotTimeslotsNodeAggregateSelection';
   from: StringAggregateSelection;
+  slots: IntAggregateSelection;
   to: StringAggregateSelection;
 };
 
@@ -376,6 +377,31 @@ export type DateSlotTimeslotsNodeAggregationWhereInput = {
   from_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
   from_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
   from_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  slots_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  slots_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  slots_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  slots_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  slots_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  slots_EQUAL?: InputMaybe<Scalars['Int']>;
+  slots_GT?: InputMaybe<Scalars['Int']>;
+  slots_GTE?: InputMaybe<Scalars['Int']>;
+  slots_LT?: InputMaybe<Scalars['Int']>;
+  slots_LTE?: InputMaybe<Scalars['Int']>;
+  slots_MAX_EQUAL?: InputMaybe<Scalars['Int']>;
+  slots_MAX_GT?: InputMaybe<Scalars['Int']>;
+  slots_MAX_GTE?: InputMaybe<Scalars['Int']>;
+  slots_MAX_LT?: InputMaybe<Scalars['Int']>;
+  slots_MAX_LTE?: InputMaybe<Scalars['Int']>;
+  slots_MIN_EQUAL?: InputMaybe<Scalars['Int']>;
+  slots_MIN_GT?: InputMaybe<Scalars['Int']>;
+  slots_MIN_GTE?: InputMaybe<Scalars['Int']>;
+  slots_MIN_LT?: InputMaybe<Scalars['Int']>;
+  slots_MIN_LTE?: InputMaybe<Scalars['Int']>;
+  slots_SUM_EQUAL?: InputMaybe<Scalars['Int']>;
+  slots_SUM_GT?: InputMaybe<Scalars['Int']>;
+  slots_SUM_GTE?: InputMaybe<Scalars['Int']>;
+  slots_SUM_LT?: InputMaybe<Scalars['Int']>;
+  slots_SUM_LTE?: InputMaybe<Scalars['Int']>;
   to_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
   to_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
   to_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
@@ -3156,11 +3182,12 @@ export type TimeSlot = {
   dateAggregate?: Maybe<TimeSlotDateSlotDateAggregationSelection>;
   dateConnection: TimeSlotDateConnection;
   from: Scalars['String'];
+  slots?: Maybe<Scalars['Int']>;
   to: Scalars['String'];
   type: TimeSlotType;
   typeAggregate?: Maybe<TimeSlotTimeSlotTypeTypeAggregationSelection>;
   typeConnection: TimeSlotTypeConnection;
-  users?: Maybe<User>;
+  users?: Maybe<Array<Maybe<User>>>;
   usersAggregate?: Maybe<TimeSlotUserUsersAggregationSelection>;
   usersConnection: TimeSlotUsersConnection;
 };
@@ -3226,17 +3253,18 @@ export type TimeSlotAggregateSelection = {
   __typename?: 'TimeSlotAggregateSelection';
   count: Scalars['Int'];
   from: StringAggregateSelection;
+  slots: IntAggregateSelection;
   to: StringAggregateSelection;
 };
 
 export type TimeSlotConnectInput = {
   date?: InputMaybe<TimeSlotDateConnectFieldInput>;
   type?: InputMaybe<TimeSlotTypeConnectFieldInput>;
-  users?: InputMaybe<TimeSlotUsersConnectFieldInput>;
+  users?: InputMaybe<Array<TimeSlotUsersConnectFieldInput>>;
 };
 
 export type TimeSlotConnectOrCreateInput = {
-  users?: InputMaybe<TimeSlotUsersConnectOrCreateFieldInput>;
+  users?: InputMaybe<Array<TimeSlotUsersConnectOrCreateFieldInput>>;
 };
 
 export type TimeSlotConnectWhere = {
@@ -3246,6 +3274,7 @@ export type TimeSlotConnectWhere = {
 export type TimeSlotCreateInput = {
   date?: InputMaybe<TimeSlotDateFieldInput>;
   from: Scalars['String'];
+  slots?: InputMaybe<Scalars['Int']>;
   to: Scalars['String'];
   type?: InputMaybe<TimeSlotTypeFieldInput>;
   users?: InputMaybe<TimeSlotUsersFieldInput>;
@@ -3362,13 +3391,13 @@ export type TimeSlotDateUpdateFieldInput = {
 export type TimeSlotDeleteInput = {
   date?: InputMaybe<TimeSlotDateDeleteFieldInput>;
   type?: InputMaybe<TimeSlotTypeDeleteFieldInput>;
-  users?: InputMaybe<TimeSlotUsersDeleteFieldInput>;
+  users?: InputMaybe<Array<TimeSlotUsersDeleteFieldInput>>;
 };
 
 export type TimeSlotDisconnectInput = {
   date?: InputMaybe<TimeSlotDateDisconnectFieldInput>;
   type?: InputMaybe<TimeSlotTypeDisconnectFieldInput>;
-  users?: InputMaybe<TimeSlotUsersDisconnectFieldInput>;
+  users?: InputMaybe<Array<TimeSlotUsersDisconnectFieldInput>>;
 };
 
 export type TimeSlotOptions = {
@@ -3381,12 +3410,13 @@ export type TimeSlotOptions = {
 export type TimeSlotRelationInput = {
   date?: InputMaybe<TimeSlotDateCreateFieldInput>;
   type?: InputMaybe<TimeSlotTypeCreateFieldInput>;
-  users?: InputMaybe<TimeSlotUsersCreateFieldInput>;
+  users?: InputMaybe<Array<TimeSlotUsersCreateFieldInput>>;
 };
 
 /** Fields to sort TimeSlots by. The order in which sorts are applied is not guaranteed when specifying many fields in one TimeSlotSort object. */
 export type TimeSlotSort = {
   from?: InputMaybe<SortDirection>;
+  slots?: InputMaybe<SortDirection>;
   to?: InputMaybe<SortDirection>;
 };
 
@@ -3564,6 +3594,7 @@ export type TimeSlotTypeTimeSlotTimeslotAggregationSelection = {
 export type TimeSlotTypeTimeSlotTimeslotNodeAggregateSelection = {
   __typename?: 'TimeSlotTypeTimeSlotTimeslotNodeAggregateSelection';
   from: StringAggregateSelection;
+  slots: IntAggregateSelection;
   to: StringAggregateSelection;
 };
 
@@ -3643,6 +3674,31 @@ export type TimeSlotTypeTimeslotNodeAggregationWhereInput = {
   from_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
   from_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
   from_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  slots_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  slots_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  slots_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  slots_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  slots_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  slots_EQUAL?: InputMaybe<Scalars['Int']>;
+  slots_GT?: InputMaybe<Scalars['Int']>;
+  slots_GTE?: InputMaybe<Scalars['Int']>;
+  slots_LT?: InputMaybe<Scalars['Int']>;
+  slots_LTE?: InputMaybe<Scalars['Int']>;
+  slots_MAX_EQUAL?: InputMaybe<Scalars['Int']>;
+  slots_MAX_GT?: InputMaybe<Scalars['Int']>;
+  slots_MAX_GTE?: InputMaybe<Scalars['Int']>;
+  slots_MAX_LT?: InputMaybe<Scalars['Int']>;
+  slots_MAX_LTE?: InputMaybe<Scalars['Int']>;
+  slots_MIN_EQUAL?: InputMaybe<Scalars['Int']>;
+  slots_MIN_GT?: InputMaybe<Scalars['Int']>;
+  slots_MIN_GTE?: InputMaybe<Scalars['Int']>;
+  slots_MIN_LT?: InputMaybe<Scalars['Int']>;
+  slots_MIN_LTE?: InputMaybe<Scalars['Int']>;
+  slots_SUM_EQUAL?: InputMaybe<Scalars['Int']>;
+  slots_SUM_GT?: InputMaybe<Scalars['Int']>;
+  slots_SUM_GTE?: InputMaybe<Scalars['Int']>;
+  slots_SUM_LT?: InputMaybe<Scalars['Int']>;
+  slots_SUM_LTE?: InputMaybe<Scalars['Int']>;
   to_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
   to_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
   to_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
@@ -3725,9 +3781,10 @@ export type TimeSlotTypeWhere = {
 export type TimeSlotUpdateInput = {
   date?: InputMaybe<TimeSlotDateUpdateFieldInput>;
   from?: InputMaybe<Scalars['String']>;
+  slots?: InputMaybe<Scalars['Int']>;
   to?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<TimeSlotTypeUpdateFieldInput>;
-  users?: InputMaybe<TimeSlotUsersUpdateFieldInput>;
+  users?: InputMaybe<Array<TimeSlotUsersUpdateFieldInput>>;
 };
 
 export type TimeSlotUserUsersAggregationSelection = {
@@ -3741,8 +3798,9 @@ export type TimeSlotUserUsersNodeAggregateSelection = {
   email: StringAggregateSelection;
   id: IdAggregateSelection;
   name: StringAggregateSelection;
-  password: StringAggregateSelection;
   phonenumber: StringAggregateSelection;
+  profilePicture: StringAggregateSelection;
+  uid: StringAggregateSelection;
 };
 
 export type TimeSlotUsersAggregateInput = {
@@ -3757,7 +3815,7 @@ export type TimeSlotUsersAggregateInput = {
 };
 
 export type TimeSlotUsersConnectFieldInput = {
-  connect?: InputMaybe<UserConnectInput>;
+  connect?: InputMaybe<Array<UserConnectInput>>;
   where?: InputMaybe<UserConnectWhere>;
 };
 
@@ -3803,9 +3861,9 @@ export type TimeSlotUsersDisconnectFieldInput = {
 };
 
 export type TimeSlotUsersFieldInput = {
-  connect?: InputMaybe<TimeSlotUsersConnectFieldInput>;
-  connectOrCreate?: InputMaybe<TimeSlotUsersConnectOrCreateFieldInput>;
-  create?: InputMaybe<TimeSlotUsersCreateFieldInput>;
+  connect?: InputMaybe<Array<TimeSlotUsersConnectFieldInput>>;
+  connectOrCreate?: InputMaybe<Array<TimeSlotUsersConnectOrCreateFieldInput>>;
+  create?: InputMaybe<Array<TimeSlotUsersCreateFieldInput>>;
 };
 
 export type TimeSlotUsersNodeAggregationWhereInput = {
@@ -3852,26 +3910,6 @@ export type TimeSlotUsersNodeAggregationWhereInput = {
   name_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
   name_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
   name_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
-  password_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
-  password_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
-  password_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
-  password_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
-  password_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
-  password_EQUAL?: InputMaybe<Scalars['String']>;
-  password_GT?: InputMaybe<Scalars['Int']>;
-  password_GTE?: InputMaybe<Scalars['Int']>;
-  password_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
-  password_LONGEST_GT?: InputMaybe<Scalars['Int']>;
-  password_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
-  password_LONGEST_LT?: InputMaybe<Scalars['Int']>;
-  password_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
-  password_LT?: InputMaybe<Scalars['Int']>;
-  password_LTE?: InputMaybe<Scalars['Int']>;
-  password_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
-  password_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
-  password_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
-  password_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
-  password_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
   phonenumber_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
   phonenumber_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
   phonenumber_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
@@ -3892,6 +3930,46 @@ export type TimeSlotUsersNodeAggregationWhereInput = {
   phonenumber_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
   phonenumber_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
   phonenumber_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  profilePicture_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  profilePicture_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  profilePicture_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  profilePicture_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  profilePicture_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  profilePicture_EQUAL?: InputMaybe<Scalars['String']>;
+  profilePicture_GT?: InputMaybe<Scalars['Int']>;
+  profilePicture_GTE?: InputMaybe<Scalars['Int']>;
+  profilePicture_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  profilePicture_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  profilePicture_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  profilePicture_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  profilePicture_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  profilePicture_LT?: InputMaybe<Scalars['Int']>;
+  profilePicture_LTE?: InputMaybe<Scalars['Int']>;
+  profilePicture_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  profilePicture_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  profilePicture_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  profilePicture_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  profilePicture_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  uid_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  uid_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  uid_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  uid_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  uid_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  uid_EQUAL?: InputMaybe<Scalars['String']>;
+  uid_GT?: InputMaybe<Scalars['Int']>;
+  uid_GTE?: InputMaybe<Scalars['Int']>;
+  uid_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  uid_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  uid_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  uid_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  uid_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  uid_LT?: InputMaybe<Scalars['Int']>;
+  uid_LTE?: InputMaybe<Scalars['Int']>;
+  uid_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  uid_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  uid_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  uid_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  uid_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
 };
 
 export type TimeSlotUsersRelationship = {
@@ -3905,11 +3983,11 @@ export type TimeSlotUsersUpdateConnectionInput = {
 };
 
 export type TimeSlotUsersUpdateFieldInput = {
-  connect?: InputMaybe<TimeSlotUsersConnectFieldInput>;
-  connectOrCreate?: InputMaybe<TimeSlotUsersConnectOrCreateFieldInput>;
-  create?: InputMaybe<TimeSlotUsersCreateFieldInput>;
-  delete?: InputMaybe<TimeSlotUsersDeleteFieldInput>;
-  disconnect?: InputMaybe<TimeSlotUsersDisconnectFieldInput>;
+  connect?: InputMaybe<Array<TimeSlotUsersConnectFieldInput>>;
+  connectOrCreate?: InputMaybe<Array<TimeSlotUsersConnectOrCreateFieldInput>>;
+  create?: InputMaybe<Array<TimeSlotUsersCreateFieldInput>>;
+  delete?: InputMaybe<Array<TimeSlotUsersDeleteFieldInput>>;
+  disconnect?: InputMaybe<Array<TimeSlotUsersDisconnectFieldInput>>;
   update?: InputMaybe<TimeSlotUsersUpdateConnectionInput>;
   where?: InputMaybe<TimeSlotUsersConnectionWhere>;
 };
@@ -3932,6 +4010,14 @@ export type TimeSlotWhere = {
   from_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   from_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
   from_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  slots?: InputMaybe<Scalars['Int']>;
+  slots_GT?: InputMaybe<Scalars['Int']>;
+  slots_GTE?: InputMaybe<Scalars['Int']>;
+  slots_IN?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  slots_LT?: InputMaybe<Scalars['Int']>;
+  slots_LTE?: InputMaybe<Scalars['Int']>;
+  slots_NOT?: InputMaybe<Scalars['Int']>;
+  slots_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
   to?: InputMaybe<Scalars['String']>;
   to_CONTAINS?: InputMaybe<Scalars['String']>;
   to_ENDS_WITH?: InputMaybe<Scalars['String']>;
@@ -4052,11 +4138,12 @@ export type User = {
   email: Scalars['String'];
   id?: Maybe<Scalars['ID']>;
   name: Scalars['String'];
-  password: Scalars['String'];
-  phonenumber: Scalars['String'];
+  phonenumber?: Maybe<Scalars['String']>;
+  profilePicture?: Maybe<Scalars['String']>;
   timeslots?: Maybe<Array<Maybe<TimeSlot>>>;
   timeslotsAggregate?: Maybe<UserTimeSlotTimeslotsAggregationSelection>;
   timeslotsConnection: UserTimeslotsConnection;
+  uid: Scalars['String'];
 };
 
 
@@ -4084,8 +4171,9 @@ export type UserAggregateSelection = {
   email: StringAggregateSelection;
   id: IdAggregateSelection;
   name: StringAggregateSelection;
-  password: StringAggregateSelection;
   phonenumber: StringAggregateSelection;
+  profilePicture: StringAggregateSelection;
+  uid: StringAggregateSelection;
 };
 
 export type UserConnectInput = {
@@ -4103,9 +4191,10 @@ export type UserConnectWhere = {
 export type UserCreateInput = {
   email: Scalars['String'];
   name: Scalars['String'];
-  password: Scalars['String'];
-  phonenumber: Scalars['String'];
+  phonenumber?: InputMaybe<Scalars['String']>;
+  profilePicture?: InputMaybe<Scalars['String']>;
   timeslots?: InputMaybe<UserTimeslotsFieldInput>;
+  uid: Scalars['String'];
 };
 
 export type UserDeleteInput = {
@@ -4132,8 +4221,9 @@ export type UserSort = {
   email?: InputMaybe<SortDirection>;
   id?: InputMaybe<SortDirection>;
   name?: InputMaybe<SortDirection>;
-  password?: InputMaybe<SortDirection>;
   phonenumber?: InputMaybe<SortDirection>;
+  profilePicture?: InputMaybe<SortDirection>;
+  uid?: InputMaybe<SortDirection>;
 };
 
 export type UserTimeSlotTimeslotsAggregationSelection = {
@@ -4145,6 +4235,7 @@ export type UserTimeSlotTimeslotsAggregationSelection = {
 export type UserTimeSlotTimeslotsNodeAggregateSelection = {
   __typename?: 'UserTimeSlotTimeslotsNodeAggregateSelection';
   from: StringAggregateSelection;
+  slots: IntAggregateSelection;
   to: StringAggregateSelection;
 };
 
@@ -4224,6 +4315,31 @@ export type UserTimeslotsNodeAggregationWhereInput = {
   from_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
   from_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
   from_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  slots_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  slots_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  slots_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  slots_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  slots_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  slots_EQUAL?: InputMaybe<Scalars['Int']>;
+  slots_GT?: InputMaybe<Scalars['Int']>;
+  slots_GTE?: InputMaybe<Scalars['Int']>;
+  slots_LT?: InputMaybe<Scalars['Int']>;
+  slots_LTE?: InputMaybe<Scalars['Int']>;
+  slots_MAX_EQUAL?: InputMaybe<Scalars['Int']>;
+  slots_MAX_GT?: InputMaybe<Scalars['Int']>;
+  slots_MAX_GTE?: InputMaybe<Scalars['Int']>;
+  slots_MAX_LT?: InputMaybe<Scalars['Int']>;
+  slots_MAX_LTE?: InputMaybe<Scalars['Int']>;
+  slots_MIN_EQUAL?: InputMaybe<Scalars['Int']>;
+  slots_MIN_GT?: InputMaybe<Scalars['Int']>;
+  slots_MIN_GTE?: InputMaybe<Scalars['Int']>;
+  slots_MIN_LT?: InputMaybe<Scalars['Int']>;
+  slots_MIN_LTE?: InputMaybe<Scalars['Int']>;
+  slots_SUM_EQUAL?: InputMaybe<Scalars['Int']>;
+  slots_SUM_GT?: InputMaybe<Scalars['Int']>;
+  slots_SUM_GTE?: InputMaybe<Scalars['Int']>;
+  slots_SUM_LT?: InputMaybe<Scalars['Int']>;
+  slots_SUM_LTE?: InputMaybe<Scalars['Int']>;
   to_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
   to_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
   to_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
@@ -4266,16 +4382,16 @@ export type UserTimeslotsUpdateFieldInput = {
 };
 
 export type UserUniqueWhere = {
-  email?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
 };
 
 export type UserUpdateInput = {
   email?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
-  password?: InputMaybe<Scalars['String']>;
   phonenumber?: InputMaybe<Scalars['String']>;
+  profilePicture?: InputMaybe<Scalars['String']>;
   timeslots?: InputMaybe<Array<UserTimeslotsUpdateFieldInput>>;
+  uid?: InputMaybe<Scalars['String']>;
 };
 
 export type UserWhere = {
@@ -4311,16 +4427,6 @@ export type UserWhere = {
   name_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   name_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
   name_STARTS_WITH?: InputMaybe<Scalars['String']>;
-  password?: InputMaybe<Scalars['String']>;
-  password_CONTAINS?: InputMaybe<Scalars['String']>;
-  password_ENDS_WITH?: InputMaybe<Scalars['String']>;
-  password_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  password_NOT?: InputMaybe<Scalars['String']>;
-  password_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
-  password_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
-  password_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  password_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
-  password_STARTS_WITH?: InputMaybe<Scalars['String']>;
   phonenumber?: InputMaybe<Scalars['String']>;
   phonenumber_CONTAINS?: InputMaybe<Scalars['String']>;
   phonenumber_ENDS_WITH?: InputMaybe<Scalars['String']>;
@@ -4331,16 +4437,36 @@ export type UserWhere = {
   phonenumber_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   phonenumber_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
   phonenumber_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  profilePicture?: InputMaybe<Scalars['String']>;
+  profilePicture_CONTAINS?: InputMaybe<Scalars['String']>;
+  profilePicture_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  profilePicture_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  profilePicture_NOT?: InputMaybe<Scalars['String']>;
+  profilePicture_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  profilePicture_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  profilePicture_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  profilePicture_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  profilePicture_STARTS_WITH?: InputMaybe<Scalars['String']>;
   timeslots?: InputMaybe<TimeSlotWhere>;
   timeslotsAggregate?: InputMaybe<UserTimeslotsAggregateInput>;
   timeslotsConnection?: InputMaybe<UserTimeslotsConnectionWhere>;
   timeslotsConnection_NOT?: InputMaybe<UserTimeslotsConnectionWhere>;
   timeslots_NOT?: InputMaybe<TimeSlotWhere>;
+  uid?: InputMaybe<Scalars['String']>;
+  uid_CONTAINS?: InputMaybe<Scalars['String']>;
+  uid_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  uid_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  uid_NOT?: InputMaybe<Scalars['String']>;
+  uid_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  uid_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  uid_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  uid_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  uid_STARTS_WITH?: InputMaybe<Scalars['String']>;
 };
 
 export type RegularAdminFragment = { __typename?: 'Admin', username: string };
 
-export type RegularDateSlotFragment = { __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: { __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined } | null | undefined> | null | undefined };
+export type RegularDateSlotFragment = { __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, slots?: number | null | undefined, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber?: string | null | undefined, email: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
 
 export type RegularHorseFragment = { __typename?: 'Horse', name: string, nickname?: string | null | undefined, movie?: string | null | undefined, owner: string, after: string, birthyear: string, gender: string, color: string, images?: Array<{ __typename?: 'HorseImage', url: string, path: string, width: number, height: number, profile: boolean } | null | undefined> | null | undefined, category: { __typename?: 'HorseCategory', category: string, image: string } };
 
@@ -4350,9 +4476,9 @@ export type RegularPartnerFragment = { __typename?: 'Partner', name: string, des
 
 export type RegularPartnerLogoFragment = { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number, owner?: { __typename?: 'Partner', name: string, description: string, website?: string | null | undefined } | null | undefined };
 
-export type RegularTimeSlotFragment = { __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined };
+export type RegularTimeSlotFragment = { __typename?: 'TimeSlot', to: string, from: string, slots?: number | null | undefined, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber?: string | null | undefined, email: string } | null | undefined> | null | undefined };
 
-export type RegularUserFragment = { __typename?: 'User', id?: string | null | undefined, password: string, name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined };
+export type RegularUserFragment = { __typename?: 'User', id?: string | null | undefined, uid: string, name: string, phonenumber?: string | null | undefined, profilePicture?: string | null | undefined, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined };
 
 export type CreateAdminMutationVariables = Exact<{
   input: Array<AdminCreateInput> | AdminCreateInput;
@@ -4370,7 +4496,6 @@ export type CreateDateSlotsMutation = { __typename?: 'Mutation', createDateSlots
 
 export type CreateHorseMutationVariables = Exact<{
   input: Array<HorseCreateInput> | HorseCreateInput;
-  where?: InputMaybe<HorseCategoryWhere>;
 }>;
 
 
@@ -4423,14 +4548,14 @@ export type CreateTimeSlotsMutationVariables = Exact<{
 }>;
 
 
-export type CreateTimeSlotsMutation = { __typename?: 'Mutation', createTimeSlots: { __typename?: 'CreateTimeSlotsMutationResponse', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined }> } };
+export type CreateTimeSlotsMutation = { __typename?: 'Mutation', createTimeSlots: { __typename?: 'CreateTimeSlotsMutationResponse', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, slots?: number | null | undefined, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber?: string | null | undefined, email: string } | null | undefined> | null | undefined }> } };
 
 export type CreateUsersMutationVariables = Exact<{
   input: Array<UserCreateInput> | UserCreateInput;
 }>;
 
 
-export type CreateUsersMutation = { __typename?: 'Mutation', createUsers: { __typename?: 'CreateUsersMutationResponse', users: Array<{ __typename?: 'User', id?: string | null | undefined, password: string, name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> } };
+export type CreateUsersMutation = { __typename?: 'Mutation', createUsers: { __typename?: 'CreateUsersMutationResponse', users: Array<{ __typename?: 'User', id?: string | null | undefined, uid: string, name: string, phonenumber?: string | null | undefined, profilePicture?: string | null | undefined, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> } };
 
 export type DeleteDateSlotsMutationVariables = Exact<{
   where?: InputMaybe<DateSlotWhere>;
@@ -4481,7 +4606,7 @@ export type UpdateDateSlotsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateDateSlotsMutation = { __typename?: 'Mutation', updateDateSlots: { __typename?: 'UpdateDateSlotsMutationResponse', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: { __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined } | null | undefined> | null | undefined }> } };
+export type UpdateDateSlotsMutation = { __typename?: 'Mutation', updateDateSlots: { __typename?: 'UpdateDateSlotsMutationResponse', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, slots?: number | null | undefined, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber?: string | null | undefined, email: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined }> } };
 
 export type UpdateHorsesMutationVariables = Exact<{
   where?: InputMaybe<HorseWhere>;
@@ -4527,7 +4652,7 @@ export type UpdateTimeSlotsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateTimeSlotsMutation = { __typename?: 'Mutation', updateTimeSlots: { __typename?: 'UpdateTimeSlotsMutationResponse', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined }> } };
+export type UpdateTimeSlotsMutation = { __typename?: 'Mutation', updateTimeSlots: { __typename?: 'UpdateTimeSlotsMutationResponse', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, slots?: number | null | undefined, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber?: string | null | undefined, email: string } | null | undefined> | null | undefined }> } };
 
 export type UpdateTimeSlotTypesMutationVariables = Exact<{
   where?: InputMaybe<TimeSlotTypeWhere>;
@@ -4542,7 +4667,7 @@ export type UpdateUsersMutationVariables = Exact<{
 }>;
 
 
-export type UpdateUsersMutation = { __typename?: 'Mutation', updateUsers: { __typename?: 'UpdateUsersMutationResponse', users: Array<{ __typename?: 'User', id?: string | null | undefined, password: string, name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> } };
+export type UpdateUsersMutation = { __typename?: 'Mutation', updateUsers: { __typename?: 'UpdateUsersMutationResponse', users: Array<{ __typename?: 'User', id?: string | null | undefined, uid: string, name: string, phonenumber?: string | null | undefined, profilePicture?: string | null | undefined, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> } };
 
 export type AdminQueryVariables = Exact<{
   where?: InputMaybe<AdminWhere>;
@@ -4561,12 +4686,12 @@ export type DateSlotQueryVariables = Exact<{
 }>;
 
 
-export type DateSlotQuery = { __typename?: 'Query', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: { __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined } | null | undefined> | null | undefined }> };
+export type DateSlotQuery = { __typename?: 'Query', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, slots?: number | null | undefined, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber?: string | null | undefined, email: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined }> };
 
 export type DateSlotsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type DateSlotsQuery = { __typename?: 'Query', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, users?: { __typename?: 'User', name: string, email: string, phonenumber: string } | null | undefined } | null | undefined> | null | undefined }> };
+export type DateSlotsQuery = { __typename?: 'Query', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, slots?: number | null | undefined, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber?: string | null | undefined, email: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined }> };
 
 export type HorseQueryVariables = Exact<{
   where?: InputMaybe<HorseWhere>;
@@ -4640,14 +4765,14 @@ export type TimeSlotQueryVariables = Exact<{
 }>;
 
 
-export type TimeSlotQuery = { __typename?: 'Query', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined }> };
+export type TimeSlotQuery = { __typename?: 'Query', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, slots?: number | null | undefined, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber?: string | null | undefined, email: string } | null | undefined> | null | undefined }> };
 
 export type TimeSlotTypeQueryVariables = Exact<{
   where?: InputMaybe<TimeSlotTypeWhere>;
 }>;
 
 
-export type TimeSlotTypeQuery = { __typename?: 'Query', timeSlotTypes: Array<{ __typename?: 'TimeSlotType', type: string, timeslot: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined } | null | undefined> }> };
+export type TimeSlotTypeQuery = { __typename?: 'Query', timeSlotTypes: Array<{ __typename?: 'TimeSlotType', type: string, timeslot: Array<{ __typename?: 'TimeSlot', to: string, from: string, slots?: number | null | undefined, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber?: string | null | undefined, email: string } | null | undefined> | null | undefined } | null | undefined> }> };
 
 export type TimeSlotTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4657,42 +4782,58 @@ export type TimeSlotTypesQuery = { __typename?: 'Query', timeSlotTypes: Array<{ 
 export type TimeSlotsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TimeSlotsQuery = { __typename?: 'Query', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: { __typename?: 'User', name: string, phonenumber: string, email: string } | null | undefined }> };
+export type TimeSlotsQuery = { __typename?: 'Query', timeSlots: Array<{ __typename?: 'TimeSlot', to: string, from: string, slots?: number | null | undefined, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber?: string | null | undefined, email: string } | null | undefined> | null | undefined }> };
+
+export type TimeSlotsCountQueryVariables = Exact<{
+  where?: InputMaybe<TimeSlotWhere>;
+}>;
+
+
+export type TimeSlotsCountQuery = { __typename?: 'Query', timeSlotsCount: number };
 
 export type UserQueryVariables = Exact<{
   where?: InputMaybe<UserWhere>;
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id?: string | null | undefined, password: string, name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> };
+export type UserQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id?: string | null | undefined, uid: string, name: string, phonenumber?: string | null | undefined, profilePicture?: string | null | undefined, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id?: string | null | undefined, password: string, name: string, phonenumber: string, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> };
+export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id?: string | null | undefined, uid: string, name: string, phonenumber?: string | null | undefined, profilePicture?: string | null | undefined, email: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string } } | null | undefined> | null | undefined }> };
 
 export const RegularAdminFragmentDoc = gql`
     fragment RegularAdmin on Admin {
   username
 }
     `;
+export const RegularTimeSlotFragmentDoc = gql`
+    fragment RegularTimeSlot on TimeSlot {
+  to
+  from
+  slots
+  type {
+    type
+  }
+  date {
+    date
+  }
+  users {
+    name
+    phonenumber
+    email
+  }
+}
+    `;
 export const RegularDateSlotFragmentDoc = gql`
     fragment RegularDateSlot on DateSlot {
   date
   timeslots {
-    to
-    from
-    type {
-      type
-    }
-    users {
-      name
-      email
-      phonenumber
-    }
+    ...RegularTimeSlot
   }
 }
-    `;
+    ${RegularTimeSlotFragmentDoc}`;
 export const RegularHorseFragmentDoc = gql`
     fragment RegularHorse on Horse {
   name
@@ -4754,29 +4895,13 @@ export const RegularPartnerLogoFragmentDoc = gql`
   }
 }
     `;
-export const RegularTimeSlotFragmentDoc = gql`
-    fragment RegularTimeSlot on TimeSlot {
-  to
-  from
-  type {
-    type
-  }
-  date {
-    date
-  }
-  users {
-    name
-    phonenumber
-    email
-  }
-}
-    `;
 export const RegularUserFragmentDoc = gql`
     fragment RegularUser on User {
   id
-  password
+  uid
   name
   phonenumber
+  profilePicture
   email
   timeslots {
     to
@@ -4861,7 +4986,7 @@ export type CreateDateSlotsMutationHookResult = ReturnType<typeof useCreateDateS
 export type CreateDateSlotsMutationResult = Apollo.MutationResult<CreateDateSlotsMutation>;
 export type CreateDateSlotsMutationOptions = Apollo.BaseMutationOptions<CreateDateSlotsMutation, CreateDateSlotsMutationVariables>;
 export const CreateHorseDocument = gql`
-    mutation CreateHorse($input: [HorseCreateInput!]!, $where: HorseCategoryWhere) {
+    mutation CreateHorse($input: [HorseCreateInput!]!) {
   createHorses(input: $input) {
     horses {
       ...RegularHorse
@@ -4885,7 +5010,6 @@ export type CreateHorseMutationFn = Apollo.MutationFunction<CreateHorseMutation,
  * const [createHorseMutation, { data, loading, error }] = useCreateHorseMutation({
  *   variables: {
  *      input: // value for 'input'
- *      where: // value for 'where'
  *   },
  * });
  */
@@ -6367,6 +6491,39 @@ export function useTimeSlotsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type TimeSlotsQueryHookResult = ReturnType<typeof useTimeSlotsQuery>;
 export type TimeSlotsLazyQueryHookResult = ReturnType<typeof useTimeSlotsLazyQuery>;
 export type TimeSlotsQueryResult = Apollo.QueryResult<TimeSlotsQuery, TimeSlotsQueryVariables>;
+export const TimeSlotsCountDocument = gql`
+    query TimeSlotsCount($where: TimeSlotWhere) {
+  timeSlotsCount(where: $where)
+}
+    `;
+
+/**
+ * __useTimeSlotsCountQuery__
+ *
+ * To run a query within a React component, call `useTimeSlotsCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTimeSlotsCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTimeSlotsCountQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useTimeSlotsCountQuery(baseOptions?: Apollo.QueryHookOptions<TimeSlotsCountQuery, TimeSlotsCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TimeSlotsCountQuery, TimeSlotsCountQueryVariables>(TimeSlotsCountDocument, options);
+      }
+export function useTimeSlotsCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TimeSlotsCountQuery, TimeSlotsCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TimeSlotsCountQuery, TimeSlotsCountQueryVariables>(TimeSlotsCountDocument, options);
+        }
+export type TimeSlotsCountQueryHookResult = ReturnType<typeof useTimeSlotsCountQuery>;
+export type TimeSlotsCountLazyQueryHookResult = ReturnType<typeof useTimeSlotsCountLazyQuery>;
+export type TimeSlotsCountQueryResult = Apollo.QueryResult<TimeSlotsCountQuery, TimeSlotsCountQueryVariables>;
 export const UserDocument = gql`
     query User($where: UserWhere) {
   users(where: $where) {

@@ -11,6 +11,7 @@ module.exports = {
       'jemmastables-bucket.s3.amazonaws.com',
       'jemmastables.com',
       'cdn.image4.io',
+      'graph.facebook.com',
     ],
   },
   async rewrites() {

@@ -1,7 +1,7 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, FacebookAuthProvider, signOut, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, FacebookAuthProvider, signOut, signInWithPopup, signInWithRedirect } from 'firebase/auth';
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { useCreateUsersMutation, User } from '../generated/graphql';
+import { useCreateUsersMutation, User, useUsersQuery } from '../generated/graphql';
 import { setAdmin, setUser } from '../redux/actions';
 import { auth } from '../utils/firebase/firebase';
 
@@ -9,29 +9,14 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }: any) {
     const [CreateUser] = useCreateUsersMutation();
-    const provider = new FacebookAuthProvider();
     const [currentUser, setCurrentUser] = useState();
+    const provider = new FacebookAuthProvider();
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(true);
+    const { data, loading } = useUsersQuery();
+    const [isLoading, setIsLoading] = useState(true);
 
-    async function signup(user: User) {
-
-        await CreateUser({
-            variables: {
-                input: {
-                    name: user.name,
-                    phonenumber: user.phonenumber,
-                    email: user.email,
-                    password: user.password
-                }
-            }
-        })
-        return createUserWithEmailAndPassword(auth, user.email, user.password);
-    }
-
-    function signin(email: string, password: string) {
-
-        return signInWithEmailAndPassword(auth, email, password);
+    function signin() {
+        return signInWithRedirect(auth, provider);
     }
 
     function signout() {
@@ -39,40 +24,52 @@ export function AuthProvider({ children }: any) {
     }
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user: any) => {
-            if (user) {
-                if (user.email === "emil@emilohlund.se") {
+        const unsubscribe = auth.onAuthStateChanged(async (facebookUser: any) => {
+            if (!loading && facebookUser) {
+             
+                const user = data?.users.find((user) => user.uid === facebookUser.uid);
+
+                if (user) {
+                    dispatch(setUser(user as User));
+                }
+
+                if (!user) {
+                    await CreateUser({
+                        variables: {
+                            input: {
+                                uid: facebookUser.uid,
+                                name: facebookUser.displayName,
+                                phonenumber: facebookUser.providerData[0].phoneNumber,
+                                email: facebookUser.email,
+                                profilePicture: facebookUser.photoURL + "/?type=normal",
+                            }
+                        }
+                    })
+                }
+
+                if (facebookUser.email === "emilohlund@hotmail.com") {
                     dispatch(setAdmin(true));
                 } else {
                     dispatch(setAdmin(false));
                 }
-            }
-            setCurrentUser(user)
-            setLoading(false)
-        });
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                // The signed-in user info.
-                const user = result.user;
-                dispatch(setUser(user));
 
-                // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-                const credential = FacebookAuthProvider.credentialFromResult(result);
-                const accessToken = credential!.accessToken;
-            })
+                setCurrentUser(facebookUser)
+            }
+            setIsLoading(false)
+        });
+
         return unsubscribe;
-    }, [])
+    }, [loading])
 
     let sharedState = {
         currentUser,
-        signup,
         signin,
         signout
     };
 
     return (
         <AuthContext.Provider value={sharedState as any}>
-            {!loading && children}
+            {!isLoading && children}
         </AuthContext.Provider>
     )
 }

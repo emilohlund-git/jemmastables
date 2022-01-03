@@ -29,9 +29,8 @@ const makeStore = ({ isServer }: { isServer: any }) => {
     const store = createStore(
       persistedReducer,
       bindMiddleware([thunkMiddleware])
-    );
+    ) as any;
 
-    /* @ts-ignore */
     store.__persistor = persistStore(store);
 
     return store;

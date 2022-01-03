@@ -1,4 +1,5 @@
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 import { DateSlot, TimeSlot } from '../../generated/graphql';
 import { getTimeSlotType } from '../../utils/calendar/getTimeSlotType';
 import { Accordion } from './Accordion';
@@ -8,13 +9,14 @@ interface Props {
     dateslot: DateSlot
     bottomBar: any
     setBottomBarHeight: any
+    count: number
 }
 
 const MobileTimeSlots = (props: Props) => {
     return (
         <>
             {getTimeSlotType(props.timeslot) != "Träning" &&
-                <Accordion setBottomBarHeight={props.setBottomBarHeight} bottomBar={props.bottomBar} timeslot={props.timeslot} dateslot={props.dateslot} />
+                <Accordion count={props.count} setBottomBarHeight={props.setBottomBarHeight} bottomBar={props.bottomBar} timeslot={props.timeslot} dateslot={props.dateslot} />
             }
         </>
     )

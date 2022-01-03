@@ -1,8 +1,9 @@
 fragment RegularUser on User {
   id
-  password
+  uid
   name
   phonenumber
+  profilePicture
   email
   timeslots {
     to

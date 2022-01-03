@@ -1,15 +1,15 @@
 import { actions } from '../actions/types';
 
-const typeReducer = (
-  state = 'Träning',
-  action: { type: string; payload: string }
+const countReducer = (
+  state = 0,
+  action: { type: string; payload: { count: number } }
 ) => {
   switch (action.type) {
-    case actions.setType:
+    case actions.setCount:
       return action.payload;
     default:
       return state;
   }
 };
 
-export default typeReducer;
+export default countReducer;

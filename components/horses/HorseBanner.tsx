@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Horse } from '../../generated/graphql';
 import { setHorse } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
+import findProfilePicture from '../../utils/horses/findProfilePicture';
 import DeleteHorseButton from './DeleteHorseButton';
 
 interface Props {
@@ -12,8 +13,7 @@ interface Props {
 
 const HorseBanner = (props: Props) => {
     const [hovering, setHovering] = useState(false);
-    /* @ts-ignore */
-    const profilePhoto = props.horse.images.find(image => image.profile).url;
+    const profilePhoto = findProfilePicture(props.horse);
     const admin: boolean = useSelector((state: RootState) => state.admin);
     const dispatch = useDispatch();
     const router = useRouter();

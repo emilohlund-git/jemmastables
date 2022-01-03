@@ -2,12 +2,14 @@ import { DateTime } from 'luxon';
 import React, { FormEvent } from 'react';
 import { FiMail, FiPhone, FiUser } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { User, useUpdateUsersMutation, useUsersQuery } from '../../generated/graphql';
+import { TimeSlot, User, useUpdateTimeSlotsMutation, useUpdateUsersMutation } from '../../generated/graphql';
 import { setUser } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
 
 interface Props {
     toggleAccordion: any
+    slots?: number
+    timeslot: TimeSlot
 }
 
 const MobileBookTimeForm = (props: Props) => {
@@ -17,15 +19,46 @@ const MobileBookTimeForm = (props: Props) => {
         to: string,
         from: string
     } = useSelector((state: RootState) => state.time);
+    const type: string = useSelector((state: RootState) => state.type);
+    const [UpdateTimeSlot] = useUpdateTimeSlotsMutation({
+        variables: {
+            where: {
+                to: time.to,
+                from: time.from,
+                date: {
+                    date: date.toSQLDate()
+                }
+            }
+        },
+        update: (cache) => {
+            cache.evict({ fieldName: "dateslots" });
+            cache.evict({ fieldName: "timeslots" });
+            cache.evict({ fieldName: "users" });
+        }
+    });
+
     const dispatch = useDispatch();
     const [UpdateUser] = useUpdateUsersMutation();
-
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+
+        await UpdateTimeSlot({
+            variables: {
+                update: {
+                    slots: props.timeslot.slots ? props.timeslot.slots - 1 : props.timeslot.slots,
+                }
+            },
+            update: (cache) => {
+                cache.evict({ fieldName: "timeslots" });
+                cache.evict({ fieldName: "users" });
+                cache.evict({ fieldName: "dateslots" })
+            }
+        })
+
         const { data, errors } = await UpdateUser({
             variables: {
                 where: {
-                    email: user.email
+                    uid: user.uid
                 },
                 update: {
                     timeslots: [
@@ -42,19 +75,20 @@ const MobileBookTimeForm = (props: Props) => {
                                         }
                                     }
                                 }
-                            ]
+                            ],
                         }
                     ]
                 }
             },
             update: (cache) => {
-                cache.evict({ fieldName: "dateSlots" });
-                cache.evict({ fieldName: "users" })
+                cache.evict({ fieldName: "timeSlots" });
+                cache.evict({ fieldName: "users" });
+                cache.evict({ fieldName: "dateSlots" })
             }
         });
 
         if (!errors) {
-            dispatch(setUser(data?.updateUsers.users[0]))
+            dispatch(setUser(data?.updateUsers.users[0] as User))
             props.toggleAccordion();
         }
     }
@@ -69,9 +103,9 @@ const MobileBookTimeForm = (props: Props) => {
                 </div>
                 <div className="flex flex-row items-center mb-6">
                     <FiPhone className="text-gray-500 mr-2" />
-                    <input value={user.phonenumber} name="phonenumber" disabled className="w-full appearance-none bg-transparent text-gray-500 mr-2 py-1 px-2 leading-tight focus:outline-none transition text-sm" type="text" placeholder="Telefonnummer" />
+                    <input value={user.phonenumber || ""} name="phonenumber" disabled className="w-full appearance-none bg-transparent text-gray-500 mr-2 py-1 px-2 leading-tight focus:outline-none transition text-sm" type="text" placeholder="Telefonnummer" />
                 </div>
-                <div className="flex flex-row items-center mb-3">
+                <div className={`flex flex-row items-center mb-6`}>
                     <FiMail className="text-gray-500 mr-2" />
                     <input value={user.email} name="email" disabled className="w-full appearance-none bg-transparent text-gray-500 mr-2 py-1 px-2 leading-tight focus:outline-none transition text-sm" type="email" placeholder="Epost" />
                 </div>

@@ -1,62 +1,73 @@
-export const setDate = (payload: any) => {
+import { DateTime } from 'luxon';
+import { User } from '../../generated/graphql';
+import { actions } from './types';
+
+export const setDate = (payload: DateTime) => {
   return {
-    type: 'SET_DATE',
+    type: actions.setDate,
     payload: payload,
   };
 };
 
-export const setType = (payload: any) => {
+export const setType = (payload: string) => {
   return {
-    type: 'SET_TYPE',
+    type: actions.setType,
     payload: payload,
   };
 };
 
-export const setCategory = (payload: any) => {
+export const setCategory = (payload: string) => {
   return {
-    type: 'SET_CATEGORY',
+    type: actions.setCategory,
     payload: payload,
   };
 };
 
-export const setHorse = (payload: any) => {
+export const setHorse = (payload: string) => {
   return {
-    type: 'SET_HORSE',
+    type: actions.setHorse,
     payload: payload,
   };
 };
 
-export const setAdmin = (payload: any) => {
+export const setAdmin = (payload: boolean) => {
   return {
-    type: 'SET_ADMIN',
+    type: actions.setAdmin,
     payload: payload,
   };
 };
 
-export const setUser = (payload: any) => {
+export const setUser = (payload: User) => {
   return {
-    type: 'SET_USER',
+    type: actions.setUser,
     payload: payload,
   };
 };
 
-export const setTime = (payload: any) => {
+export const setTime = (payload: { from: string; to: string }) => {
   return {
-    type: 'SET_TIME',
+    type: actions.setTime,
     payload: payload,
   };
 };
 
-export const setIsOpen = (payload: any) => {
+export const setIsOpen = (payload: boolean) => {
   return {
-    type: 'SET_IS_OPEN',
+    type: actions.setIsOpen,
     payload: payload,
   };
 };
 
-export const setBookingIsOpen = (payload: any) => {
+export const setBookingIsOpen = (payload: boolean) => {
   return {
-    type: 'SET_BOOKING_IS_OPEN',
+    type: actions.setBookingIsOpen,
+    payload: payload,
+  };
+};
+
+export const setCount = (payload: number) => {
+  return {
+    type: actions.setCount,
     payload: payload,
   };
 };

@@ -1,8 +1,11 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { TIMESLOT_TYPE } from '../../config/constants'
 import { DateSlot, TimeSlot } from '../../generated/graphql'
 import { setTime } from '../../redux/actions'
 import { getBackgroundColorByTimeSlot } from '../../utils/calendar/getBackgroundColorByTimeSlot'
+import DeleteTimeSlotButton from './DeleteTimeSlotButton'
+import InformationPill from './InformationPill'
 import MobileBookTimeForm from './MobileBookTimeForm'
 
 interface AccordionProps {
@@ -10,6 +13,7 @@ interface AccordionProps {
     dateslot: DateSlot
     bottomBar: any
     setBottomBarHeight: any
+    count: number;
 }
 
 export const Accordion = (props: AccordionProps) => {
@@ -22,7 +26,7 @@ export const Accordion = (props: AccordionProps) => {
     const contentSpace = useRef(null)
 
     function toggleAccordion() {
-        if (!props.timeslot?.users) {
+        if (props.timeslot?.users && props.timeslot.users.length < 1 || props.timeslot?.type.type == TIMESLOT_TYPE['Öppen bana'] && props.timeslot?.slots! > 0) {
             setActive(active === false ? true : false)
             // @ts-ignore
             setHeight(active ? '0px' : `${contentSpace.current.scrollHeight}px`)
@@ -42,6 +46,7 @@ export const Accordion = (props: AccordionProps) => {
 
     return (
         <div className="flex flex-col">
+            <DeleteTimeSlotButton count={props.count} date={props.timeslot.date.date} to={props.timeslot.to} from={props.timeslot.from} />
             <button
                 className="appearance-none cursor-pointer focus:outline-none justify-between"
                 onClick={toggleAccordion}
@@ -51,17 +56,31 @@ export const Accordion = (props: AccordionProps) => {
                         <div className={`w-2 h-16 ${getBackgroundColorByTimeSlot(props.timeslot)} rounded-md`}>
 
                         </div>
-                        <div className="h-16 rounded-md items-center py-3 pl-2 text-white">
+                        <div className="h-16 w-16 py-3 rounded-md items-center pl-2 text-white">
                             <p className="font-bold">{props.timeslot.from}</p>
                             <p className="text-xs">1 timma</p>
                         </div>
+                        <div className="h-16 rounded-md items-center py-3 md:pl-2 text-white">
+                            {props.timeslot.slots && props.timeslot!.slots! != 0 ?
+                                <InformationPill textColor="text-black" backgroundColor="bg-white">
+                                    {`${props.timeslot.slots} ${props.timeslot.slots === 1 ? "ledig plats" : "lediga platser"}`}
+                                </InformationPill>
+                                :
+                                <></>
+                            }
+                        </div>
                     </div>
-                    <div className="m-4 py-2 text-white">
-                        {props.timeslot.users ?
-                            <><p className="text-xs text-gray-400 text-right">{props.timeslot.type.type}</p>
-                                <p>bokad av {props.timeslot!.users.name}</p></>
-                            : <><p className="text-xs text-gray-400 text-right">{props.timeslot.type.type}</p>
-                                <p>klicka för att boka</p></>}
+                    <div className="m-4 py-3 h-20 text-white">
+                        {props.timeslot?.users && props.timeslot?.users.length > 0 ?
+                            <><p className="text-sm mb-2 text-gray-400 text-right flex justify-end">{props.timeslot.type.type}</p>
+                                <div className="flex text-sm justify-end"><p className="hidden">bokad av</p> {props.timeslot!.users.map((user, index) =>
+                                    <InformationPill key={index} textColor="text-black" backgroundColor="bg-white">
+                                        {user!.name.toLowerCase()}
+                                    </InformationPill>
+                                )}
+                                </div></>
+                            : <><p className="text-sm mb-2 text-gray-400 text-right">{props.timeslot.type.type}</p>
+                                <p className="text-sm">klicka för att boka</p></>}
                     </div>
                 </div>
             </button>
@@ -70,7 +89,7 @@ export const Accordion = (props: AccordionProps) => {
                 style={{ maxHeight: `${height}` }}
                 className="overflow-auto scrollbar-none transition-max-height duration-700 ease-in-out"
             >
-                <MobileBookTimeForm toggleAccordion={toggleAccordion} />
+                <MobileBookTimeForm timeslot={props.timeslot} slots={props.timeslot!.slots!} toggleAccordion={toggleAccordion} />
             </div>
         </div>
     )

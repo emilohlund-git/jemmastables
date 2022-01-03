@@ -1,9 +1,11 @@
+import { actions } from "../actions/types";
+
 const isOpenReducer = (
   state = false,
   action: { type: string; payload: { isOpen: boolean } }
 ) => {
   switch (action.type) {
-    case "SET_IS_OPEN":
+    case actions.setIsOpen:
       return action.payload;
     default:
       return state;

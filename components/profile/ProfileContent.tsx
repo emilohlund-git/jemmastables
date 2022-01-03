@@ -6,56 +6,50 @@ import { User, useUpdateUsersMutation } from '../../generated/graphql';
 import { setUser } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
 import BookedTimeSlots from './BookedTimeSlots';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { notify } from '../../utils/notifyMessages';
+import { notifyTypes } from '../../utils/notifyTypes';
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
 
 export default function ProfileContent() {
-    const notify = () => toast.success('Uppdaterad!', {
-        position: "top-left",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-    });
-
     const user: User = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
 
     const [formState, setFormState] = useState({
         phonenumber: user.phonenumber,
-        name: user.name
+        name: user.name,
+        email: user.email
     });
 
     const [disabled, setDisabled] = useState(true);
 
     useEffect(() => {
-        if (formState.name === user.name && formState.phonenumber === user.phonenumber) {
+        if (formState.name === user.name && formState.phonenumber === user.phonenumber && formState.email === user.email) {
             setDisabled(true);
         } else {
             setDisabled(false);
         }
         return
-    }, [formState, user.name, user.phonenumber])
+    }, [formState, user.name, user.phonenumber, user.email])
 
     const [UpdateUser] = useUpdateUsersMutation();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        const updatedUser = await UpdateUser({
+        const { data: updatedUser, errors } = await UpdateUser({
             variables: {
                 where: {
-                    email: user.email
+                    uid: user.uid
                 },
                 update: {
                     phonenumber: formState.phonenumber,
-                    name: formState.name
+                    name: formState.name,
+                    email: formState.email
                 }
             },
             update: (cache) => {
@@ -63,9 +57,14 @@ export default function ProfileContent() {
             }
         })
 
-        notify();
-
-        dispatch(setUser(updatedUser.data?.updateUsers.users[0]));
+        if (errors) {
+            notify("Något gick fel", notifyTypes.error);
+        } else {
+            if (updatedUser) {
+                dispatch(setUser(updatedUser.updateUsers!.users![0] as User));
+                notify("Uppdaterad!", notifyTypes.success);
+            }
+        }
     }
 
     return (
@@ -138,14 +137,17 @@ export default function ProfileContent() {
                             </div>
                             <div className="flex flex-row items-center mb-6">
                                 <FiPhone className="text-gray-500 mr-2" />
-                                <input value={formState.phonenumber} onChange={(e) => setFormState({
+                                <input value={formState.phonenumber || ""} onChange={(e) => setFormState({
                                     ...formState,
                                     phonenumber: e.target.value
                                 })} name="phonenumber" className="w-full appearance-none bg-transparent text-gray-500 mr-2 py-1 px-2 leading-tight focus:outline-none transition text-sm" type="text" placeholder="Telefonnummer" />
                             </div>
                             <div className="flex flex-row items-center mb-3">
                                 <FiMail className="text-gray-500 mr-2" />
-                                <input value={user.email} name="email" disabled className="w-full appearance-none bg-transparent text-gray-500 mr-2 py-1 px-2 leading-tight focus:outline-none transition text-sm" type="email" placeholder="Epost" />
+                                <input value={formState.email} onChange={(e) => setFormState({
+                                    ...formState,
+                                    email: e.target.value
+                                })} name="email" className="w-full appearance-none bg-transparent text-gray-500 mr-2 py-1 px-2 leading-tight focus:outline-none transition text-sm" type="email" placeholder="Epost" />
                             </div>
                             <div className="flex w-full justify-end">
                                 <button onClick={handleSubmit} disabled={disabled} className="disabled:bg-gray-300 disabled:cursor-default transition-all w-full bg-gray-900 text-white font-bold py-2 px-4 border-none rounded-md mt-4">

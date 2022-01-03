@@ -1,18 +1,18 @@
 import { DateTime } from "luxon";
 import React, { useEffect, useRef, useState } from 'react';
-import { FiChevronLeft, FiChevronRight, FiPlus, FiMinus } from 'react-icons/fi';
+import { FiChevronLeft, FiChevronRight, FiMinus, FiPlus } from 'react-icons/fi';
 import { useSelector } from "react-redux";
-import { DateSlot, TimeSlot, useDateSlotsQuery } from "../../generated/graphql";
+import { DateSlot, useDateSlotsQuery } from "../../generated/graphql";
 import { RootState } from "../../redux/reducers";
 import getDaysInMonth from "../../utils/calendar/getDaysInMonth";
 import getDaysInWeek from "../../utils/calendar/getDaysInWeek";
 import Spinner from "../Spinner";
+import AddTimeSlotBanner from "./AddTimeSlotBanner";
+import AdminModal from "./AdminModal";
 import { BookingModal } from "./BookingModal";
 import { DayBox } from "./DayBox";
 import EmptyTimeSlot from './EmptyTimeSlot';
-import MobileTimeSlots from "./MobileTimeSlots";
-import { AdminModal } from "./AdminModal";
-import AddTimeSlotBanner from "./AddTimeSlotBanner";
+import TimeSlotsContainer from "./TimeSlotsContainer";
 
 interface Props {
 
@@ -21,15 +21,16 @@ interface Props {
 const JemmaCalendar = (props: Props) => {
     const [active, setActive] = useState(false)
     const [height, setHeight] = useState('0px')
-    const admin: boolean = useSelector((state: RootState) => state.admin);
-    const date: DateTime = useSelector((state: RootState) => state.date);
     const [currentDate, setCurrentDate] = useState(DateTime.local());
     const [days, setDays] = useState(
         getDaysInMonth(currentDate)
     );
+    const admin: boolean = useSelector((state: RootState) => state.admin);
+    const date: DateTime = useSelector((state: RootState) => state.date);
     const [weekDays, setWeekDays] = useState(getDaysInWeek(currentDate));
     const { data, loading } = useDateSlotsQuery();
-    const bottomBarRef = useRef(null);
+    const bottomBarRef = useRef<HTMLDivElement>(null);
+    const [count, setCount] = useState(0);
 
     const changeCalendar = (value: string) => {
         if (value == "minus") {
@@ -46,8 +47,8 @@ const JemmaCalendar = (props: Props) => {
 
     const hideBottomBar = () => {
         setActive(active === false ? true : false)
-        // @ts-ignore
-        setHeight(active ? '0px' : `${bottomBarRef.current.scrollHeight + 1}px`)
+        if (bottomBarRef.current !== null)
+            setHeight(active ? '0px' : `${bottomBarRef.current.scrollHeight + 1}px`)
     }
 
     return (
@@ -81,7 +82,7 @@ const JemmaCalendar = (props: Props) => {
                         <div className="my-2 grid grid-cols-7 gap-1">
                             {days && !loading &&
                                 days.map((day, i) => (
-                                    <DayBox active={active} setActive={setActive} bottomBarRef={bottomBarRef} height={height} setHeight={setHeight} day={day} dateSlot={data?.dateSlots.filter((d) => d.date === day.toSQLDate()) as [DateSlot]} key={i} />
+                                    <DayBox active={active} setActive={setActive} bottomBarRef={bottomBarRef} height={height} setHeight={setHeight} day={day} dateSlot={data?.dateSlots.find((d) => d.date === day.toSQLDate()) as DateSlot} key={i} />
                                 ))
                             }
                         </div>
@@ -111,19 +112,9 @@ const JemmaCalendar = (props: Props) => {
                     </div>
                 </div>
                 <div className="overflow-hidden scrollbar-none md:transition-max-height md:duration-700 md:ease-in-out" style={{ maxHeight: `${height}` }} ref={bottomBarRef} >
-                    {!loading && data?.dateSlots.map((dateSlot) => {
-                        if (dateSlot.date === date.toSQLDate()) {
-                            if (dateSlot.timeslots!.length > 0) {
-                                return (
-                                    dateSlot.timeslots?.map((timeslot, index) => {
-                                        return (
-                                            <MobileTimeSlots setBottomBarHeight={setHeight} bottomBar={bottomBarRef.current} dateslot={dateSlot as DateSlot} timeslot={timeslot as TimeSlot} key={index} />
-                                        )
-                                    })
-                                )
-                            }
-                        }
-                    })}
+                    {!loading && data?.dateSlots && data!.dateSlots!.map((dateSlot, index) =>
+                        <TimeSlotsContainer count={count} setCount={setCount} key={index} setHeight={setHeight} bottomBar={bottomBarRef} dateSlot={dateSlot as DateSlot} />
+                    )}
                     {!loading && data?.dateSlots!.filter((d) => d.date === date.toSQLDate()).length === 0 &&
                         <EmptyTimeSlot />}
                     {admin &&

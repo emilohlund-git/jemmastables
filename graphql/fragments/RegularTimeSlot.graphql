@@ -1,6 +1,7 @@
 fragment RegularTimeSlot on TimeSlot {
   to
   from
+  slots
   type {
     type
   }

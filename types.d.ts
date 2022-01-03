@@ -1,6 +1,4 @@
-declare module 'instagram-web-api';
 declare module 'xhr2';
-declare module 'filereader';
 declare module 'uuid';
 declare module 'tailwindcss-glow';
 declare module 'bcryptjs';

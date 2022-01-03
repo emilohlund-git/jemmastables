@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import dateReducer from './date';
-import isAuthenticatedReducer from './isAuthenticated';
 import isOpenReducer from './isOpen';
 import typeReducer from './type';
 import adminReducer from './admin';
@@ -9,9 +8,10 @@ import timeReducer from './time';
 import userReducer from './user';
 import categoryReducer from './category';
 import horseReducer from './horse';
+import { actions } from '../actions/types';
+import countReducer from './count';
 
 const appReducer = combineReducers({
-  authenticated: isAuthenticatedReducer,
   date: dateReducer,
   isOpen: isOpenReducer,
   type: typeReducer,
@@ -21,10 +21,11 @@ const appReducer = combineReducers({
   user: userReducer,
   category: categoryReducer,
   horse: horseReducer,
+  count: countReducer,
 });
 
 const rootReducer = (state: any, action: any) => {
-  if (action.type === 'RESET_STORE') {
+  if (action.type === actions.resetStore) {
     return appReducer(undefined, action);
   }
 

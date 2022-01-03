@@ -1,3 +1,5 @@
+import { actions } from '../actions/types';
+
 const initialState = {
   from: '00:00',
   to: '00:00',
@@ -5,10 +7,18 @@ const initialState = {
 
 const timeReducer = (
   state = initialState,
-  action: { type: string; payload: { time: {} } }
+  action: {
+    type: string;
+    payload: {
+      time: {
+        from: string;
+        to: string;
+      };
+    };
+  }
 ) => {
   switch (action.type) {
-    case 'SET_TIME':
+    case actions.setTime:
       return action.payload;
     default:
       return state;

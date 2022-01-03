@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { User } from '../../generated/graphql';
+import { TimeSlot, User } from '../../generated/graphql';
 import { RootState } from '../../redux/reducers';
-import MobileTimeSlots from '../calendar/MobileTimeSlots';
+import { sortTimeSlotsByDayDesc } from '../../utils/calendar/sortTimeSlotsByDay';
 import BookedTimeSlot from './BookedTimeSlot';
 
 interface Props {
@@ -10,10 +10,16 @@ interface Props {
 
 const BookedTimeSlots = (props: Props) => {
     const user: User = useSelector((state: RootState) => state.user);
+    const [sortedTimeSlots, setSortedTimeSlots] = useState([] as TimeSlot[]);
+    useEffect(() => {
+        if (user && user.timeslots) {
+            setSortedTimeSlots(sortTimeSlotsByDayDesc(user.timeslots as TimeSlot[]));
+        }
+    }, [user])
 
     return (
         <>
-            {user && user.timeslots!.map((timeslot, index) => {
+            {sortedTimeSlots.map((timeslot, index) => {
                 return (
                     <BookedTimeSlot key={index} timeslot={timeslot!} />
                 )

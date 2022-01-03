@@ -25,13 +25,14 @@ body {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 16px;
-  height: 16px;
+  position: absolute;
+  width: 8px;
+  height: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #111;
+  background: rgba(17, 17, 17, 0.349);
 }
 
 /* Handle */

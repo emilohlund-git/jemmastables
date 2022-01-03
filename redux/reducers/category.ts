@@ -1,9 +1,11 @@
+import { actions } from "../actions/types";
+
 const categoryReducer = (
   state = null,
   action: { type: string; payload: { category: string } }
 ) => {
   switch (action.type) {
-    case 'SET_CATEGORY':
+    case actions.setCategory:
       return action.payload;
     default:
       return state;

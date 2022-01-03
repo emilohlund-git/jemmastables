@@ -1,11 +1,11 @@
 import { Dialog, Tab, Transition } from '@headlessui/react';
 import { DateTime } from 'luxon';
-import React, { Fragment, useEffect, useState } from 'react';
-import { FiClock } from 'react-icons/fi';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../redux/reducers';
+import React, { Dispatch, Fragment, SetStateAction, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { TIMESLOT_TYPE } from '../../config/constants';
+import { DateSlotsDocument, useCreateDateSlotsMutation, useDateSlotQuery, useUpdateDateSlotsMutation } from '../../generated/graphql';
 import { setIsOpen, setType } from '../../redux/actions';
-import { useCreateDateSlotsMutation, useDateSlotQuery, useUpdateDateSlotsMutation } from '../../generated/graphql';
+import { RootState } from '../../redux/reducers';
 
 interface Props {
 }
@@ -14,11 +14,11 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-// eslint-disable-next-line react/display-name
-export const AdminModal = React.memo((props: Props) => {
+const AdminModal = React.memo((props: Props) => {
     const date: DateTime = useSelector((state: RootState) => state.date);
     const open: Boolean = useSelector((state: RootState) => state.isOpen);
     const type: string = useSelector((state: RootState) => state.type);
+    const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
     const { data, loading } = useDateSlotQuery({
         variables: {
@@ -30,7 +30,10 @@ export const AdminModal = React.memo((props: Props) => {
 
     const [timeTo, setTimeTo] = useState("12:00");
     const [timeFrom, setTimeFrom] = useState("12:00");
-    const [title, setTitle] = useState("");
+    const [slots, setSlots]: [
+        slots: number,
+        setSlots: Dispatch<SetStateAction<number>>
+    ] = useState(1);
 
     const [CreateDateSlot] = useCreateDateSlotsMutation();
     const [UpdateDateSlot] = useUpdateDateSlotsMutation();
@@ -55,6 +58,7 @@ export const AdminModal = React.memo((props: Props) => {
                                     node: {
                                         to: timeTo,
                                         from: timeFrom,
+                                        slots: type === TIMESLOT_TYPE['Öppen bana'] ? slots : null,
                                         type: {
                                             connect: {
                                                 where: {
@@ -70,9 +74,10 @@ export const AdminModal = React.memo((props: Props) => {
                         },
                     }
                 },
-                update: (cache) => {
-                    cache.evict({ fieldName: "dateSlots" });
-                }
+                refetchQueries: [
+                    DateSlotsDocument,
+                    "DateSlots",
+                ]
             })
 
             if (!errors) {
@@ -92,6 +97,7 @@ export const AdminModal = React.memo((props: Props) => {
                                         node: {
                                             to: timeTo,
                                             from: timeFrom,
+                                            slots: type === TIMESLOT_TYPE['Öppen bana'] ? slots : null,
                                             type: {
                                                 connect: {
                                                     where: {
@@ -110,6 +116,8 @@ export const AdminModal = React.memo((props: Props) => {
                 },
                 update: (cache) => {
                     cache.evict({ fieldName: "dateSlots" });
+                    cache.evict({ fieldName: "timeSlots" });
+                    cache.evict({ fieldName: "users" });
                 }
             });
 
@@ -125,6 +133,7 @@ export const AdminModal = React.memo((props: Props) => {
         <>
             <Transition appear show={open ? true : false} as={Fragment}>
                 <Dialog
+                    initialFocus={cancelButtonRef}
                     as="div"
                     className="fixed inset-0 z-50 overflow-y-auto transform transition-all"
                     onClose={closeModal}
@@ -224,13 +233,8 @@ export const AdminModal = React.memo((props: Props) => {
                                         >
                                             <div className="flex flex-row items-center">
                                                 <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
-                                            </div>
-                                            <div className="flex w-full justify-end">
-                                                <button onClick={createDateSlot} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
-                                                    Spara
-                                                </button>
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm flex flex-grow" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm flex flex-grow" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
                                         </Tab.Panel>
                                         <Tab.Panel
@@ -241,14 +245,9 @@ export const AdminModal = React.memo((props: Props) => {
                                             )}
                                         >
                                             <div className="flex flex-row items-center">
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
-                                            </div>
-                                            <div className="flex w-full justify-end">
-                                                <button onClick={createDateSlot} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
-                                                    Spara
-                                                </button>
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm flex flex-grow" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm flex flex-grow" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
                                         </Tab.Panel>
                                         <Tab.Panel
@@ -260,16 +259,21 @@ export const AdminModal = React.memo((props: Props) => {
                                         >
                                             <div className="flex flex-row items-center">
                                                 <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { handleCurrentDate(e.target.value) })} disabled type="date" value={date.toISODate()} />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
-                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm flex flex-grow" onChange={((e) => { setTimeFrom(e.target.value) })} type="time" value={timeFrom} aria-label="Title" />
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm flex flex-grow" onChange={((e) => { setTimeTo(e.target.value) })} type="time" value={timeTo} aria-label="Title" />
                                             </div>
-                                            <div className="flex w-full justify-end">
-                                                <button onClick={createDateSlot} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
-                                                    Spara
-                                                </button>
+                                            <div className="flex flex-row items-center mt-4">
+                                                <label className="text-sm" htmlFor="">Antal platser: </label>
+                                                <input className="appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-xs md:text-sm flex flex-grow" type="number" onChange={((e) => { setSlots(parseInt(e.target.value)) })} value={slots} min="1" />
                                             </div>
+
                                         </Tab.Panel>
                                     </Tab.Panels>
+                                    <div className="flex w-full justify-end">
+                                        <button ref={cancelButtonRef} onClick={createDateSlot} className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
+                                            Spara
+                                        </button>
+                                    </div>
                                 </Tab.Group>
                             </div>
                         </Transition.Child>
@@ -279,3 +283,6 @@ export const AdminModal = React.memo((props: Props) => {
         </>
     )
 });
+
+AdminModal.displayName = "AdminModal";
+export default AdminModal;

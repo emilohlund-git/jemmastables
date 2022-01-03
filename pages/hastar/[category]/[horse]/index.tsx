@@ -9,9 +9,11 @@ import Spinner from '../../../../components/Spinner';
 import UploadControlImages from '../../../../components/UploadControlImages';
 import { HorseImage, useHorseQuery, useUpdateHorsesMutation } from '../../../../generated/graphql';
 import { RootState } from '../../../../redux/reducers';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { withApollo } from '../../../../utils/withApollo';
+import { notify } from '../../../../utils/notifyMessages';
+import { notifyTypes } from '../../../../utils/notifyTypes';
 
 interface Props {
 
@@ -31,15 +33,6 @@ const Horse = (props: Props) => {
     });
     const [UpdateHorse] = useUpdateHorsesMutation();
     const [formState, setFormState] = useState({} as any);
-    const notify = () => toast.success('Uppdaterad!', {
-        position: "top-left",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-    });
 
     useEffect(() => {
         if (!loading) {
@@ -52,8 +45,8 @@ const Horse = (props: Props) => {
                 after: data?.horses[0].after
             });
             if (data?.horses[0].images?.find((image) => image!.profile)) {
-                /* @ts-ignore */
-                setProfilePicture(data?.horses[0].images?.find((image) => image!.profile).url);
+                const image = data!.horses[0].images!.find((image) => image!.profile);
+                setProfilePicture(image!.url);
             }
         }
     }, [data, loading])
@@ -80,9 +73,9 @@ const Horse = (props: Props) => {
             });
 
             if (!errors) {
-                notify();
+                notify("Uppdaterad!", notifyTypes.success);
             } else {
-
+                notify("Något gick fel: " + errors, notifyTypes.error);
             }
         }
     }
@@ -204,4 +197,4 @@ const Horse = (props: Props) => {
     )
 }
 
-export default withApollo({ ssr: true })(Horse)
+export default Horse

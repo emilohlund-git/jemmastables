@@ -1,0 +1,3 @@
+query TimeSlotsCount($where: TimeSlotWhere) {
+  timeSlotsCount(where: $where)
+}

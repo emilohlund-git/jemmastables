@@ -1,11 +1,12 @@
 import { DateTime } from "luxon";
+import { actions } from "../actions/types";
 
 const dateReducer = (
   state = DateTime.local(),
   action: { type: string; payload: { day: DateTime } }
 ) => {
   switch (action.type) {
-    case "SET_DATE":
+    case actions.setDate:
       return action.payload;
     default:
       return state;

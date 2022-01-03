@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useCreateHorseMutation, useHorsesQuery } from '../../generated/graphql';
+import { useCreateHorseMutation } from '../../generated/graphql';
 import { RootState } from '../../redux/reducers';
 import { HORSE_CATEGORIES } from '../../utils/constants';
 
@@ -42,7 +42,6 @@ export const AddHorseModal = React.memo((props: Props) => {
     }, [category])
 
     const [CreateHorse] = useCreateHorseMutation();
-    const { data, loading } = useHorsesQuery();
 
     function closeModal() {
         props.setModalOpen(false);
@@ -68,9 +67,6 @@ export const AddHorseModal = React.memo((props: Props) => {
         }
         const { errors } = await CreateHorse({
             variables: {
-                where: {
-                    category: formState.category
-                },
                 input: {
                     name: formState.name,
                     nickname: formState.nickname,
