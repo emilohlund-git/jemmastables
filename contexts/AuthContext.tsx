@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, FacebookAuthProvider, signOut, signInWithPopup, signInWithRedirect } from 'firebase/auth';
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { useCreateUsersMutation, User, useUsersQuery } from '../generated/graphql';
+import { useAdminsQuery, useCreateUsersMutation, User, useUsersQuery } from '../generated/graphql';
 import { setAdmin, setUser } from '../redux/actions';
 import { auth } from '../utils/firebase/firebase';
 
@@ -13,6 +13,7 @@ export function AuthProvider({ children }: any) {
     const provider = new FacebookAuthProvider();
     const dispatch = useDispatch();
     const { data, loading } = useUsersQuery();
+    const { data: AdminData, loading: AdminLoading } = useAdminsQuery();
     const [isLoading, setIsLoading] = useState(true);
 
     function signin() {
@@ -26,7 +27,7 @@ export function AuthProvider({ children }: any) {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (facebookUser: any) => {
             if (!loading && facebookUser) {
-             
+
                 const user = data?.users.find((user) => user.uid === facebookUser.uid);
 
                 if (user) {
@@ -47,10 +48,14 @@ export function AuthProvider({ children }: any) {
                     })
                 }
 
-                if (facebookUser.email === "emilohlund@hotmail.com") {
-                    dispatch(setAdmin(true));
-                } else {
-                    dispatch(setAdmin(false));
+                if (!AdminLoading) {
+                    AdminData?.admins.forEach((admin) => {
+                        if (facebookUser.uid === admin.uid)
+                            dispatch(setAdmin(true));
+                        else {
+                            dispatch(setAdmin(false));
+                        }
+                    })
                 }
 
                 setCurrentUser(facebookUser)

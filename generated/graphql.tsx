@@ -18,18 +18,18 @@ export type Scalars = {
 export type Admin = {
   __typename?: 'Admin';
   id?: Maybe<Scalars['ID']>;
-  username: Scalars['String'];
+  uid: Scalars['String'];
 };
 
 export type AdminAggregateSelection = {
   __typename?: 'AdminAggregateSelection';
   count: Scalars['Int'];
   id: IdAggregateSelection;
-  username: StringAggregateSelection;
+  uid: StringAggregateSelection;
 };
 
 export type AdminCreateInput = {
-  username: Scalars['String'];
+  uid: Scalars['String'];
 };
 
 export type AdminOptions = {
@@ -42,11 +42,11 @@ export type AdminOptions = {
 /** Fields to sort Admins by. The order in which sorts are applied is not guaranteed when specifying many fields in one AdminSort object. */
 export type AdminSort = {
   id?: InputMaybe<SortDirection>;
-  username?: InputMaybe<SortDirection>;
+  uid?: InputMaybe<SortDirection>;
 };
 
 export type AdminUpdateInput = {
-  username?: InputMaybe<Scalars['String']>;
+  uid?: InputMaybe<Scalars['String']>;
 };
 
 export type AdminWhere = {
@@ -62,16 +62,16 @@ export type AdminWhere = {
   id_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   id_NOT_STARTS_WITH?: InputMaybe<Scalars['ID']>;
   id_STARTS_WITH?: InputMaybe<Scalars['ID']>;
-  username?: InputMaybe<Scalars['String']>;
-  username_CONTAINS?: InputMaybe<Scalars['String']>;
-  username_ENDS_WITH?: InputMaybe<Scalars['String']>;
-  username_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  username_NOT?: InputMaybe<Scalars['String']>;
-  username_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
-  username_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
-  username_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  username_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
-  username_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  uid?: InputMaybe<Scalars['String']>;
+  uid_CONTAINS?: InputMaybe<Scalars['String']>;
+  uid_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  uid_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  uid_NOT?: InputMaybe<Scalars['String']>;
+  uid_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  uid_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  uid_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  uid_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  uid_STARTS_WITH?: InputMaybe<Scalars['String']>;
 };
 
 export type Component = {
@@ -4464,7 +4464,7 @@ export type UserWhere = {
   uid_STARTS_WITH?: InputMaybe<Scalars['String']>;
 };
 
-export type RegularAdminFragment = { __typename?: 'Admin', username: string };
+export type RegularAdminFragment = { __typename?: 'Admin', uid: string };
 
 export type RegularDateSlotFragment = { __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, slots?: number | null | undefined, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber?: string | null | undefined, email: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
 
@@ -4485,7 +4485,7 @@ export type CreateAdminMutationVariables = Exact<{
 }>;
 
 
-export type CreateAdminMutation = { __typename?: 'Mutation', createAdmins: { __typename?: 'CreateAdminsMutationResponse', admins: Array<{ __typename?: 'Admin', username: string }> } };
+export type CreateAdminMutation = { __typename?: 'Mutation', createAdmins: { __typename?: 'CreateAdminsMutationResponse', admins: Array<{ __typename?: 'Admin', uid: string }> } };
 
 export type CreateDateSlotsMutationVariables = Exact<{
   input: Array<DateSlotCreateInput> | DateSlotCreateInput;
@@ -4674,12 +4674,12 @@ export type AdminQueryVariables = Exact<{
 }>;
 
 
-export type AdminQuery = { __typename?: 'Query', admins: Array<{ __typename?: 'Admin', username: string }> };
+export type AdminQuery = { __typename?: 'Query', admins: Array<{ __typename?: 'Admin', uid: string }> };
 
 export type AdminsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AdminsQuery = { __typename?: 'Query', admins: Array<{ __typename?: 'Admin', username: string }> };
+export type AdminsQuery = { __typename?: 'Query', admins: Array<{ __typename?: 'Admin', uid: string }> };
 
 export type DateSlotQueryVariables = Exact<{
   where?: InputMaybe<DateSlotWhere>;
@@ -4805,7 +4805,7 @@ export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'Us
 
 export const RegularAdminFragmentDoc = gql`
     fragment RegularAdmin on Admin {
-  username
+  uid
 }
     `;
 export const RegularTimeSlotFragmentDoc = gql`

@@ -15,7 +15,7 @@ const AddTimeSlotBanner = (props: Props) => {
     }
 
     return (
-        <div onClick={handleClick} className={`border-dotted border-t-2 border-white ${hovering ? "border-opacity-40" : "border-opacity-20"} flex z-20 w-full relative h-20 transition-all hover:filter-none bg-gray-800 shadow-lg`} onMouseLeave={() => setHovering(false)} onMouseEnter={() => setHovering(true)} >
+        <div onClick={handleClick} className={`border-dotted border-t-2 border-white ${hovering ? "border-opacity-40" : "border-opacity-20"} flex z-20 w-full relative h-20 transition-all hover:filter-none bg-gray-800 shadow-2xl`} onMouseLeave={() => setHovering(false)} onMouseEnter={() => setHovering(true)} >
             <div className="text-center ml-4 self-center mb-4 w-full">
                 <p className={`select-none text-white cursor-pointer transition-all ${hovering ? "text-4xl" : "text-2xl"} mt-2`}>+</p>
             </div>
