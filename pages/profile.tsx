@@ -38,7 +38,7 @@ const User = (props: Props) => {
                 <>
                     <div className="flex justify-center text-center flex-col pb-12 pt-14 px-6 bg-white">
                         <div className="w-32 h-32 self-center">
-                            <JemmaImage className="rounded-full" width={200} height={200} src={user.profilePicture!} alt={user.name} />
+                            <JemmaImage className="rounded-full max-h-32" width={200} height={200} src={user.profilePicture!} alt={user.name} />
                         </div>
                         <h1 className="font-bold text-xl text-black mt-6">{user.name.toLowerCase()}</h1>
                         <p className="text-sm text-black">{user.email}</p>
