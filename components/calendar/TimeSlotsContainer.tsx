@@ -1,8 +1,10 @@
 import { DateTime } from 'luxon'
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { TIMESLOT_TYPE } from '../../config/constants'
 import { DateSlot, TimeSlot } from '../../generated/graphql'
 import { RootState } from '../../redux/reducers'
+import { containsNoDateSlotsAndNoTimeSlots } from '../../utils/calendar/containsDateSlots,'
 import { isTodaySQL } from '../../utils/calendar/isTodaySQL'
 import EmptyTimeSlot from './EmptyTimeSlot'
 import MobileTimeSlots from './MobileTimeSlots'
@@ -24,11 +26,12 @@ const TimeSlotsContainer = (props: Props) => {
 
     return (
         <>
-            {isTodaySQL(props.dateSlot, date) && props.dateSlot.timeslots!.length > 0 ?
+            {isTodaySQL(props.dateSlot, date) &&
+                props.dateSlot.timeslots!.length > 0 &&
                 props.dateSlot.timeslots?.map((timeslot, index: number) =>
                     <MobileTimeSlots count={props.count} setBottomBarHeight={props.setHeight} bottomBar={props.bottomBar.current} dateslot={props.dateSlot as DateSlot} timeslot={timeslot as TimeSlot} key={index} />
                 )
-                : <EmptyTimeSlot />}
+            }
         </>
     )
 }

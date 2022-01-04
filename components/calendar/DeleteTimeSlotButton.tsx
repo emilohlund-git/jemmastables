@@ -27,9 +27,9 @@ const DeleteTimeSlotButton = (props: Props) => {
                 },
             },
             update: (cache) => {
-                cache.evict({ id: "ROOT_QUERY", fieldName: "dateSlots", broadcast: false });
-                cache.evict({ id: "ROOT_QUERY", fieldName: "timeSlots", broadcast: false });
-                cache.evict({ id: "ROOT_QUERY", fieldName: "users", broadcast: false });
+                cache.evict({ id: "ROOT_QUERY", fieldName: "dateSlots" });
+                cache.evict({ id: "ROOT_QUERY", fieldName: "timeSlots" });
+                cache.evict({ id: "ROOT_QUERY", fieldName: "users" });
                 cache.gc()
             }
         })
@@ -43,9 +43,9 @@ const DeleteTimeSlotButton = (props: Props) => {
                         }
                     },
                     update: (cache) => {
-                        cache.evict({ id: "ROOT_QUERY", fieldName: "dateSlots", broadcast: false });
-                        cache.evict({ id: "ROOT_QUERY", fieldName: "timeSlots", broadcast: false });
-                        cache.evict({ id: "ROOT_QUERY", fieldName: "users", broadcast: false });
+                        cache.evict({ id: "ROOT_QUERY", fieldName: "dateSlots" });
+                        cache.evict({ id: "ROOT_QUERY", fieldName: "timeSlots" });
+                        cache.evict({ id: "ROOT_QUERY", fieldName: "users" });
                         cache.gc()
                     }
                 })

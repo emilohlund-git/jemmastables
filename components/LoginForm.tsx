@@ -38,7 +38,7 @@ const LoginForm = (props: Props) => {
                                 name: facebookUser.displayName,
                                 phonenumber: facebookUser.providerData[0].phoneNumber,
                                 email: facebookUser.email,
-                                profilePicture: facebookUser.photoURL + "/?type=normal",
+                                profilePicture: facebookUser.photoURL + "/?type=large",
                             }
                         }
                     })

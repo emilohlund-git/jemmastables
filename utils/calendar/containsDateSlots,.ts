@@ -8,14 +8,12 @@ export const containsDateSlotsAndAtleastOneTimeSlot = (
   return hasTimeSlots(data.dateSlots as [DateSlot]);
 };
 
-export const containsDateSlotsAndNoTimeSlots = (data: DateSlotsQuery) => {
-  if (data.dateSlots.length === 0) return false;
-  return data.dateSlots.find((d) => d.timeslots!.length === 0) ? true : false;
+export const containsDateSlotsAndNoTimeSlots = (data: DateSlot) => {
+  return data.timeslots!.length === 0 ? true : false;
 };
 
-export const containsNoDateSlotsAndNoTimeSlots = (data: DateSlotsQuery) => {
-  if (!data) return false;
-  if (data.dateSlots.length === 0) return true;
+export const containsNoDateSlotsAndNoTimeSlots = (data: DateSlot) => {
+  if (data.timeslots) return true;
 };
 
 function containsTrainingTypeTimeSlot(timeslots: [TimeSlot]) {

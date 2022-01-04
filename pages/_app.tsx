@@ -3,7 +3,6 @@ import { useStore } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import SimpleReactLightbox from 'simple-react-lightbox';
 import Layout from '../components/Layout';
-import { AuthProvider } from '../contexts/AuthContext';
 import { wrapper } from '../redux/store';
 import "../styles/globals.css";
 

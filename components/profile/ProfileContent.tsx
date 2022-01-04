@@ -2,9 +2,10 @@ import { Tab } from '@headlessui/react';
 import { FormEvent, useEffect, useState } from 'react';
 import { FiMail, FiPhone, FiUser } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { User, useUpdateUsersMutation } from '../../generated/graphql';
+import { User, useUpdateUsersMutation, useUserQuery } from '../../generated/graphql';
 import { setUser } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
+import Spinner from '../Spinner';
 import BookedTimeSlots from './BookedTimeSlots';
 
 function classNames(...classes: any) {
@@ -13,7 +14,22 @@ function classNames(...classes: any) {
 
 export default function ProfileContent() {
     const user: User = useSelector((state: RootState) => state.user);
+    const [currentUser, setCurrentUser] = useState({} as User);
+    const { data, loading } = useUserQuery({
+        variables: {
+            where: {
+                uid: user.uid
+            }
+        }
+    })
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!loading) {
+            setCurrentUser(data?.users[0] as User);
+        }
+        return
+    }, [loading, user])
 
     const [formState, setFormState] = useState({
         phonenumber: user.phonenumber,
@@ -101,7 +117,11 @@ export default function ProfileContent() {
                             'focus:outline-none'
                         )}
                     >
-                        <BookedTimeSlots />
+                        {!loading ?
+                            <BookedTimeSlots user={currentUser} />
+                            :
+                            <Spinner />
+                        }
                     </Tab.Panel>
                     <Tab.Panel
                         className={classNames(
@@ -134,7 +154,7 @@ export default function ProfileContent() {
                             </div>
                             <div className="flex w-full justify-end">
                                 <button onClick={handleSubmit} disabled={disabled} className="disabled:bg-gray-300 disabled:cursor-default transition-all w-full bg-gray-900 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
-                                    ändra
+                                    uppdatera
                                 </button>
                             </div>
                         </div>

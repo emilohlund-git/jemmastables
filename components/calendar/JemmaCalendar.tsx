@@ -15,6 +15,7 @@ import { DayBox } from "./DayBox";
 import EmptyTimeSlot from './EmptyTimeSlot';
 import TimeSlotsContainer from "./TimeSlotsContainer";
 import { useSwipeable } from 'react-swipeable';
+import { isTodaySQL } from "../../utils/calendar/isTodaySQL";
 
 interface Props {
 
@@ -122,11 +123,12 @@ const JemmaCalendar = (props: Props) => {
                     </div>
                 </div>
                 <div className="overflow-hidden scrollbar-none md:transition-max-height md:duration-700 md:ease-in-out" style={{ maxHeight: `${height}` }} ref={bottomBarRef} >
-                    {!loading && data?.dateSlots && data!.dateSlots!.map((dateSlot, index) =>
-                        <TimeSlotsContainer count={count} setCount={setCount} key={index} setHeight={setHeight} bottomBar={bottomBarRef} dateSlot={dateSlot as DateSlot} />
+                    {!loading && data!.dateSlots!.length > 0 && data!.dateSlots!.map((dateSlot, index) => {
+                        return (
+                            <TimeSlotsContainer count={count} setCount={setCount} key={index} setHeight={setHeight} bottomBar={bottomBarRef} dateSlot={dateSlot as DateSlot} />
+                        )
+                    }
                     )}
-                    {!loading && containsDateSlotsAndNoTimeSlots(data!) || containsNoDateSlotsAndNoTimeSlots(data!) &&
-                        <EmptyTimeSlot />}
                     {admin &&
                         <AddTimeSlotBanner />
                     }

@@ -47,7 +47,7 @@ const AdminModal = React.memo((props: Props) => {
     }
 
     const createDateSlot = async (e: any) => {
-        if (!loading && data!.dateSlots.length === 0) {
+        if (!loading && data!.dateSlots.length === 0 || !loading && data!.dateSlots.length > 0 && data!.dateSlots.find((d) => d.timeslots!.length === 0) != null) {
             const { errors, data } = await CreateDateSlot({
                 variables: {
                     input: {
@@ -74,10 +74,11 @@ const AdminModal = React.memo((props: Props) => {
                         },
                     }
                 },
-                refetchQueries: [
-                    DateSlotsDocument,
-                    "DateSlots",
-                ]
+                update: (cache) => {
+                    cache.evict({ fieldName: "dateSlots" });
+                    cache.evict({ fieldName: "timeSlots" });
+                    cache.evict({ fieldName: "users" });
+                }
             })
 
             if (!errors) {
