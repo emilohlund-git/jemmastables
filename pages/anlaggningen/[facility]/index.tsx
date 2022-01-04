@@ -9,6 +9,7 @@ import Image from 'next/image';
 import AddFacilityImage from '../../../components/facilities/AddFacilityImage';
 import UploadControlImages from '../../../components/UploadControlImages';
 import Spinner from '../../../components/Spinner';
+import { withApollo } from '../../../utils/withApollo'
 
 interface Props {
 
@@ -127,4 +128,4 @@ const Facility = (props: Props) => {
     )
 }
 
-export default Facility
+export default withApollo({ ssr: true })(Facility)

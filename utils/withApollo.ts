@@ -9,7 +9,43 @@ const client = new ApolloClient({
       ? 'http://localhost:4000/graphql'
       : 'https://jemmastables.herokuapp.com/graphql',
   credentials: 'include',
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      DateSlots: {
+        fields: {
+          timeslots: {
+            merge(existing, incoming) {
+              console.log(existing, incoming);
+              return incoming;
+            },
+          },
+        },
+      },
+      TimeSlots: {
+        fields: {
+          users: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+          date: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+        },
+      },
+      User: {
+        fields: {
+          timeslots: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+        },
+      },
+    },
+  }),
   connectToDevTools: true,
 });
 

@@ -28,4 +28,4 @@ const Bokning = (props: Props) => {
     )
 }
 
-export default Bokning
+export default withApollo({ ssr: true })(Bokning)

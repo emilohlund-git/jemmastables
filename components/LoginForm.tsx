@@ -1,9 +1,10 @@
-import React, { FormEvent, useState } from 'react';
+import { FacebookAuthProvider, signInWithRedirect, signOut } from 'firebase/auth';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAuth } from '../contexts/AuthContext';
-import { User } from '../generated/graphql';
-import { setUser } from '../redux/actions';
+import { useAdminsQuery, useCreateUsersMutation, User, useUsersQuery } from '../generated/graphql';
+import { setAdmin, setUser } from '../redux/actions';
 import { RootState } from '../redux/reducers';
+import { auth } from '../utils/firebase/firebase';
 
 interface Props {
 
@@ -11,17 +12,60 @@ interface Props {
 
 const LoginForm = (props: Props) => {
     const user: User = useSelector((state: RootState) => state.user);
-    const { signin, signout }: any = useAuth();
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const provider = new FacebookAuthProvider();
     const dispatch = useDispatch();
-    
+
+    const [CreateUser] = useCreateUsersMutation();
+    const { data, loading } = useUsersQuery();
+    const { data: AdminData, loading: AdminLoading } = useAdminsQuery();
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(async (facebookUser: any) => {
+            if (!loading && facebookUser) {
+                const user = data?.users.find((user) => user.uid === facebookUser.uid);
+
+                if (user) {
+                    dispatch(setUser(user as User));
+                }
+
+                if (!user) {
+                    await CreateUser({
+                        variables: {
+                            input: {
+                                uid: facebookUser.uid,
+                                name: facebookUser.displayName,
+                                phonenumber: facebookUser.providerData[0].phoneNumber,
+                                email: facebookUser.email,
+                                profilePicture: facebookUser.photoURL + "/?type=normal",
+                            }
+                        }
+                    })
+                }
+
+                if (!AdminLoading) {
+                    AdminData?.admins.forEach((admin) => {
+                        if (facebookUser.uid === admin.uid)
+                            dispatch(setAdmin(true));
+                        else {
+                            dispatch(setAdmin(false));
+                        }
+                    })
+                }
+            }
+            setIsLoading(false)
+        });
+
+        return unsubscribe;
+    }, [loading])
+
     const handleLogin = async (e: FormEvent) => {
         e.preventDefault();
         if (!isLoading) {
             try {
                 setError('');
-                await signin();
+                await signInWithRedirect(auth, provider);
             } catch (err) {
                 console.log(err);
                 setError("Inloggningen misslyckades.");
@@ -34,7 +78,7 @@ const LoginForm = (props: Props) => {
         e.preventDefault();
         try {
             setError('');
-            await signout();
+            await signOut(auth);
             setIsLoading(true);
             dispatch(setUser(null));
         } catch (err) {

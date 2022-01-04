@@ -9,6 +9,7 @@ import Spinner from '../../../../components/Spinner';
 import UploadControlImages from '../../../../components/UploadControlImages';
 import { HorseImage, useHorseQuery, useUpdateHorsesMutation } from '../../../../generated/graphql';
 import { RootState } from '../../../../redux/reducers';
+import { withApollo } from '../../../../utils/withApollo';
 
 interface Props {
 
@@ -179,4 +180,4 @@ const Horse = (props: Props) => {
     )
 }
 
-export default Horse
+export default withApollo({ ssr: true })(Horse)

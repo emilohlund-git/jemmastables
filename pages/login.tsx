@@ -1,5 +1,6 @@
 import React from 'react'
 import LoginForm from '../components/LoginForm'
+import { withApollo } from '../utils/withApollo'
 
 interface Props {
 
@@ -11,4 +12,4 @@ const login = (props: Props) => {
     )
 }
 
-export default login
+export default withApollo({ ssr: true })(login)

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Instagram from '../components/Instagram';
 import { usePartnersQuery } from '../generated/graphql';
 import { SRLWrapper } from "simple-react-lightbox";
+import { withApollo } from '../utils/withApollo';
 
 const Home: NextPage = () => {
   const { data, loading } = usePartnersQuery();
@@ -49,5 +50,4 @@ const Home: NextPage = () => {
   )
 }
 
-
-export default Home
+export default withApollo({ssr: false})(Home)

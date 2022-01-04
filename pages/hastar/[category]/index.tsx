@@ -12,4 +12,4 @@ const Häst = (props: Props) => {
     )
 }
 
-export default Häst
+export default withApollo({ ssr: true })(Häst)
