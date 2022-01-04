@@ -1,12 +1,12 @@
-fragment RegularPartner on Partner {
+fragment RegularFacility on Facility {
   id
   name
   description
-  website
-  logo {
+  images {
     url
     path
     width
     height
+    profile
   }
 }

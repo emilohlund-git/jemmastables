@@ -151,6 +151,12 @@ export type CreateFacilitiesMutationResponse = {
   info: CreateInfo;
 };
 
+export type CreateFacilityImagesMutationResponse = {
+  __typename?: 'CreateFacilityImagesMutationResponse';
+  facilityImages: Array<FacilityImage>;
+  info: CreateInfo;
+};
+
 export type CreateHorseCategoriesMutationResponse = {
   __typename?: 'CreateHorseCategoriesMutationResponse';
   horseCategories: Array<HorseCategory>;
@@ -478,21 +484,533 @@ export type DeleteInfo = {
 export type Facility = {
   __typename?: 'Facility';
   description: Scalars['String'];
-  images: Array<Maybe<Scalars['String']>>;
+  id?: Maybe<Scalars['ID']>;
+  images: Array<Maybe<FacilityImage>>;
+  imagesAggregate?: Maybe<FacilityFacilityImageImagesAggregationSelection>;
+  imagesConnection: FacilityImagesConnection;
   name: Scalars['String'];
+};
+
+
+export type FacilityImagesArgs = {
+  options?: InputMaybe<FacilityImageOptions>;
+  where?: InputMaybe<FacilityImageWhere>;
+};
+
+
+export type FacilityImagesAggregateArgs = {
+  where?: InputMaybe<FacilityImageWhere>;
+};
+
+
+export type FacilityImagesConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<FacilityImagesConnectionSort>>;
+  where?: InputMaybe<FacilityImagesConnectionWhere>;
 };
 
 export type FacilityAggregateSelection = {
   __typename?: 'FacilityAggregateSelection';
   count: Scalars['Int'];
   description: StringAggregateSelection;
+  id: IdAggregateSelection;
   name: StringAggregateSelection;
+};
+
+export type FacilityConnectInput = {
+  images?: InputMaybe<Array<FacilityImagesConnectFieldInput>>;
+};
+
+export type FacilityConnectOrCreateWhere = {
+  node: FacilityUniqueWhere;
+};
+
+export type FacilityConnectWhere = {
+  node: FacilityWhere;
 };
 
 export type FacilityCreateInput = {
   description: Scalars['String'];
-  images: Array<InputMaybe<Scalars['String']>>;
+  images?: InputMaybe<FacilityImagesFieldInput>;
   name: Scalars['String'];
+};
+
+export type FacilityDeleteInput = {
+  images?: InputMaybe<Array<FacilityImagesDeleteFieldInput>>;
+};
+
+export type FacilityDisconnectInput = {
+  images?: InputMaybe<Array<FacilityImagesDisconnectFieldInput>>;
+};
+
+export type FacilityFacilityImageImagesAggregationSelection = {
+  __typename?: 'FacilityFacilityImageImagesAggregationSelection';
+  count: Scalars['Int'];
+  node?: Maybe<FacilityFacilityImageImagesNodeAggregateSelection>;
+};
+
+export type FacilityFacilityImageImagesNodeAggregateSelection = {
+  __typename?: 'FacilityFacilityImageImagesNodeAggregateSelection';
+  height: IntAggregateSelection;
+  path: StringAggregateSelection;
+  url: StringAggregateSelection;
+  width: IntAggregateSelection;
+};
+
+export type FacilityImage = {
+  __typename?: 'FacilityImage';
+  height: Scalars['Int'];
+  owner?: Maybe<Facility>;
+  ownerAggregate?: Maybe<FacilityImageFacilityOwnerAggregationSelection>;
+  ownerConnection: FacilityImageOwnerConnection;
+  path: Scalars['String'];
+  profile: Scalars['Boolean'];
+  url: Scalars['String'];
+  width: Scalars['Int'];
+};
+
+
+export type FacilityImageOwnerArgs = {
+  options?: InputMaybe<FacilityOptions>;
+  where?: InputMaybe<FacilityWhere>;
+};
+
+
+export type FacilityImageOwnerAggregateArgs = {
+  where?: InputMaybe<FacilityWhere>;
+};
+
+
+export type FacilityImageOwnerConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<FacilityImageOwnerConnectionSort>>;
+  where?: InputMaybe<FacilityImageOwnerConnectionWhere>;
+};
+
+export type FacilityImageAggregateSelection = {
+  __typename?: 'FacilityImageAggregateSelection';
+  count: Scalars['Int'];
+  height: IntAggregateSelection;
+  path: StringAggregateSelection;
+  url: StringAggregateSelection;
+  width: IntAggregateSelection;
+};
+
+export type FacilityImageConnectInput = {
+  owner?: InputMaybe<FacilityImageOwnerConnectFieldInput>;
+};
+
+export type FacilityImageConnectOrCreateInput = {
+  owner?: InputMaybe<FacilityImageOwnerConnectOrCreateFieldInput>;
+};
+
+export type FacilityImageConnectWhere = {
+  node: FacilityImageWhere;
+};
+
+export type FacilityImageCreateInput = {
+  height: Scalars['Int'];
+  owner?: InputMaybe<FacilityImageOwnerFieldInput>;
+  path: Scalars['String'];
+  profile: Scalars['Boolean'];
+  url: Scalars['String'];
+  width: Scalars['Int'];
+};
+
+export type FacilityImageDeleteInput = {
+  owner?: InputMaybe<FacilityImageOwnerDeleteFieldInput>;
+};
+
+export type FacilityImageDisconnectInput = {
+  owner?: InputMaybe<FacilityImageOwnerDisconnectFieldInput>;
+};
+
+export type FacilityImageFacilityOwnerAggregationSelection = {
+  __typename?: 'FacilityImageFacilityOwnerAggregationSelection';
+  count: Scalars['Int'];
+  node?: Maybe<FacilityImageFacilityOwnerNodeAggregateSelection>;
+};
+
+export type FacilityImageFacilityOwnerNodeAggregateSelection = {
+  __typename?: 'FacilityImageFacilityOwnerNodeAggregateSelection';
+  description: StringAggregateSelection;
+  id: IdAggregateSelection;
+  name: StringAggregateSelection;
+};
+
+export type FacilityImageOptions = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  /** Specify one or more FacilityImageSort objects to sort FacilityImages by. The sorts will be applied in the order in which they are arranged in the array. */
+  sort?: InputMaybe<Array<InputMaybe<FacilityImageSort>>>;
+};
+
+export type FacilityImageOwnerAggregateInput = {
+  AND?: InputMaybe<Array<FacilityImageOwnerAggregateInput>>;
+  OR?: InputMaybe<Array<FacilityImageOwnerAggregateInput>>;
+  count?: InputMaybe<Scalars['Int']>;
+  count_GT?: InputMaybe<Scalars['Int']>;
+  count_GTE?: InputMaybe<Scalars['Int']>;
+  count_LT?: InputMaybe<Scalars['Int']>;
+  count_LTE?: InputMaybe<Scalars['Int']>;
+  node?: InputMaybe<FacilityImageOwnerNodeAggregationWhereInput>;
+};
+
+export type FacilityImageOwnerConnectFieldInput = {
+  connect?: InputMaybe<FacilityConnectInput>;
+  where?: InputMaybe<FacilityConnectWhere>;
+};
+
+export type FacilityImageOwnerConnectOrCreateFieldInput = {
+  onCreate: FacilityImageOwnerConnectOrCreateFieldInputOnCreate;
+  where: FacilityConnectOrCreateWhere;
+};
+
+export type FacilityImageOwnerConnectOrCreateFieldInputOnCreate = {
+  node: FacilityCreateInput;
+};
+
+export type FacilityImageOwnerConnection = {
+  __typename?: 'FacilityImageOwnerConnection';
+  edges: Array<FacilityImageOwnerRelationship>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type FacilityImageOwnerConnectionSort = {
+  node?: InputMaybe<FacilitySort>;
+};
+
+export type FacilityImageOwnerConnectionWhere = {
+  AND?: InputMaybe<Array<FacilityImageOwnerConnectionWhere>>;
+  OR?: InputMaybe<Array<FacilityImageOwnerConnectionWhere>>;
+  node?: InputMaybe<FacilityWhere>;
+  node_NOT?: InputMaybe<FacilityWhere>;
+};
+
+export type FacilityImageOwnerCreateFieldInput = {
+  node: FacilityCreateInput;
+};
+
+export type FacilityImageOwnerDeleteFieldInput = {
+  delete?: InputMaybe<FacilityDeleteInput>;
+  where?: InputMaybe<FacilityImageOwnerConnectionWhere>;
+};
+
+export type FacilityImageOwnerDisconnectFieldInput = {
+  disconnect?: InputMaybe<FacilityDisconnectInput>;
+  where?: InputMaybe<FacilityImageOwnerConnectionWhere>;
+};
+
+export type FacilityImageOwnerFieldInput = {
+  connect?: InputMaybe<FacilityImageOwnerConnectFieldInput>;
+  connectOrCreate?: InputMaybe<FacilityImageOwnerConnectOrCreateFieldInput>;
+  create?: InputMaybe<FacilityImageOwnerCreateFieldInput>;
+};
+
+export type FacilityImageOwnerNodeAggregationWhereInput = {
+  AND?: InputMaybe<Array<FacilityImageOwnerNodeAggregationWhereInput>>;
+  OR?: InputMaybe<Array<FacilityImageOwnerNodeAggregationWhereInput>>;
+  description_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  description_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  description_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  description_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  description_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  description_EQUAL?: InputMaybe<Scalars['String']>;
+  description_GT?: InputMaybe<Scalars['Int']>;
+  description_GTE?: InputMaybe<Scalars['Int']>;
+  description_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  description_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  description_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  description_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  description_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  description_LT?: InputMaybe<Scalars['Int']>;
+  description_LTE?: InputMaybe<Scalars['Int']>;
+  description_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  description_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  description_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  description_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  description_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  id_EQUAL?: InputMaybe<Scalars['ID']>;
+  name_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  name_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  name_EQUAL?: InputMaybe<Scalars['String']>;
+  name_GT?: InputMaybe<Scalars['Int']>;
+  name_GTE?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  name_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  name_LT?: InputMaybe<Scalars['Int']>;
+  name_LTE?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  name_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+};
+
+export type FacilityImageOwnerRelationship = {
+  __typename?: 'FacilityImageOwnerRelationship';
+  cursor: Scalars['String'];
+  node: Facility;
+};
+
+export type FacilityImageOwnerUpdateConnectionInput = {
+  node?: InputMaybe<FacilityUpdateInput>;
+};
+
+export type FacilityImageOwnerUpdateFieldInput = {
+  connect?: InputMaybe<FacilityImageOwnerConnectFieldInput>;
+  connectOrCreate?: InputMaybe<FacilityImageOwnerConnectOrCreateFieldInput>;
+  create?: InputMaybe<FacilityImageOwnerCreateFieldInput>;
+  delete?: InputMaybe<FacilityImageOwnerDeleteFieldInput>;
+  disconnect?: InputMaybe<FacilityImageOwnerDisconnectFieldInput>;
+  update?: InputMaybe<FacilityImageOwnerUpdateConnectionInput>;
+  where?: InputMaybe<FacilityImageOwnerConnectionWhere>;
+};
+
+export type FacilityImageRelationInput = {
+  owner?: InputMaybe<FacilityImageOwnerCreateFieldInput>;
+};
+
+/** Fields to sort FacilityImages by. The order in which sorts are applied is not guaranteed when specifying many fields in one FacilityImageSort object. */
+export type FacilityImageSort = {
+  height?: InputMaybe<SortDirection>;
+  path?: InputMaybe<SortDirection>;
+  profile?: InputMaybe<SortDirection>;
+  url?: InputMaybe<SortDirection>;
+  width?: InputMaybe<SortDirection>;
+};
+
+export type FacilityImageUpdateInput = {
+  height?: InputMaybe<Scalars['Int']>;
+  owner?: InputMaybe<FacilityImageOwnerUpdateFieldInput>;
+  path?: InputMaybe<Scalars['String']>;
+  profile?: InputMaybe<Scalars['Boolean']>;
+  url?: InputMaybe<Scalars['String']>;
+  width?: InputMaybe<Scalars['Int']>;
+};
+
+export type FacilityImageWhere = {
+  AND?: InputMaybe<Array<FacilityImageWhere>>;
+  OR?: InputMaybe<Array<FacilityImageWhere>>;
+  height?: InputMaybe<Scalars['Int']>;
+  height_GT?: InputMaybe<Scalars['Int']>;
+  height_GTE?: InputMaybe<Scalars['Int']>;
+  height_IN?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  height_LT?: InputMaybe<Scalars['Int']>;
+  height_LTE?: InputMaybe<Scalars['Int']>;
+  height_NOT?: InputMaybe<Scalars['Int']>;
+  height_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  owner?: InputMaybe<FacilityWhere>;
+  ownerAggregate?: InputMaybe<FacilityImageOwnerAggregateInput>;
+  ownerConnection?: InputMaybe<FacilityImageOwnerConnectionWhere>;
+  ownerConnection_NOT?: InputMaybe<FacilityImageOwnerConnectionWhere>;
+  owner_NOT?: InputMaybe<FacilityWhere>;
+  path?: InputMaybe<Scalars['String']>;
+  path_CONTAINS?: InputMaybe<Scalars['String']>;
+  path_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  path_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  path_NOT?: InputMaybe<Scalars['String']>;
+  path_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  path_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  path_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  path_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  path_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  profile?: InputMaybe<Scalars['Boolean']>;
+  profile_NOT?: InputMaybe<Scalars['Boolean']>;
+  url?: InputMaybe<Scalars['String']>;
+  url_CONTAINS?: InputMaybe<Scalars['String']>;
+  url_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  url_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  url_NOT?: InputMaybe<Scalars['String']>;
+  url_NOT_CONTAINS?: InputMaybe<Scalars['String']>;
+  url_NOT_ENDS_WITH?: InputMaybe<Scalars['String']>;
+  url_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  url_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  url_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  width?: InputMaybe<Scalars['Int']>;
+  width_GT?: InputMaybe<Scalars['Int']>;
+  width_GTE?: InputMaybe<Scalars['Int']>;
+  width_IN?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  width_LT?: InputMaybe<Scalars['Int']>;
+  width_LTE?: InputMaybe<Scalars['Int']>;
+  width_NOT?: InputMaybe<Scalars['Int']>;
+  width_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+};
+
+export type FacilityImagesAggregateInput = {
+  AND?: InputMaybe<Array<FacilityImagesAggregateInput>>;
+  OR?: InputMaybe<Array<FacilityImagesAggregateInput>>;
+  count?: InputMaybe<Scalars['Int']>;
+  count_GT?: InputMaybe<Scalars['Int']>;
+  count_GTE?: InputMaybe<Scalars['Int']>;
+  count_LT?: InputMaybe<Scalars['Int']>;
+  count_LTE?: InputMaybe<Scalars['Int']>;
+  node?: InputMaybe<FacilityImagesNodeAggregationWhereInput>;
+};
+
+export type FacilityImagesConnectFieldInput = {
+  connect?: InputMaybe<Array<FacilityImageConnectInput>>;
+  where?: InputMaybe<FacilityImageConnectWhere>;
+};
+
+export type FacilityImagesConnection = {
+  __typename?: 'FacilityImagesConnection';
+  edges: Array<FacilityImagesRelationship>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type FacilityImagesConnectionSort = {
+  node?: InputMaybe<FacilityImageSort>;
+};
+
+export type FacilityImagesConnectionWhere = {
+  AND?: InputMaybe<Array<FacilityImagesConnectionWhere>>;
+  OR?: InputMaybe<Array<FacilityImagesConnectionWhere>>;
+  node?: InputMaybe<FacilityImageWhere>;
+  node_NOT?: InputMaybe<FacilityImageWhere>;
+};
+
+export type FacilityImagesCreateFieldInput = {
+  node: FacilityImageCreateInput;
+};
+
+export type FacilityImagesDeleteFieldInput = {
+  delete?: InputMaybe<FacilityImageDeleteInput>;
+  where?: InputMaybe<FacilityImagesConnectionWhere>;
+};
+
+export type FacilityImagesDisconnectFieldInput = {
+  disconnect?: InputMaybe<FacilityImageDisconnectInput>;
+  where?: InputMaybe<FacilityImagesConnectionWhere>;
+};
+
+export type FacilityImagesFieldInput = {
+  connect?: InputMaybe<Array<FacilityImagesConnectFieldInput>>;
+  create?: InputMaybe<Array<FacilityImagesCreateFieldInput>>;
+};
+
+export type FacilityImagesNodeAggregationWhereInput = {
+  AND?: InputMaybe<Array<FacilityImagesNodeAggregationWhereInput>>;
+  OR?: InputMaybe<Array<FacilityImagesNodeAggregationWhereInput>>;
+  height_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  height_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  height_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  height_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  height_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  height_EQUAL?: InputMaybe<Scalars['Int']>;
+  height_GT?: InputMaybe<Scalars['Int']>;
+  height_GTE?: InputMaybe<Scalars['Int']>;
+  height_LT?: InputMaybe<Scalars['Int']>;
+  height_LTE?: InputMaybe<Scalars['Int']>;
+  height_MAX_EQUAL?: InputMaybe<Scalars['Int']>;
+  height_MAX_GT?: InputMaybe<Scalars['Int']>;
+  height_MAX_GTE?: InputMaybe<Scalars['Int']>;
+  height_MAX_LT?: InputMaybe<Scalars['Int']>;
+  height_MAX_LTE?: InputMaybe<Scalars['Int']>;
+  height_MIN_EQUAL?: InputMaybe<Scalars['Int']>;
+  height_MIN_GT?: InputMaybe<Scalars['Int']>;
+  height_MIN_GTE?: InputMaybe<Scalars['Int']>;
+  height_MIN_LT?: InputMaybe<Scalars['Int']>;
+  height_MIN_LTE?: InputMaybe<Scalars['Int']>;
+  height_SUM_EQUAL?: InputMaybe<Scalars['Int']>;
+  height_SUM_GT?: InputMaybe<Scalars['Int']>;
+  height_SUM_GTE?: InputMaybe<Scalars['Int']>;
+  height_SUM_LT?: InputMaybe<Scalars['Int']>;
+  height_SUM_LTE?: InputMaybe<Scalars['Int']>;
+  path_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  path_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  path_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  path_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  path_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  path_EQUAL?: InputMaybe<Scalars['String']>;
+  path_GT?: InputMaybe<Scalars['Int']>;
+  path_GTE?: InputMaybe<Scalars['Int']>;
+  path_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  path_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  path_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  path_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  path_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  path_LT?: InputMaybe<Scalars['Int']>;
+  path_LTE?: InputMaybe<Scalars['Int']>;
+  path_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  path_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  path_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  path_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  path_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  url_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  url_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  url_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  url_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  url_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  url_EQUAL?: InputMaybe<Scalars['String']>;
+  url_GT?: InputMaybe<Scalars['Int']>;
+  url_GTE?: InputMaybe<Scalars['Int']>;
+  url_LONGEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  url_LONGEST_GT?: InputMaybe<Scalars['Int']>;
+  url_LONGEST_GTE?: InputMaybe<Scalars['Int']>;
+  url_LONGEST_LT?: InputMaybe<Scalars['Int']>;
+  url_LONGEST_LTE?: InputMaybe<Scalars['Int']>;
+  url_LT?: InputMaybe<Scalars['Int']>;
+  url_LTE?: InputMaybe<Scalars['Int']>;
+  url_SHORTEST_EQUAL?: InputMaybe<Scalars['Int']>;
+  url_SHORTEST_GT?: InputMaybe<Scalars['Int']>;
+  url_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
+  url_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
+  url_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  width_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
+  width_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
+  width_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
+  width_AVERAGE_LT?: InputMaybe<Scalars['Float']>;
+  width_AVERAGE_LTE?: InputMaybe<Scalars['Float']>;
+  width_EQUAL?: InputMaybe<Scalars['Int']>;
+  width_GT?: InputMaybe<Scalars['Int']>;
+  width_GTE?: InputMaybe<Scalars['Int']>;
+  width_LT?: InputMaybe<Scalars['Int']>;
+  width_LTE?: InputMaybe<Scalars['Int']>;
+  width_MAX_EQUAL?: InputMaybe<Scalars['Int']>;
+  width_MAX_GT?: InputMaybe<Scalars['Int']>;
+  width_MAX_GTE?: InputMaybe<Scalars['Int']>;
+  width_MAX_LT?: InputMaybe<Scalars['Int']>;
+  width_MAX_LTE?: InputMaybe<Scalars['Int']>;
+  width_MIN_EQUAL?: InputMaybe<Scalars['Int']>;
+  width_MIN_GT?: InputMaybe<Scalars['Int']>;
+  width_MIN_GTE?: InputMaybe<Scalars['Int']>;
+  width_MIN_LT?: InputMaybe<Scalars['Int']>;
+  width_MIN_LTE?: InputMaybe<Scalars['Int']>;
+  width_SUM_EQUAL?: InputMaybe<Scalars['Int']>;
+  width_SUM_GT?: InputMaybe<Scalars['Int']>;
+  width_SUM_GTE?: InputMaybe<Scalars['Int']>;
+  width_SUM_LT?: InputMaybe<Scalars['Int']>;
+  width_SUM_LTE?: InputMaybe<Scalars['Int']>;
+};
+
+export type FacilityImagesRelationship = {
+  __typename?: 'FacilityImagesRelationship';
+  cursor: Scalars['String'];
+  node: FacilityImage;
+};
+
+export type FacilityImagesUpdateConnectionInput = {
+  node?: InputMaybe<FacilityImageUpdateInput>;
+};
+
+export type FacilityImagesUpdateFieldInput = {
+  connect?: InputMaybe<Array<FacilityImagesConnectFieldInput>>;
+  create?: InputMaybe<Array<FacilityImagesCreateFieldInput>>;
+  delete?: InputMaybe<Array<FacilityImagesDeleteFieldInput>>;
+  disconnect?: InputMaybe<Array<FacilityImagesDisconnectFieldInput>>;
+  update?: InputMaybe<FacilityImagesUpdateConnectionInput>;
+  where?: InputMaybe<FacilityImagesConnectionWhere>;
 };
 
 export type FacilityOptions = {
@@ -502,15 +1020,24 @@ export type FacilityOptions = {
   sort?: InputMaybe<Array<InputMaybe<FacilitySort>>>;
 };
 
+export type FacilityRelationInput = {
+  images?: InputMaybe<Array<FacilityImagesCreateFieldInput>>;
+};
+
 /** Fields to sort Facilities by. The order in which sorts are applied is not guaranteed when specifying many fields in one FacilitySort object. */
 export type FacilitySort = {
   description?: InputMaybe<SortDirection>;
+  id?: InputMaybe<SortDirection>;
   name?: InputMaybe<SortDirection>;
+};
+
+export type FacilityUniqueWhere = {
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type FacilityUpdateInput = {
   description?: InputMaybe<Scalars['String']>;
-  images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  images?: InputMaybe<Array<FacilityImagesUpdateFieldInput>>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -527,10 +1054,21 @@ export type FacilityWhere = {
   description_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   description_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
   description_STARTS_WITH?: InputMaybe<Scalars['String']>;
-  images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  images_INCLUDES?: InputMaybe<Scalars['String']>;
-  images_NOT?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  images_NOT_INCLUDES?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  id_NOT?: InputMaybe<Scalars['ID']>;
+  id_NOT_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_NOT_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  id_NOT_STARTS_WITH?: InputMaybe<Scalars['ID']>;
+  id_STARTS_WITH?: InputMaybe<Scalars['ID']>;
+  images?: InputMaybe<FacilityImageWhere>;
+  imagesAggregate?: InputMaybe<FacilityImagesAggregateInput>;
+  imagesConnection?: InputMaybe<FacilityImagesConnectionWhere>;
+  imagesConnection_NOT?: InputMaybe<FacilityImagesConnectionWhere>;
+  images_NOT?: InputMaybe<FacilityImageWhere>;
   name?: InputMaybe<Scalars['String']>;
   name_CONTAINS?: InputMaybe<Scalars['String']>;
   name_ENDS_WITH?: InputMaybe<Scalars['String']>;
@@ -552,6 +1090,7 @@ export type Horse = {
   categoryConnection: HorseCategoryConnection;
   color: Scalars['String'];
   gender: Scalars['String'];
+  id?: Maybe<Scalars['ID']>;
   images?: Maybe<Array<Maybe<HorseImage>>>;
   imagesAggregate?: Maybe<HorseHorseImageImagesAggregationSelection>;
   imagesConnection: HorseImagesConnection;
@@ -606,6 +1145,7 @@ export type HorseAggregateSelection = {
   color: StringAggregateSelection;
   count: Scalars['Int'];
   gender: StringAggregateSelection;
+  id: IdAggregateSelection;
   movie: StringAggregateSelection;
   name: StringAggregateSelection;
   nickname: StringAggregateSelection;
@@ -665,6 +1205,10 @@ export type HorseCategoryConnectFieldInput = {
 
 export type HorseCategoryConnectInput = {
   horses?: InputMaybe<Array<HorseCategoryHorsesConnectFieldInput>>;
+};
+
+export type HorseCategoryConnectOrCreateInput = {
+  horses?: InputMaybe<Array<HorseCategoryHorsesConnectOrCreateFieldInput>>;
 };
 
 export type HorseCategoryConnectWhere = {
@@ -734,6 +1278,7 @@ export type HorseCategoryHorseHorsesNodeAggregateSelection = {
   birthyear: StringAggregateSelection;
   color: StringAggregateSelection;
   gender: StringAggregateSelection;
+  id: IdAggregateSelection;
   movie: StringAggregateSelection;
   name: StringAggregateSelection;
   nickname: StringAggregateSelection;
@@ -754,6 +1299,15 @@ export type HorseCategoryHorsesAggregateInput = {
 export type HorseCategoryHorsesConnectFieldInput = {
   connect?: InputMaybe<Array<HorseConnectInput>>;
   where?: InputMaybe<HorseConnectWhere>;
+};
+
+export type HorseCategoryHorsesConnectOrCreateFieldInput = {
+  onCreate: HorseCategoryHorsesConnectOrCreateFieldInputOnCreate;
+  where: HorseConnectOrCreateWhere;
+};
+
+export type HorseCategoryHorsesConnectOrCreateFieldInputOnCreate = {
+  node: HorseCreateInput;
 };
 
 export type HorseCategoryHorsesConnection = {
@@ -790,6 +1344,7 @@ export type HorseCategoryHorsesDisconnectFieldInput = {
 
 export type HorseCategoryHorsesFieldInput = {
   connect?: InputMaybe<Array<HorseCategoryHorsesConnectFieldInput>>;
+  connectOrCreate?: InputMaybe<Array<HorseCategoryHorsesConnectOrCreateFieldInput>>;
   create?: InputMaybe<Array<HorseCategoryHorsesCreateFieldInput>>;
 };
 
@@ -876,6 +1431,7 @@ export type HorseCategoryHorsesNodeAggregationWhereInput = {
   gender_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
   gender_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
   gender_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  id_EQUAL?: InputMaybe<Scalars['ID']>;
   movie_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
   movie_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
   movie_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
@@ -970,6 +1526,7 @@ export type HorseCategoryHorsesUpdateConnectionInput = {
 
 export type HorseCategoryHorsesUpdateFieldInput = {
   connect?: InputMaybe<Array<HorseCategoryHorsesConnectFieldInput>>;
+  connectOrCreate?: InputMaybe<Array<HorseCategoryHorsesConnectOrCreateFieldInput>>;
   create?: InputMaybe<Array<HorseCategoryHorsesCreateFieldInput>>;
   delete?: InputMaybe<Array<HorseCategoryHorsesDeleteFieldInput>>;
   disconnect?: InputMaybe<Array<HorseCategoryHorsesDisconnectFieldInput>>;
@@ -1099,6 +1656,10 @@ export type HorseConnectInput = {
   images?: InputMaybe<Array<HorseImagesConnectFieldInput>>;
 };
 
+export type HorseConnectOrCreateWhere = {
+  node: HorseUniqueWhere;
+};
+
 export type HorseConnectWhere = {
   node: HorseWhere;
 };
@@ -1196,6 +1757,10 @@ export type HorseImageConnectInput = {
   owner?: InputMaybe<HorseImageOwnerConnectFieldInput>;
 };
 
+export type HorseImageConnectOrCreateInput = {
+  owner?: InputMaybe<HorseImageOwnerConnectOrCreateFieldInput>;
+};
+
 export type HorseImageConnectWhere = {
   node: HorseImageWhere;
 };
@@ -1229,6 +1794,7 @@ export type HorseImageHorseOwnerNodeAggregateSelection = {
   birthyear: StringAggregateSelection;
   color: StringAggregateSelection;
   gender: StringAggregateSelection;
+  id: IdAggregateSelection;
   movie: StringAggregateSelection;
   name: StringAggregateSelection;
   nickname: StringAggregateSelection;
@@ -1256,6 +1822,15 @@ export type HorseImageOwnerAggregateInput = {
 export type HorseImageOwnerConnectFieldInput = {
   connect?: InputMaybe<HorseConnectInput>;
   where?: InputMaybe<HorseConnectWhere>;
+};
+
+export type HorseImageOwnerConnectOrCreateFieldInput = {
+  onCreate: HorseImageOwnerConnectOrCreateFieldInputOnCreate;
+  where: HorseConnectOrCreateWhere;
+};
+
+export type HorseImageOwnerConnectOrCreateFieldInputOnCreate = {
+  node: HorseCreateInput;
 };
 
 export type HorseImageOwnerConnection = {
@@ -1292,6 +1867,7 @@ export type HorseImageOwnerDisconnectFieldInput = {
 
 export type HorseImageOwnerFieldInput = {
   connect?: InputMaybe<HorseImageOwnerConnectFieldInput>;
+  connectOrCreate?: InputMaybe<HorseImageOwnerConnectOrCreateFieldInput>;
   create?: InputMaybe<HorseImageOwnerCreateFieldInput>;
 };
 
@@ -1378,6 +1954,7 @@ export type HorseImageOwnerNodeAggregationWhereInput = {
   gender_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
   gender_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
   gender_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  id_EQUAL?: InputMaybe<Scalars['ID']>;
   movie_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
   movie_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
   movie_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
@@ -1472,6 +2049,7 @@ export type HorseImageOwnerUpdateConnectionInput = {
 
 export type HorseImageOwnerUpdateFieldInput = {
   connect?: InputMaybe<HorseImageOwnerConnectFieldInput>;
+  connectOrCreate?: InputMaybe<HorseImageOwnerConnectOrCreateFieldInput>;
   create?: InputMaybe<HorseImageOwnerCreateFieldInput>;
   delete?: InputMaybe<HorseImageOwnerDeleteFieldInput>;
   disconnect?: InputMaybe<HorseImageOwnerDisconnectFieldInput>;
@@ -1734,10 +2312,15 @@ export type HorseSort = {
   birthyear?: InputMaybe<SortDirection>;
   color?: InputMaybe<SortDirection>;
   gender?: InputMaybe<SortDirection>;
+  id?: InputMaybe<SortDirection>;
   movie?: InputMaybe<SortDirection>;
   name?: InputMaybe<SortDirection>;
   nickname?: InputMaybe<SortDirection>;
   owner?: InputMaybe<SortDirection>;
+};
+
+export type HorseUniqueWhere = {
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type HorseUpdateInput = {
@@ -1801,6 +2384,16 @@ export type HorseWhere = {
   gender_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   gender_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
   gender_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  id_NOT?: InputMaybe<Scalars['ID']>;
+  id_NOT_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_NOT_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  id_NOT_STARTS_WITH?: InputMaybe<Scalars['ID']>;
+  id_STARTS_WITH?: InputMaybe<Scalars['ID']>;
   images?: InputMaybe<HorseImageWhere>;
   imagesAggregate?: InputMaybe<HorseImagesAggregateInput>;
   imagesConnection?: InputMaybe<HorseImagesConnectionWhere>;
@@ -1914,6 +2507,7 @@ export type Mutation = {
   createComponents: CreateComponentsMutationResponse;
   createDateSlots: CreateDateSlotsMutationResponse;
   createFacilities: CreateFacilitiesMutationResponse;
+  createFacilityImages: CreateFacilityImagesMutationResponse;
   createHorseCategories: CreateHorseCategoriesMutationResponse;
   createHorseImages: CreateHorseImagesMutationResponse;
   createHorses: CreateHorsesMutationResponse;
@@ -1928,6 +2522,7 @@ export type Mutation = {
   deleteComponents: DeleteInfo;
   deleteDateSlots: DeleteInfo;
   deleteFacilities: DeleteInfo;
+  deleteFacilityImages: DeleteInfo;
   deleteHorseCategories: DeleteInfo;
   deleteHorseImages: DeleteInfo;
   deleteHorses: DeleteInfo;
@@ -1942,6 +2537,7 @@ export type Mutation = {
   updateComponents: UpdateComponentsMutationResponse;
   updateDateSlots: UpdateDateSlotsMutationResponse;
   updateFacilities: UpdateFacilitiesMutationResponse;
+  updateFacilityImages: UpdateFacilityImagesMutationResponse;
   updateHorseCategories: UpdateHorseCategoriesMutationResponse;
   updateHorseImages: UpdateHorseImagesMutationResponse;
   updateHorses: UpdateHorsesMutationResponse;
@@ -1972,6 +2568,11 @@ export type MutationCreateDateSlotsArgs = {
 
 export type MutationCreateFacilitiesArgs = {
   input: Array<FacilityCreateInput>;
+};
+
+
+export type MutationCreateFacilityImagesArgs = {
+  input: Array<FacilityImageCreateInput>;
 };
 
 
@@ -2042,7 +2643,14 @@ export type MutationDeleteDateSlotsArgs = {
 
 
 export type MutationDeleteFacilitiesArgs = {
+  delete?: InputMaybe<FacilityDeleteInput>;
   where?: InputMaybe<FacilityWhere>;
+};
+
+
+export type MutationDeleteFacilityImagesArgs = {
+  delete?: InputMaybe<FacilityImageDeleteInput>;
+  where?: InputMaybe<FacilityImageWhere>;
 };
 
 
@@ -2127,13 +2735,29 @@ export type MutationUpdateDateSlotsArgs = {
 
 
 export type MutationUpdateFacilitiesArgs = {
+  connect?: InputMaybe<FacilityConnectInput>;
+  create?: InputMaybe<FacilityRelationInput>;
+  delete?: InputMaybe<FacilityDeleteInput>;
+  disconnect?: InputMaybe<FacilityDisconnectInput>;
   update?: InputMaybe<FacilityUpdateInput>;
   where?: InputMaybe<FacilityWhere>;
 };
 
 
+export type MutationUpdateFacilityImagesArgs = {
+  connect?: InputMaybe<FacilityImageConnectInput>;
+  connectOrCreate?: InputMaybe<FacilityImageConnectOrCreateInput>;
+  create?: InputMaybe<FacilityImageRelationInput>;
+  delete?: InputMaybe<FacilityImageDeleteInput>;
+  disconnect?: InputMaybe<FacilityImageDisconnectInput>;
+  update?: InputMaybe<FacilityImageUpdateInput>;
+  where?: InputMaybe<FacilityImageWhere>;
+};
+
+
 export type MutationUpdateHorseCategoriesArgs = {
   connect?: InputMaybe<HorseCategoryConnectInput>;
+  connectOrCreate?: InputMaybe<HorseCategoryConnectOrCreateInput>;
   create?: InputMaybe<HorseCategoryRelationInput>;
   delete?: InputMaybe<HorseCategoryDeleteInput>;
   disconnect?: InputMaybe<HorseCategoryDisconnectInput>;
@@ -2144,6 +2768,7 @@ export type MutationUpdateHorseCategoriesArgs = {
 
 export type MutationUpdateHorseImagesArgs = {
   connect?: InputMaybe<HorseImageConnectInput>;
+  connectOrCreate?: InputMaybe<HorseImageConnectOrCreateInput>;
   create?: InputMaybe<HorseImageRelationInput>;
   delete?: InputMaybe<HorseImageDeleteInput>;
   disconnect?: InputMaybe<HorseImageDisconnectInput>;
@@ -2176,6 +2801,7 @@ export type MutationUpdatePagesArgs = {
 
 export type MutationUpdatePartnerLogosArgs = {
   connect?: InputMaybe<PartnerLogoConnectInput>;
+  connectOrCreate?: InputMaybe<PartnerLogoConnectOrCreateInput>;
   create?: InputMaybe<PartnerLogoRelationInput>;
   delete?: InputMaybe<PartnerLogoDeleteInput>;
   disconnect?: InputMaybe<PartnerLogoDisconnectInput>;
@@ -2304,6 +2930,7 @@ export type PageWhere = {
 export type Partner = {
   __typename?: 'Partner';
   description: Scalars['String'];
+  id?: Maybe<Scalars['ID']>;
   logo?: Maybe<PartnerLogo>;
   logoAggregate?: Maybe<PartnerPartnerLogoLogoAggregationSelection>;
   logoConnection: PartnerLogoConnection;
@@ -2334,12 +2961,17 @@ export type PartnerAggregateSelection = {
   __typename?: 'PartnerAggregateSelection';
   count: Scalars['Int'];
   description: StringAggregateSelection;
+  id: IdAggregateSelection;
   name: StringAggregateSelection;
   website: StringAggregateSelection;
 };
 
 export type PartnerConnectInput = {
   logo?: InputMaybe<PartnerLogoConnectFieldInput>;
+};
+
+export type PartnerConnectOrCreateWhere = {
+  node: PartnerUniqueWhere;
 };
 
 export type PartnerConnectWhere = {
@@ -2418,6 +3050,10 @@ export type PartnerLogoConnectFieldInput = {
 
 export type PartnerLogoConnectInput = {
   owner?: InputMaybe<PartnerLogoOwnerConnectFieldInput>;
+};
+
+export type PartnerLogoConnectOrCreateInput = {
+  owner?: InputMaybe<PartnerLogoOwnerConnectOrCreateFieldInput>;
 };
 
 export type PartnerLogoConnectWhere = {
@@ -2595,6 +3231,15 @@ export type PartnerLogoOwnerConnectFieldInput = {
   where?: InputMaybe<PartnerConnectWhere>;
 };
 
+export type PartnerLogoOwnerConnectOrCreateFieldInput = {
+  onCreate: PartnerLogoOwnerConnectOrCreateFieldInputOnCreate;
+  where: PartnerConnectOrCreateWhere;
+};
+
+export type PartnerLogoOwnerConnectOrCreateFieldInputOnCreate = {
+  node: PartnerCreateInput;
+};
+
 export type PartnerLogoOwnerConnection = {
   __typename?: 'PartnerLogoOwnerConnection';
   edges: Array<PartnerLogoOwnerRelationship>;
@@ -2629,6 +3274,7 @@ export type PartnerLogoOwnerDisconnectFieldInput = {
 
 export type PartnerLogoOwnerFieldInput = {
   connect?: InputMaybe<PartnerLogoOwnerConnectFieldInput>;
+  connectOrCreate?: InputMaybe<PartnerLogoOwnerConnectOrCreateFieldInput>;
   create?: InputMaybe<PartnerLogoOwnerCreateFieldInput>;
 };
 
@@ -2655,6 +3301,7 @@ export type PartnerLogoOwnerNodeAggregationWhereInput = {
   description_SHORTEST_GTE?: InputMaybe<Scalars['Int']>;
   description_SHORTEST_LT?: InputMaybe<Scalars['Int']>;
   description_SHORTEST_LTE?: InputMaybe<Scalars['Int']>;
+  id_EQUAL?: InputMaybe<Scalars['ID']>;
   name_AVERAGE_EQUAL?: InputMaybe<Scalars['Float']>;
   name_AVERAGE_GT?: InputMaybe<Scalars['Float']>;
   name_AVERAGE_GTE?: InputMaybe<Scalars['Float']>;
@@ -2709,6 +3356,7 @@ export type PartnerLogoOwnerUpdateConnectionInput = {
 
 export type PartnerLogoOwnerUpdateFieldInput = {
   connect?: InputMaybe<PartnerLogoOwnerConnectFieldInput>;
+  connectOrCreate?: InputMaybe<PartnerLogoOwnerConnectOrCreateFieldInput>;
   create?: InputMaybe<PartnerLogoOwnerCreateFieldInput>;
   delete?: InputMaybe<PartnerLogoOwnerDeleteFieldInput>;
   disconnect?: InputMaybe<PartnerLogoOwnerDisconnectFieldInput>;
@@ -2725,6 +3373,7 @@ export type PartnerLogoPartnerOwnerAggregationSelection = {
 export type PartnerLogoPartnerOwnerNodeAggregateSelection = {
   __typename?: 'PartnerLogoPartnerOwnerNodeAggregateSelection';
   description: StringAggregateSelection;
+  id: IdAggregateSelection;
   name: StringAggregateSelection;
   website: StringAggregateSelection;
 };
@@ -2842,8 +3491,13 @@ export type PartnerRelationInput = {
 /** Fields to sort Partners by. The order in which sorts are applied is not guaranteed when specifying many fields in one PartnerSort object. */
 export type PartnerSort = {
   description?: InputMaybe<SortDirection>;
+  id?: InputMaybe<SortDirection>;
   name?: InputMaybe<SortDirection>;
   website?: InputMaybe<SortDirection>;
+};
+
+export type PartnerUniqueWhere = {
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type PartnerUpdateInput = {
@@ -2866,6 +3520,16 @@ export type PartnerWhere = {
   description_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   description_NOT_STARTS_WITH?: InputMaybe<Scalars['String']>;
   description_STARTS_WITH?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  id_NOT?: InputMaybe<Scalars['ID']>;
+  id_NOT_CONTAINS?: InputMaybe<Scalars['ID']>;
+  id_NOT_ENDS_WITH?: InputMaybe<Scalars['ID']>;
+  id_NOT_IN?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  id_NOT_STARTS_WITH?: InputMaybe<Scalars['ID']>;
+  id_STARTS_WITH?: InputMaybe<Scalars['ID']>;
   logo?: InputMaybe<PartnerLogoWhere>;
   logoAggregate?: InputMaybe<PartnerLogoAggregateInput>;
   logoConnection?: InputMaybe<PartnerLogoConnectionWhere>;
@@ -2907,6 +3571,9 @@ export type Query = {
   facilities: Array<Facility>;
   facilitiesAggregate: FacilityAggregateSelection;
   facilitiesCount: Scalars['Int'];
+  facilityImages: Array<FacilityImage>;
+  facilityImagesAggregate: FacilityImageAggregateSelection;
+  facilityImagesCount: Scalars['Int'];
   horseCategories: Array<HorseCategory>;
   horseCategoriesAggregate: HorseCategoryAggregateSelection;
   horseCategoriesCount: Scalars['Int'];
@@ -3001,6 +3668,22 @@ export type QueryFacilitiesAggregateArgs = {
 
 export type QueryFacilitiesCountArgs = {
   where?: InputMaybe<FacilityWhere>;
+};
+
+
+export type QueryFacilityImagesArgs = {
+  options?: InputMaybe<FacilityImageOptions>;
+  where?: InputMaybe<FacilityImageWhere>;
+};
+
+
+export type QueryFacilityImagesAggregateArgs = {
+  where?: InputMaybe<FacilityImageWhere>;
+};
+
+
+export type QueryFacilityImagesCountArgs = {
+  where?: InputMaybe<FacilityImageWhere>;
 };
 
 
@@ -4064,6 +4747,12 @@ export type UpdateFacilitiesMutationResponse = {
   info: UpdateInfo;
 };
 
+export type UpdateFacilityImagesMutationResponse = {
+  __typename?: 'UpdateFacilityImagesMutationResponse';
+  facilityImages: Array<FacilityImage>;
+  info: UpdateInfo;
+};
+
 export type UpdateHorseCategoriesMutationResponse = {
   __typename?: 'UpdateHorseCategoriesMutationResponse';
   horseCategories: Array<HorseCategory>;
@@ -4468,11 +5157,15 @@ export type RegularAdminFragment = { __typename?: 'Admin', uid: string };
 
 export type RegularDateSlotFragment = { __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, slots?: number | null | undefined, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber?: string | null | undefined, email: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
 
+export type RegularFacilityFragment = { __typename?: 'Facility', id?: string | null | undefined, name: string, description: string, images: Array<{ __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean } | null | undefined> };
+
+export type RegularFacilityImageFragment = { __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean, owner?: { __typename?: 'Facility', id?: string | null | undefined, name: string, description: string, images: Array<{ __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean } | null | undefined> } | null | undefined };
+
 export type RegularHorseFragment = { __typename?: 'Horse', name: string, nickname?: string | null | undefined, movie?: string | null | undefined, owner: string, after: string, birthyear: string, gender: string, color: string, images?: Array<{ __typename?: 'HorseImage', url: string, path: string, width: number, height: number, profile: boolean } | null | undefined> | null | undefined, category: { __typename?: 'HorseCategory', category: string, image: string } };
 
 export type RegularHorseImageFragment = { __typename?: 'HorseImage', url: string, path: string, width: number, height: number, profile: boolean, owner?: { __typename?: 'Horse', name: string, nickname?: string | null | undefined, movie?: string | null | undefined, owner: string, after: string, birthyear: string, gender: string, color: string, images?: Array<{ __typename?: 'HorseImage', url: string, path: string, width: number, height: number, profile: boolean } | null | undefined> | null | undefined, category: { __typename?: 'HorseCategory', category: string, image: string } } | null | undefined };
 
-export type RegularPartnerFragment = { __typename?: 'Partner', name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined };
+export type RegularPartnerFragment = { __typename?: 'Partner', id?: string | null | undefined, name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined };
 
 export type RegularPartnerLogoFragment = { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number, owner?: { __typename?: 'Partner', name: string, description: string, website?: string | null | undefined } | null | undefined };
 
@@ -4493,6 +5186,20 @@ export type CreateDateSlotsMutationVariables = Exact<{
 
 
 export type CreateDateSlotsMutation = { __typename?: 'Mutation', createDateSlots: { __typename?: 'CreateDateSlotsMutationResponse', dateSlots: Array<{ __typename?: 'DateSlot', date: string }> } };
+
+export type CreateFacilityMutationVariables = Exact<{
+  input: Array<FacilityCreateInput> | FacilityCreateInput;
+}>;
+
+
+export type CreateFacilityMutation = { __typename?: 'Mutation', createFacilities: { __typename?: 'CreateFacilitiesMutationResponse', facilities: Array<{ __typename?: 'Facility', id?: string | null | undefined, name: string, description: string, images: Array<{ __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean } | null | undefined> }> } };
+
+export type CreateFacilityImagesMutationVariables = Exact<{
+  input: Array<FacilityImageCreateInput> | FacilityImageCreateInput;
+}>;
+
+
+export type CreateFacilityImagesMutation = { __typename?: 'Mutation', createFacilityImages: { __typename?: 'CreateFacilityImagesMutationResponse', facilityImages: Array<{ __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean, owner?: { __typename?: 'Facility', id?: string | null | undefined, name: string, description: string, images: Array<{ __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean } | null | undefined> } | null | undefined }> } };
 
 export type CreateHorseMutationVariables = Exact<{
   input: Array<HorseCreateInput> | HorseCreateInput;
@@ -4527,7 +5234,7 @@ export type CreatePartnerMutationVariables = Exact<{
 }>;
 
 
-export type CreatePartnerMutation = { __typename?: 'Mutation', createPartners: { __typename?: 'CreatePartnersMutationResponse', partners: Array<{ __typename?: 'Partner', name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined }> } };
+export type CreatePartnerMutation = { __typename?: 'Mutation', createPartners: { __typename?: 'CreatePartnersMutationResponse', partners: Array<{ __typename?: 'Partner', id?: string | null | undefined, name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined }> } };
 
 export type CreatePartnerLogoMutationVariables = Exact<{
   input: Array<PartnerLogoCreateInput> | PartnerLogoCreateInput;
@@ -4564,6 +5271,20 @@ export type DeleteDateSlotsMutationVariables = Exact<{
 
 
 export type DeleteDateSlotsMutation = { __typename?: 'Mutation', deleteDateSlots: { __typename?: 'DeleteInfo', relationshipsDeleted: number, nodesDeleted: number } };
+
+export type DeleteFacilityMutationVariables = Exact<{
+  where?: InputMaybe<FacilityWhere>;
+}>;
+
+
+export type DeleteFacilityMutation = { __typename?: 'Mutation', deleteFacilities: { __typename?: 'DeleteInfo', nodesDeleted: number, relationshipsDeleted: number } };
+
+export type DeleteFacilityImagesMutationVariables = Exact<{
+  where?: InputMaybe<FacilityImageWhere>;
+}>;
+
+
+export type DeleteFacilityImagesMutation = { __typename?: 'Mutation', deleteFacilityImages: { __typename?: 'DeleteInfo', nodesDeleted: number, relationshipsDeleted: number } };
 
 export type DeleteHorsesMutationVariables = Exact<{
   where?: InputMaybe<HorseWhere>;
@@ -4608,6 +5329,22 @@ export type UpdateDateSlotsMutationVariables = Exact<{
 
 export type UpdateDateSlotsMutation = { __typename?: 'Mutation', updateDateSlots: { __typename?: 'UpdateDateSlotsMutationResponse', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, slots?: number | null | undefined, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber?: string | null | undefined, email: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined }> } };
 
+export type UpdateFacilityMutationVariables = Exact<{
+  where?: InputMaybe<FacilityWhere>;
+  update?: InputMaybe<FacilityUpdateInput>;
+}>;
+
+
+export type UpdateFacilityMutation = { __typename?: 'Mutation', updateFacilities: { __typename?: 'UpdateFacilitiesMutationResponse', facilities: Array<{ __typename?: 'Facility', id?: string | null | undefined, name: string, description: string, images: Array<{ __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean } | null | undefined> }> } };
+
+export type UpdateFacilityImagesMutationVariables = Exact<{
+  where?: InputMaybe<FacilityImageWhere>;
+  update?: InputMaybe<FacilityImageUpdateInput>;
+}>;
+
+
+export type UpdateFacilityImagesMutation = { __typename?: 'Mutation', updateFacilityImages: { __typename?: 'UpdateFacilityImagesMutationResponse', facilityImages: Array<{ __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean, owner?: { __typename?: 'Facility', id?: string | null | undefined, name: string, description: string, images: Array<{ __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean } | null | undefined> } | null | undefined }> } };
+
 export type UpdateHorsesMutationVariables = Exact<{
   where?: InputMaybe<HorseWhere>;
   update?: InputMaybe<HorseUpdateInput>;
@@ -4634,10 +5371,11 @@ export type UpdateLogoMutation = { __typename?: 'Mutation', updateLogos: { __typ
 
 export type UpdatePartnerMutationVariables = Exact<{
   where?: InputMaybe<PartnerWhere>;
+  update?: InputMaybe<PartnerUpdateInput>;
 }>;
 
 
-export type UpdatePartnerMutation = { __typename?: 'Mutation', updatePartners: { __typename?: 'UpdatePartnersMutationResponse', partners: Array<{ __typename?: 'Partner', name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined }> } };
+export type UpdatePartnerMutation = { __typename?: 'Mutation', updatePartners: { __typename?: 'UpdatePartnersMutationResponse', partners: Array<{ __typename?: 'Partner', id?: string | null | undefined, name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined }> } };
 
 export type UpdatePartnerLogoMutationVariables = Exact<{
   where?: InputMaybe<PartnerLogoWhere>;
@@ -4693,6 +5431,30 @@ export type DateSlotsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type DateSlotsQuery = { __typename?: 'Query', dateSlots: Array<{ __typename?: 'DateSlot', date: string, timeslots?: Array<{ __typename?: 'TimeSlot', to: string, from: string, slots?: number | null | undefined, type: { __typename?: 'TimeSlotType', type: string }, date: { __typename?: 'DateSlot', date: string }, users?: Array<{ __typename?: 'User', name: string, phonenumber?: string | null | undefined, email: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined }> };
 
+export type FacilitiesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FacilitiesQuery = { __typename?: 'Query', facilities: Array<{ __typename?: 'Facility', id?: string | null | undefined, name: string, description: string, images: Array<{ __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean } | null | undefined> }> };
+
+export type FacilityQueryVariables = Exact<{
+  where?: InputMaybe<FacilityWhere>;
+}>;
+
+
+export type FacilityQuery = { __typename?: 'Query', facilities: Array<{ __typename?: 'Facility', id?: string | null | undefined, name: string, description: string, images: Array<{ __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean } | null | undefined> }> };
+
+export type FacilityImageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FacilityImageQuery = { __typename?: 'Query', facilityImages: Array<{ __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean, owner?: { __typename?: 'Facility', id?: string | null | undefined, name: string, description: string, images: Array<{ __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean } | null | undefined> } | null | undefined }> };
+
+export type FacilityImagesQueryVariables = Exact<{
+  where?: InputMaybe<FacilityImageWhere>;
+}>;
+
+
+export type FacilityImagesQuery = { __typename?: 'Query', facilityImages: Array<{ __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean, owner?: { __typename?: 'Facility', id?: string | null | undefined, name: string, description: string, images: Array<{ __typename?: 'FacilityImage', url: string, path: string, width: number, height: number, profile: boolean } | null | undefined> } | null | undefined }> };
+
 export type HorseQueryVariables = Exact<{
   where?: InputMaybe<HorseWhere>;
 }>;
@@ -4741,7 +5503,7 @@ export type PartnerQueryVariables = Exact<{
 }>;
 
 
-export type PartnerQuery = { __typename?: 'Query', partners: Array<{ __typename?: 'Partner', name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined }> };
+export type PartnerQuery = { __typename?: 'Query', partners: Array<{ __typename?: 'Partner', id?: string | null | undefined, name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined }> };
 
 export type PartnerLogoQueryVariables = Exact<{
   where?: InputMaybe<PartnerLogoWhere>;
@@ -4758,7 +5520,7 @@ export type PartnerLogosQuery = { __typename?: 'Query', partnerLogos: Array<{ __
 export type PartnersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PartnersQuery = { __typename?: 'Query', partners: Array<{ __typename?: 'Partner', name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined }> };
+export type PartnersQuery = { __typename?: 'Query', partners: Array<{ __typename?: 'Partner', id?: string | null | undefined, name: string, description: string, website?: string | null | undefined, logo?: { __typename?: 'PartnerLogo', url: string, path: string, width: number, height: number } | null | undefined }> };
 
 export type TimeSlotQueryVariables = Exact<{
   where?: InputMaybe<TimeSlotWhere>;
@@ -4834,6 +5596,32 @@ export const RegularDateSlotFragmentDoc = gql`
   }
 }
     ${RegularTimeSlotFragmentDoc}`;
+export const RegularFacilityFragmentDoc = gql`
+    fragment RegularFacility on Facility {
+  id
+  name
+  description
+  images {
+    url
+    path
+    width
+    height
+    profile
+  }
+}
+    `;
+export const RegularFacilityImageFragmentDoc = gql`
+    fragment RegularFacilityImage on FacilityImage {
+  url
+  path
+  width
+  height
+  profile
+  owner {
+    ...RegularFacility
+  }
+}
+    ${RegularFacilityFragmentDoc}`;
 export const RegularHorseFragmentDoc = gql`
     fragment RegularHorse on Horse {
   name
@@ -4871,6 +5659,7 @@ export const RegularHorseImageFragmentDoc = gql`
     ${RegularHorseFragmentDoc}`;
 export const RegularPartnerFragmentDoc = gql`
     fragment RegularPartner on Partner {
+  id
   name
   description
   website
@@ -4985,6 +5774,76 @@ export function useCreateDateSlotsMutation(baseOptions?: Apollo.MutationHookOpti
 export type CreateDateSlotsMutationHookResult = ReturnType<typeof useCreateDateSlotsMutation>;
 export type CreateDateSlotsMutationResult = Apollo.MutationResult<CreateDateSlotsMutation>;
 export type CreateDateSlotsMutationOptions = Apollo.BaseMutationOptions<CreateDateSlotsMutation, CreateDateSlotsMutationVariables>;
+export const CreateFacilityDocument = gql`
+    mutation CreateFacility($input: [FacilityCreateInput!]!) {
+  createFacilities(input: $input) {
+    facilities {
+      ...RegularFacility
+    }
+  }
+}
+    ${RegularFacilityFragmentDoc}`;
+export type CreateFacilityMutationFn = Apollo.MutationFunction<CreateFacilityMutation, CreateFacilityMutationVariables>;
+
+/**
+ * __useCreateFacilityMutation__
+ *
+ * To run a mutation, you first call `useCreateFacilityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateFacilityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createFacilityMutation, { data, loading, error }] = useCreateFacilityMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateFacilityMutation(baseOptions?: Apollo.MutationHookOptions<CreateFacilityMutation, CreateFacilityMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateFacilityMutation, CreateFacilityMutationVariables>(CreateFacilityDocument, options);
+      }
+export type CreateFacilityMutationHookResult = ReturnType<typeof useCreateFacilityMutation>;
+export type CreateFacilityMutationResult = Apollo.MutationResult<CreateFacilityMutation>;
+export type CreateFacilityMutationOptions = Apollo.BaseMutationOptions<CreateFacilityMutation, CreateFacilityMutationVariables>;
+export const CreateFacilityImagesDocument = gql`
+    mutation CreateFacilityImages($input: [FacilityImageCreateInput!]!) {
+  createFacilityImages(input: $input) {
+    facilityImages {
+      ...RegularFacilityImage
+    }
+  }
+}
+    ${RegularFacilityImageFragmentDoc}`;
+export type CreateFacilityImagesMutationFn = Apollo.MutationFunction<CreateFacilityImagesMutation, CreateFacilityImagesMutationVariables>;
+
+/**
+ * __useCreateFacilityImagesMutation__
+ *
+ * To run a mutation, you first call `useCreateFacilityImagesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateFacilityImagesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createFacilityImagesMutation, { data, loading, error }] = useCreateFacilityImagesMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateFacilityImagesMutation(baseOptions?: Apollo.MutationHookOptions<CreateFacilityImagesMutation, CreateFacilityImagesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateFacilityImagesMutation, CreateFacilityImagesMutationVariables>(CreateFacilityImagesDocument, options);
+      }
+export type CreateFacilityImagesMutationHookResult = ReturnType<typeof useCreateFacilityImagesMutation>;
+export type CreateFacilityImagesMutationResult = Apollo.MutationResult<CreateFacilityImagesMutation>;
+export type CreateFacilityImagesMutationOptions = Apollo.BaseMutationOptions<CreateFacilityImagesMutation, CreateFacilityImagesMutationVariables>;
 export const CreateHorseDocument = gql`
     mutation CreateHorse($input: [HorseCreateInput!]!) {
   createHorses(input: $input) {
@@ -5338,6 +6197,74 @@ export function useDeleteDateSlotsMutation(baseOptions?: Apollo.MutationHookOpti
 export type DeleteDateSlotsMutationHookResult = ReturnType<typeof useDeleteDateSlotsMutation>;
 export type DeleteDateSlotsMutationResult = Apollo.MutationResult<DeleteDateSlotsMutation>;
 export type DeleteDateSlotsMutationOptions = Apollo.BaseMutationOptions<DeleteDateSlotsMutation, DeleteDateSlotsMutationVariables>;
+export const DeleteFacilityDocument = gql`
+    mutation DeleteFacility($where: FacilityWhere) {
+  deleteFacilities(where: $where) {
+    nodesDeleted
+    relationshipsDeleted
+  }
+}
+    `;
+export type DeleteFacilityMutationFn = Apollo.MutationFunction<DeleteFacilityMutation, DeleteFacilityMutationVariables>;
+
+/**
+ * __useDeleteFacilityMutation__
+ *
+ * To run a mutation, you first call `useDeleteFacilityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteFacilityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteFacilityMutation, { data, loading, error }] = useDeleteFacilityMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useDeleteFacilityMutation(baseOptions?: Apollo.MutationHookOptions<DeleteFacilityMutation, DeleteFacilityMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteFacilityMutation, DeleteFacilityMutationVariables>(DeleteFacilityDocument, options);
+      }
+export type DeleteFacilityMutationHookResult = ReturnType<typeof useDeleteFacilityMutation>;
+export type DeleteFacilityMutationResult = Apollo.MutationResult<DeleteFacilityMutation>;
+export type DeleteFacilityMutationOptions = Apollo.BaseMutationOptions<DeleteFacilityMutation, DeleteFacilityMutationVariables>;
+export const DeleteFacilityImagesDocument = gql`
+    mutation DeleteFacilityImages($where: FacilityImageWhere) {
+  deleteFacilityImages(where: $where) {
+    nodesDeleted
+    relationshipsDeleted
+  }
+}
+    `;
+export type DeleteFacilityImagesMutationFn = Apollo.MutationFunction<DeleteFacilityImagesMutation, DeleteFacilityImagesMutationVariables>;
+
+/**
+ * __useDeleteFacilityImagesMutation__
+ *
+ * To run a mutation, you first call `useDeleteFacilityImagesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteFacilityImagesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteFacilityImagesMutation, { data, loading, error }] = useDeleteFacilityImagesMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useDeleteFacilityImagesMutation(baseOptions?: Apollo.MutationHookOptions<DeleteFacilityImagesMutation, DeleteFacilityImagesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteFacilityImagesMutation, DeleteFacilityImagesMutationVariables>(DeleteFacilityImagesDocument, options);
+      }
+export type DeleteFacilityImagesMutationHookResult = ReturnType<typeof useDeleteFacilityImagesMutation>;
+export type DeleteFacilityImagesMutationResult = Apollo.MutationResult<DeleteFacilityImagesMutation>;
+export type DeleteFacilityImagesMutationOptions = Apollo.BaseMutationOptions<DeleteFacilityImagesMutation, DeleteFacilityImagesMutationVariables>;
 export const DeleteHorsesDocument = gql`
     mutation DeleteHorses($where: HorseWhere) {
   deleteHorses(where: $where) {
@@ -5542,6 +6469,78 @@ export function useUpdateDateSlotsMutation(baseOptions?: Apollo.MutationHookOpti
 export type UpdateDateSlotsMutationHookResult = ReturnType<typeof useUpdateDateSlotsMutation>;
 export type UpdateDateSlotsMutationResult = Apollo.MutationResult<UpdateDateSlotsMutation>;
 export type UpdateDateSlotsMutationOptions = Apollo.BaseMutationOptions<UpdateDateSlotsMutation, UpdateDateSlotsMutationVariables>;
+export const UpdateFacilityDocument = gql`
+    mutation UpdateFacility($where: FacilityWhere, $update: FacilityUpdateInput) {
+  updateFacilities(where: $where, update: $update) {
+    facilities {
+      ...RegularFacility
+    }
+  }
+}
+    ${RegularFacilityFragmentDoc}`;
+export type UpdateFacilityMutationFn = Apollo.MutationFunction<UpdateFacilityMutation, UpdateFacilityMutationVariables>;
+
+/**
+ * __useUpdateFacilityMutation__
+ *
+ * To run a mutation, you first call `useUpdateFacilityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateFacilityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateFacilityMutation, { data, loading, error }] = useUpdateFacilityMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *      update: // value for 'update'
+ *   },
+ * });
+ */
+export function useUpdateFacilityMutation(baseOptions?: Apollo.MutationHookOptions<UpdateFacilityMutation, UpdateFacilityMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateFacilityMutation, UpdateFacilityMutationVariables>(UpdateFacilityDocument, options);
+      }
+export type UpdateFacilityMutationHookResult = ReturnType<typeof useUpdateFacilityMutation>;
+export type UpdateFacilityMutationResult = Apollo.MutationResult<UpdateFacilityMutation>;
+export type UpdateFacilityMutationOptions = Apollo.BaseMutationOptions<UpdateFacilityMutation, UpdateFacilityMutationVariables>;
+export const UpdateFacilityImagesDocument = gql`
+    mutation UpdateFacilityImages($where: FacilityImageWhere, $update: FacilityImageUpdateInput) {
+  updateFacilityImages(where: $where, update: $update) {
+    facilityImages {
+      ...RegularFacilityImage
+    }
+  }
+}
+    ${RegularFacilityImageFragmentDoc}`;
+export type UpdateFacilityImagesMutationFn = Apollo.MutationFunction<UpdateFacilityImagesMutation, UpdateFacilityImagesMutationVariables>;
+
+/**
+ * __useUpdateFacilityImagesMutation__
+ *
+ * To run a mutation, you first call `useUpdateFacilityImagesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateFacilityImagesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateFacilityImagesMutation, { data, loading, error }] = useUpdateFacilityImagesMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *      update: // value for 'update'
+ *   },
+ * });
+ */
+export function useUpdateFacilityImagesMutation(baseOptions?: Apollo.MutationHookOptions<UpdateFacilityImagesMutation, UpdateFacilityImagesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateFacilityImagesMutation, UpdateFacilityImagesMutationVariables>(UpdateFacilityImagesDocument, options);
+      }
+export type UpdateFacilityImagesMutationHookResult = ReturnType<typeof useUpdateFacilityImagesMutation>;
+export type UpdateFacilityImagesMutationResult = Apollo.MutationResult<UpdateFacilityImagesMutation>;
+export type UpdateFacilityImagesMutationOptions = Apollo.BaseMutationOptions<UpdateFacilityImagesMutation, UpdateFacilityImagesMutationVariables>;
 export const UpdateHorsesDocument = gql`
     mutation UpdateHorses($where: HorseWhere, $update: HorseUpdateInput) {
   updateHorses(where: $where, update: $update) {
@@ -5651,8 +6650,8 @@ export type UpdateLogoMutationHookResult = ReturnType<typeof useUpdateLogoMutati
 export type UpdateLogoMutationResult = Apollo.MutationResult<UpdateLogoMutation>;
 export type UpdateLogoMutationOptions = Apollo.BaseMutationOptions<UpdateLogoMutation, UpdateLogoMutationVariables>;
 export const UpdatePartnerDocument = gql`
-    mutation UpdatePartner($where: PartnerWhere) {
-  updatePartners(where: $where) {
+    mutation UpdatePartner($where: PartnerWhere, $update: PartnerUpdateInput) {
+  updatePartners(where: $where, update: $update) {
     partners {
       ...RegularPartner
     }
@@ -5675,6 +6674,7 @@ export type UpdatePartnerMutationFn = Apollo.MutationFunction<UpdatePartnerMutat
  * const [updatePartnerMutation, { data, loading, error }] = useUpdatePartnerMutation({
  *   variables: {
  *      where: // value for 'where'
+ *      update: // value for 'update'
  *   },
  * });
  */
@@ -5965,6 +6965,144 @@ export function useDateSlotsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type DateSlotsQueryHookResult = ReturnType<typeof useDateSlotsQuery>;
 export type DateSlotsLazyQueryHookResult = ReturnType<typeof useDateSlotsLazyQuery>;
 export type DateSlotsQueryResult = Apollo.QueryResult<DateSlotsQuery, DateSlotsQueryVariables>;
+export const FacilitiesDocument = gql`
+    query Facilities {
+  facilities {
+    ...RegularFacility
+  }
+}
+    ${RegularFacilityFragmentDoc}`;
+
+/**
+ * __useFacilitiesQuery__
+ *
+ * To run a query within a React component, call `useFacilitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFacilitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFacilitiesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFacilitiesQuery(baseOptions?: Apollo.QueryHookOptions<FacilitiesQuery, FacilitiesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FacilitiesQuery, FacilitiesQueryVariables>(FacilitiesDocument, options);
+      }
+export function useFacilitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FacilitiesQuery, FacilitiesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FacilitiesQuery, FacilitiesQueryVariables>(FacilitiesDocument, options);
+        }
+export type FacilitiesQueryHookResult = ReturnType<typeof useFacilitiesQuery>;
+export type FacilitiesLazyQueryHookResult = ReturnType<typeof useFacilitiesLazyQuery>;
+export type FacilitiesQueryResult = Apollo.QueryResult<FacilitiesQuery, FacilitiesQueryVariables>;
+export const FacilityDocument = gql`
+    query Facility($where: FacilityWhere) {
+  facilities(where: $where) {
+    ...RegularFacility
+  }
+}
+    ${RegularFacilityFragmentDoc}`;
+
+/**
+ * __useFacilityQuery__
+ *
+ * To run a query within a React component, call `useFacilityQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFacilityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFacilityQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useFacilityQuery(baseOptions?: Apollo.QueryHookOptions<FacilityQuery, FacilityQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FacilityQuery, FacilityQueryVariables>(FacilityDocument, options);
+      }
+export function useFacilityLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FacilityQuery, FacilityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FacilityQuery, FacilityQueryVariables>(FacilityDocument, options);
+        }
+export type FacilityQueryHookResult = ReturnType<typeof useFacilityQuery>;
+export type FacilityLazyQueryHookResult = ReturnType<typeof useFacilityLazyQuery>;
+export type FacilityQueryResult = Apollo.QueryResult<FacilityQuery, FacilityQueryVariables>;
+export const FacilityImageDocument = gql`
+    query FacilityImage {
+  facilityImages {
+    ...RegularFacilityImage
+  }
+}
+    ${RegularFacilityImageFragmentDoc}`;
+
+/**
+ * __useFacilityImageQuery__
+ *
+ * To run a query within a React component, call `useFacilityImageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFacilityImageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFacilityImageQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFacilityImageQuery(baseOptions?: Apollo.QueryHookOptions<FacilityImageQuery, FacilityImageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FacilityImageQuery, FacilityImageQueryVariables>(FacilityImageDocument, options);
+      }
+export function useFacilityImageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FacilityImageQuery, FacilityImageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FacilityImageQuery, FacilityImageQueryVariables>(FacilityImageDocument, options);
+        }
+export type FacilityImageQueryHookResult = ReturnType<typeof useFacilityImageQuery>;
+export type FacilityImageLazyQueryHookResult = ReturnType<typeof useFacilityImageLazyQuery>;
+export type FacilityImageQueryResult = Apollo.QueryResult<FacilityImageQuery, FacilityImageQueryVariables>;
+export const FacilityImagesDocument = gql`
+    query FacilityImages($where: FacilityImageWhere) {
+  facilityImages(where: $where) {
+    ...RegularFacilityImage
+  }
+}
+    ${RegularFacilityImageFragmentDoc}`;
+
+/**
+ * __useFacilityImagesQuery__
+ *
+ * To run a query within a React component, call `useFacilityImagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFacilityImagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFacilityImagesQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useFacilityImagesQuery(baseOptions?: Apollo.QueryHookOptions<FacilityImagesQuery, FacilityImagesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FacilityImagesQuery, FacilityImagesQueryVariables>(FacilityImagesDocument, options);
+      }
+export function useFacilityImagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FacilityImagesQuery, FacilityImagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FacilityImagesQuery, FacilityImagesQueryVariables>(FacilityImagesDocument, options);
+        }
+export type FacilityImagesQueryHookResult = ReturnType<typeof useFacilityImagesQuery>;
+export type FacilityImagesLazyQueryHookResult = ReturnType<typeof useFacilityImagesLazyQuery>;
+export type FacilityImagesQueryResult = Apollo.QueryResult<FacilityImagesQuery, FacilityImagesQueryVariables>;
 export const HorseDocument = gql`
     query Horse($where: HorseWhere) {
   horses(where: $where) {

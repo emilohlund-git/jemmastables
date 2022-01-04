@@ -1,0 +1,6 @@
+mutation DeleteFacilityImages($where: FacilityImageWhere) {
+  deleteFacilityImages(where: $where) {
+    nodesDeleted
+    relationshipsDeleted
+  }
+}

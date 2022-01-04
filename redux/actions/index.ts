@@ -71,3 +71,10 @@ export const setCount = (payload: number) => {
     payload: payload,
   };
 };
+
+export const setFacility = (payload: string) => {
+  return {
+    type: actions.setFacility,
+    payload: payload,
+  };
+};

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useCreateHorseImagesMutation, useDeleteHorseImagesMutation } from '../generated/graphql';
+import { useCreateFacilityImagesMutation, useCreateHorseImagesMutation, useDeleteFacilityImagesMutation, useDeleteHorseImagesMutation } from '../generated/graphql';
 import { RootState } from '../redux/reducers';
 
 interface Props {
@@ -8,12 +8,16 @@ interface Props {
     path: string
     profile: boolean
     id: string
+    type?: string
 }
 
-const UploadControlImages = ({ children, path, profile, id }: Props) => {
+const UploadControlImages = ({ children, path, profile, id, type }: Props) => {
     const [CreateHorseImages] = useCreateHorseImagesMutation();
     const [DeleteHorseImages] = useDeleteHorseImagesMutation();
+    const [CreateFacilityImages] = useCreateFacilityImagesMutation();
+    const [DeleteFacilityImages] = useDeleteFacilityImagesMutation();
     const name: string = useSelector((state: RootState) => state.horse);
+    const facility: string = useSelector((state: RootState) => state.facility);
 
     const handleUpload = async (e: any) => {
         console.log(profile);
@@ -29,51 +33,100 @@ const UploadControlImages = ({ children, path, profile, id }: Props) => {
             })
             const json = await response.json();
 
-            if (profile) {
-                await DeleteHorseImages({
-                    variables: {
-                        where: {
-                            owner: {
-                                name: name
-                            },
-                            AND: [
-                                {
-                                    profile: true
-                                }
-                            ]
+            if (type !== "facility") {
+                if (profile) {
+                    await DeleteHorseImages({
+                        variables: {
+                            where: {
+                                owner: {
+                                    name: name
+                                },
+                                AND: [
+                                    {
+                                        profile: true
+                                    }
+                                ]
+                            }
                         }
-                    }
-                })
-            }
+                    })
+                }
 
-            const { errors } = await CreateHorseImages({
-                variables: {
-                    input: [
-                        {
-                            url: json.uploadedFiles[0].url,
-                            path: json.uploadedFiles[0].imagePath,
-                            width: json.uploadedFiles[0].width,
-                            height: json.uploadedFiles[0].height,
-                            profile: profile,
-                            owner: {
-                                connect: {
-                                    where: {
-                                        node: {
-                                            name: name
+                const { errors } = await CreateHorseImages({
+                    variables: {
+                        input: [
+                            {
+                                url: json.uploadedFiles[0].url,
+                                path: json.uploadedFiles[0].imagePath,
+                                width: json.uploadedFiles[0].width,
+                                height: json.uploadedFiles[0].height,
+                                profile: profile,
+                                owner: {
+                                    connect: {
+                                        where: {
+                                            node: {
+                                                name: name
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                    ]
-                },
-                update: (cache) => {
-                    cache.evict({ fieldName: "horses" });
-                }
-            });
+                        ]
+                    },
+                    update: (cache) => {
+                        cache.evict({ fieldName: "horses" });
+                    }
+                });
 
-            if (!errors) {
-            } else {
+                if (!errors) {
+                } else {
+                }
+            } else if (type === "facility") {
+                if (profile) {
+                    await DeleteFacilityImages({
+                        variables: {
+                            where: {
+                                owner: {
+                                    name: facility
+                                },
+                                AND: [
+                                    {
+                                        profile: true
+                                    }
+                                ]
+                            }
+                        }
+                    })
+                }
+
+                const { errors } = await CreateFacilityImages({
+                    variables: {
+                        input: [
+                            {
+                                url: json.uploadedFiles[0].url,
+                                path: json.uploadedFiles[0].imagePath,
+                                width: json.uploadedFiles[0].width,
+                                height: json.uploadedFiles[0].height,
+                                profile: profile,
+                                owner: {
+                                    connect: {
+                                        where: {
+                                            node: {
+                                                name: facility
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    update: (cache) => {
+                        cache.evict({ fieldName: "facilities" });
+                    }
+                });
+
+                if (!errors) {
+                } else {
+                }
             }
         }
     }

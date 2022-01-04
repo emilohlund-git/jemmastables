@@ -19,6 +19,7 @@ const Bokning = (props: Props) => {
                 <meta property="og:type" content="website" />
             </Head>
             <div className="flex flex-col justify-center dark:bg-gray-900">
+         
                 <RouteGuard>
                     <JemmaCalendar />
                 </RouteGuard>

@@ -1,5 +1,5 @@
-mutation UpdatePartner($where: PartnerWhere) {
-  updatePartners(where: $where) {
+mutation UpdatePartner($where: PartnerWhere, $update: PartnerUpdateInput) {
+  updatePartners(where: $where, update: $update) {
     partners {
       ...RegularPartner
     }

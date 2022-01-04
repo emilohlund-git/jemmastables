@@ -59,7 +59,7 @@ export const AddHorseModal = React.memo((props: Props) => {
         })
         const json = await response.json();
         const _image = {
-            url: json.uploadedFiles[0].url,
+            url: json.uploadaedFiles[0].url,
             path: json.uploadedFiles[0].imagePath,
             width: json.uploadedFiles[0].width,
             height: json.uploadedFiles[0].height,
@@ -118,6 +118,7 @@ export const AddHorseModal = React.memo((props: Props) => {
                     className="fixed inset-0 z-50 overflow-y-auto transform transition-all"
                     onClose={closeModal}
                 >
+                    <Dialog.Overlay className="fixed inset-0 bg-black opacity-50" />
                     <div className="min-h-screen px-4 text-center transform transition-all">
                         <Transition.Child
                             as={Fragment}
@@ -147,9 +148,9 @@ export const AddHorseModal = React.memo((props: Props) => {
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl">
                                 <div className={classNames(
-                                    'bg-white rounded-xl p-3',
+                                    'bg-white p-3',
                                     'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60'
                                 )}>
                                     <Dialog.Title

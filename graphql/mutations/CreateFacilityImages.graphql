@@ -1,0 +1,7 @@
+mutation CreateFacilityImages($input: [FacilityImageCreateInput!]!) {
+  createFacilityImages(input: $input) {
+    facilityImages {
+      ...RegularFacilityImage
+    }
+  }
+}

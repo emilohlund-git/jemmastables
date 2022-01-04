@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useState } from 'react';
-import { useCreatePartnerMutation } from '../../generated/graphql';
+import { useCreateFacilityMutation } from '../../generated/graphql';
 
 interface Props {
     modalOpen: boolean;
@@ -12,26 +12,25 @@ function classNames(...classes: string[]) {
 }
 
 // eslint-disable-next-line react/display-name
-export const AddPartnerModal = React.memo((props: Props) => {
+export const AddFacilityModal = React.memo((props: Props) => {
     const [image, setImage] = useState() as any;
 
-    const [CreatePartner] = useCreatePartnerMutation();
+    const [CreateFacility] = useCreateFacilityMutation();
 
     const [formState, setFormState] = useState({
         name: '',
         description: '',
-        website: '',
-        logo: image
+        images: image
     });
 
     function closeModal() {
         props.setModalOpen(false);
     }
 
-    const addPartner = async (e: any) => {
+    const addFacility = async (e: any) => {
         e.preventDefault();
 
-        const path = `/partners/${formState.name}`;
+        const path = `/facility/${formState.name}`;
 
         const body = new FormData();
         body.append("file", image);
@@ -43,28 +42,30 @@ export const AddPartnerModal = React.memo((props: Props) => {
         })
         const json = await response.json();
 
-        await CreatePartner({
+        await CreateFacility({
             variables: {
                 input: [
                     {
                         name: formState.name,
                         description: formState.description,
-                        website: formState.website,
-                        logo: {
-                            create: {
-                                node: {
-                                    url: json.uploadedFiles[0].url,
-                                    path: json.uploadedFiles[0].imagePath,
-                                    width: json.uploadedFiles[0].width,
-                                    height: json.uploadedFiles[0].height,
+                        images: {
+                            create: [
+                                {
+                                    node: {
+                                        url: json.uploadedFiles[0].url,
+                                        path: json.uploadedFiles[0].imagePath,
+                                        width: json.uploadedFiles[0].width,
+                                        height: json.uploadedFiles[0].height,
+                                        profile: true
+                                    }
                                 }
-                            }
-                        }
+                            ]
+                        },
                     }
                 ]
             },
             update: (cache) => {
-                cache.evict({ fieldName: "partners" });
+                cache.evict({ fieldName: "facilities" });
             }
         })
 
@@ -122,9 +123,9 @@ export const AddPartnerModal = React.memo((props: Props) => {
                                         as="h1"
                                         className="text-lg font-medium leading-6 text-gray-900 mb-6"
                                     >
-                                        <div className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none transition focus:border-blue-400" aria-label="Title">Lägg till partner</div>
+                                        <div className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none transition focus:border-blue-400" aria-label="Title">Lägg till byggnad</div>
                                     </Dialog.Title>
-                                    <form onInvalid={invalidHandler} onSubmit={addPartner}>
+                                    <form onInvalid={invalidHandler} onSubmit={addFacility}>
                                         <div className="flex flex-row items-center mb-6">
                                             <input value={formState.name}
                                                 onChange={(e) =>
@@ -144,19 +145,10 @@ export const AddPartnerModal = React.memo((props: Props) => {
                                                 } name="description" className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" placeholder="Beskrivning" />
                                         </div>
                                         <div className="flex flex-row items-center mb-6">
-                                            <input value={formState.website}
-                                                onChange={(e) =>
-                                                    setFormState({
-                                                        ...formState,
-                                                        website: e.target.value
-                                                    })
-                                                } name="website" className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="text" placeholder="Hemsida" />
-                                        </div>
-                                        <div className="flex flex-row items-center mb-6">
-                                            <label>Logo</label>
+                                            <label>Bild</label>
                                             <input onChange={(e) =>
                                                 setImage(e.target.files![0]!)
-                                            } name="logo" className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="file" placeholder="Logotyp" />
+                                            } name="logo" className="w-full appearance-none bg-transparent text-gray-700 mr-2 py-1 px-2 leading-tight focus:outline-none border-b-2 transition focus:border-blue-400 text-sm" type="file" placeholder="Profilbild" />
                                         </div>
                                         <div className="flex w-full justify-end">
                                             <button className="transition-all bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 border-none rounded-md mt-4">

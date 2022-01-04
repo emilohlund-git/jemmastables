@@ -1,0 +1,10 @@
+fragment RegularFacilityImage on FacilityImage {
+  url
+  path
+  width
+  height
+  profile
+  owner {
+    ...RegularFacility
+  }
+}

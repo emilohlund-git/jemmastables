@@ -1,0 +1,6 @@
+mutation DeleteFacility($where: FacilityWhere) {
+  deleteFacilities(where: $where) {
+    nodesDeleted
+    relationshipsDeleted
+  }
+}

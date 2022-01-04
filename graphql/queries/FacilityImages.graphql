@@ -1,0 +1,5 @@
+query FacilityImages($where: FacilityImageWhere) {
+  facilityImages(where: $where) {
+    ...RegularFacilityImage
+  }
+}

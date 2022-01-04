@@ -1,0 +1,10 @@
+mutation UpdateFacilityImages(
+  $where: FacilityImageWhere
+  $update: FacilityImageUpdateInput
+) {
+  updateFacilityImages(where: $where, update: $update) {
+    facilityImages {
+      ...RegularFacilityImage
+    }
+  }
+}

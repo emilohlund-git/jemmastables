@@ -138,6 +138,7 @@ const AdminModal = React.memo((props: Props) => {
                     className="fixed inset-0 z-50 overflow-y-auto transform transition-all"
                     onClose={closeModal}
                 >
+                    <Dialog.Overlay className="fixed inset-0 bg-black opacity-50" />
                     <div className="min-h-screen px-4 text-center transform transition-all">
                         <Transition.Child
                             as={Fragment}
@@ -167,7 +168,7 @@ const AdminModal = React.memo((props: Props) => {
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl">
                                 <Dialog.Title
                                     as="h3"
                                     className="md:text-lg font-medium leading-6 text-gray-900 mb-6"
@@ -179,12 +180,12 @@ const AdminModal = React.memo((props: Props) => {
                                     if (index === 1) dispatch(setType("Träning"))
                                     if (index === 2) dispatch(setType("Öppen bana"))
                                 }}>
-                                    <Tab.List className="flex p-1 space-x-1 bg-blue-100 rounded-xl transform transition-all">
+                                    <Tab.List className="flex p-1 space-x-1 bg-blue-100 transform transition-all">
                                         <Tab
                                             key={1}
                                             className={({ selected }) =>
                                                 classNames(
-                                                    'w-full py-2.5 text-xs md:text-sm leading-5 font-medium text-blue-400 rounded-lg',
+                                                    'w-full py-2.5 text-xs md:text-sm leading-5 font-medium text-blue-400',
                                                     'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60',
                                                     selected
                                                         ? 'bg-white shadow'
@@ -198,7 +199,7 @@ const AdminModal = React.memo((props: Props) => {
                                             key={2}
                                             className={({ selected }) =>
                                                 classNames(
-                                                    'w-full py-2.5 text-xs md:text-sm leading-5 font-medium text-blue-400 rounded-lg',
+                                                    'w-full py-2.5 text-xs md:text-sm leading-5 font-medium text-blue-400',
                                                     'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60',
                                                     selected
                                                         ? 'bg-white shadow'
@@ -212,7 +213,7 @@ const AdminModal = React.memo((props: Props) => {
                                             key={3}
                                             className={({ selected }) =>
                                                 classNames(
-                                                    'w-full py-2.5 text-xs md:text-sm leading-5 font-medium text-blue-400 rounded-lg',
+                                                    'w-full py-2.5 text-xs md:text-sm leading-5 font-medium text-blue-400',
                                                     'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60',
                                                     selected
                                                         ? 'bg-white shadow'
@@ -227,7 +228,7 @@ const AdminModal = React.memo((props: Props) => {
                                         <Tab.Panel
                                             key={1}
                                             className={classNames(
-                                                'bg-white rounded-xl p-3',
+                                                'bg-white p-3',
                                                 'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60'
                                             )}
                                         >
@@ -240,7 +241,7 @@ const AdminModal = React.memo((props: Props) => {
                                         <Tab.Panel
                                             key={2}
                                             className={classNames(
-                                                'bg-white rounded-xl p-3',
+                                                'bg-white p-3',
                                                 'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60'
                                             )}
                                         >
@@ -253,7 +254,7 @@ const AdminModal = React.memo((props: Props) => {
                                         <Tab.Panel
                                             key={3}
                                             className={classNames(
-                                                'bg-white rounded-xl p-3',
+                                                'bg-white p-3',
                                                 'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60'
                                             )}
                                         >

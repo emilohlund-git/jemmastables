@@ -1,5 +1,4 @@
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
 import { DateSlot, TimeSlot } from '../../generated/graphql';
 import { getTimeSlotType } from '../../utils/calendar/getTimeSlotType';
 import { Accordion } from './Accordion';

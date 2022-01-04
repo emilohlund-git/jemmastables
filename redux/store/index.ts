@@ -20,7 +20,7 @@ const makeStore = ({ isServer }: { isServer: any }) => {
     const { persistStore, persistReducer } = require('redux-persist');
     const persistConfig = {
       key: 'nextjs',
-      whitelist: ['user', 'category', 'horse'],
+      whitelist: ['user', 'category', 'horse', 'admin', 'facility'],
       storage,
     };
 

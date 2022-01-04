@@ -1,0 +1,7 @@
+mutation UpdateFacility($where: FacilityWhere, $update: FacilityUpdateInput) {
+  updateFacilities(where: $where, update: $update) {
+    facilities {
+      ...RegularFacility
+    }
+  }
+}

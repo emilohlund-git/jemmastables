@@ -10,6 +10,7 @@ import categoryReducer from './category';
 import horseReducer from './horse';
 import { actions } from '../actions/types';
 import countReducer from './count';
+import facilityReducer from './facility';
 
 const appReducer = combineReducers({
   date: dateReducer,
@@ -22,6 +23,7 @@ const appReducer = combineReducers({
   category: categoryReducer,
   horse: horseReducer,
   count: countReducer,
+  facility: facilityReducer,
 });
 
 const rootReducer = (state: any, action: any) => {

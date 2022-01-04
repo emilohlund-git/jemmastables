@@ -1,0 +1,5 @@
+query Facility($where: FacilityWhere) {
+  facilities(where: $where) {
+    ...RegularFacility
+  }
+}

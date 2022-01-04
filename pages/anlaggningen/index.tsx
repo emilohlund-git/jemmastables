@@ -1,4 +1,5 @@
 import React from 'react'
+import Facilities from '../../components/facilities/Facilities'
 
 interface Props {
 
@@ -6,9 +7,7 @@ interface Props {
 
 const index = (props: Props) => {
     return (
-        <div>
-            Anläggnigen
-        </div>
+        <Facilities />
     )
 }
 

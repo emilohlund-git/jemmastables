@@ -6,10 +6,6 @@ import { User, useUpdateUsersMutation } from '../../generated/graphql';
 import { setUser } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
 import BookedTimeSlots from './BookedTimeSlots';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { notify } from '../../utils/notifyMessages';
-import { notifyTypes } from '../../utils/notifyTypes';
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
@@ -58,28 +54,15 @@ export default function ProfileContent() {
         })
 
         if (errors) {
-            notify("Något gick fel", notifyTypes.error);
         } else {
             if (updatedUser) {
                 dispatch(setUser(updatedUser.updateUsers!.users![0] as User));
-                notify("Uppdaterad!", notifyTypes.success);
             }
         }
     }
 
     return (
         <div className="w-full max-w-md px-2 sm:px-0 shadow-2xl">
-            <ToastContainer
-                position="top-left"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
             <Tab.Group>
                 <Tab.List className="flex p-1 space-x-1 bg-blue-900/20 rounded-xl">
                     <Tab

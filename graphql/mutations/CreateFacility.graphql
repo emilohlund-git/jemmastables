@@ -1,0 +1,7 @@
+mutation CreateFacility($input: [FacilityCreateInput!]!) {
+  createFacilities(input: $input) {
+    facilities {
+      ...RegularFacility
+    }
+  }
+}

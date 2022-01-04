@@ -9,11 +9,6 @@ import Spinner from '../../../../components/Spinner';
 import UploadControlImages from '../../../../components/UploadControlImages';
 import { HorseImage, useHorseQuery, useUpdateHorsesMutation } from '../../../../generated/graphql';
 import { RootState } from '../../../../redux/reducers';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { withApollo } from '../../../../utils/withApollo';
-import { notify } from '../../../../utils/notifyMessages';
-import { notifyTypes } from '../../../../utils/notifyTypes';
 
 interface Props {
 
@@ -73,9 +68,7 @@ const Horse = (props: Props) => {
             });
 
             if (!errors) {
-                notify("Uppdaterad!", notifyTypes.success);
             } else {
-                notify("Något gick fel: " + errors, notifyTypes.error);
             }
         }
     }
@@ -84,17 +77,6 @@ const Horse = (props: Props) => {
     return (
         <div className="flex flex-col justify-center bg-gray-900">
             <div className="h-screen bg-gradient-to-b from-gray-900 to-gray-800">
-                <ToastContainer
-                    position="top-left"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                />
                 {!loading && data! ?
                     <div className="flex w-full">
                         <div className="text-white md:ml-10 mt-10 md:my-20 w-full">

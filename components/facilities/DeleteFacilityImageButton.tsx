@@ -1,15 +1,15 @@
 import axios from 'axios';
 import React from 'react';
 import { FiTrash2 } from 'react-icons/fi';
-import { HorseImage, useDeleteHorseImagesMutation } from '../../generated/graphql';
+import { FacilityImage, useDeleteFacilityImagesMutation } from '../../generated/graphql';
 
 interface Props {
-    image: HorseImage
+    image: FacilityImage
     name: string
 }
 
 const DeleteFacilityImageButton = (props: Props) => {
-    const [DeleteImage] = useDeleteHorseImagesMutation();
+    const [DeleteImage] = useDeleteFacilityImagesMutation();
 
     const handleDelete = async (e: any) => {
         e.stopPropagation();
@@ -28,8 +28,8 @@ const DeleteFacilityImageButton = (props: Props) => {
                 }
             },
             update: (cache) => {
-                cache.evict({ fieldName: "horses" });
-                cache.evict({ fieldName: "horseimages" });
+                cache.evict({ fieldName: "facilities" });
+                cache.evict({ fieldName: "facilityimages" });
             }
         })
 

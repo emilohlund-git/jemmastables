@@ -86,10 +86,10 @@ const MobileBookTimeForm = (props: Props) => {
                 cache.evict({ fieldName: "dateSlots" })
             }
         });
-
         if (!errors) {
             dispatch(setUser(data?.updateUsers.users[0] as User))
             props.toggleAccordion();
+        } else {
         }
     }
 
