@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import JemmaImage from '../components/JemmaImage';
 import ProfileContent from '../components/profile/ProfileContent';
 import { User } from '../generated/graphql';
 import { setUser } from '../redux/actions';
@@ -37,7 +38,7 @@ const User = (props: Props) => {
                 <>
                     <div className="flex justify-center text-center flex-col pb-12 pt-14 px-6 bg-white">
                         <div className="w-32 h-32 self-center">
-                            <Image className="rounded-full" src={user.profilePicture!} alt={user.name} layout="responsive" width={200} height={200} />
+                            <JemmaImage className="rounded-full" width={200} height={200} src={user.profilePicture!} alt={user.name} />
                         </div>
                         <h1 className="font-bold text-xl text-black mt-6">{user.name.toLowerCase()}</h1>
                         <p className="text-sm text-black">{user.email}</p>

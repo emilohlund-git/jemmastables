@@ -17,7 +17,6 @@ const FacilityBanner = (props: Props) => {
     const admin: boolean = useSelector((state: RootState) => state.admin);
     const dispatch = useDispatch();
     const router = useRouter();
-    const facility: string = useSelector((state: RootState) => state.facility);
 
     const handleClick = () => {
         dispatch(setFacility(props.facility.name));

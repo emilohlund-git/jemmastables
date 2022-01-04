@@ -10,6 +10,7 @@ declare module 'react-grid-gallery';
 declare module 'fslightbox-react';
 declare module 'simple-react-lightbox';
 declare module 'instafeed.js';
+declare module 'cslx';
 
 interface Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;

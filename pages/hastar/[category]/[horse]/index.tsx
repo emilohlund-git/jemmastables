@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { SRLWrapper } from "simple-react-lightbox";
 import AddHorseImage from '../../../../components/horses/AddHorseImage';
 import DeleteHorseImageButton from '../../../../components/horses/DeleteHorseImageButton';
+import JemmaImage from '../../../../components/JemmaImage';
 import Spinner from '../../../../components/Spinner';
 import UploadControlImages from '../../../../components/UploadControlImages';
 import { HorseImage, useHorseQuery, useUpdateHorsesMutation } from '../../../../generated/graphql';
@@ -148,14 +149,14 @@ const Horse = (props: Props) => {
                                 </div>
                             </div>
                             <SRLWrapper>
-                                <div className="grid max-h-96 bg-gray-800 grid-cols-2 md:grid-cols-4 mt-4 overflow-y-scroll md:overscroll-contain shadow-2xl">
+                                <div className="grid bg-gray-800 grid-cols-2 md:grid-cols-4 mt-4 overflow-y-scroll md:overscroll-contain shadow-2xl">
                                     {data!.horses[0].images && data!.horses[0].images.map((image, index) =>
                                         !image!.profile &&
                                         <div key={index} className={`relative w-full mr-2 cursor-pointer`}>
                                             {admin &&
                                                 <DeleteHorseImageButton image={image as HorseImage} name={name} />
                                             }
-                                            <Image alt={name} src={image!.url} layout="responsive" width={image!.width} height={image!.height} />
+                                            <JemmaImage width={image!.width} height={image!.height} src={image!.url} alt={name} />
                                         </div>
                                     )}
                                     {admin &&

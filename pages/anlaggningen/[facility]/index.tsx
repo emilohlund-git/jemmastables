@@ -5,11 +5,11 @@ import { FacilityImage, useFacilityQuery, useUpdateFacilityMutation } from '../.
 import { RootState } from '../../../redux/reducers';
 import { SRLWrapper } from "simple-react-lightbox";
 import DeleteFacilityImageButton from '../../../components/facilities/DeleteFacilityImageButton';
-import Image from 'next/image';
 import AddFacilityImage from '../../../components/facilities/AddFacilityImage';
 import UploadControlImages from '../../../components/UploadControlImages';
 import Spinner from '../../../components/Spinner';
 import { withApollo } from '../../../utils/withApollo'
+import JemmaImage from '../../../components/JemmaImage';
 
 interface Props {
 
@@ -97,14 +97,14 @@ const Facility = (props: Props) => {
                                 </div>
                             </div>
                             <SRLWrapper>
-                                <div className="grid max-h-96 bg-gray-800 grid-cols-2 md:grid-cols-4 mt-4 overflow-y-scroll md:overscroll-contain shadow-2xl">
+                                <div className="grid bg-gray-800 grid-cols-2 md:grid-cols-4 mt-4 overflow-y-scroll md:overscroll-contain shadow-2xl">
                                     {!loading && data!.facilities[0].images && data!.facilities[0].images.map((image, index) =>
                                         !image!.profile &&
                                         <div key={index} className={`relative w-full mr-2 cursor-pointer`}>
                                             {admin &&
                                                 <DeleteFacilityImageButton image={image as FacilityImage} name={facility} />
                                             }
-                                            <Image alt={facility} src={image!.url} layout="responsive" width={image!.width} height={image!.height} />
+                                            <JemmaImage width={image!.width} height={image!.height} src={image!.url} alt={facility} />
                                         </div>
                                     )}
                                     {admin &&
@@ -115,7 +115,7 @@ const Facility = (props: Props) => {
                         </div>
                         <div style={{ backgroundImage: `url("${profilePicture}")`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }} className="w-full h-screen ml-20 hidden md:flex">
                             {admin &&
-                                <UploadControlImages id="profile_upload" path={`/horses/${name}`} profile={true}>
+                                <UploadControlImages type="facility" id="profile_upload" path={`/facility/${facility}`} profile={true}>
                                 </UploadControlImages>
                             }
                         </div>
