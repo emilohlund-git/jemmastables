@@ -27,10 +27,9 @@ const LoginForm = (props: Props) => {
 
                     if (!adminLoading) {
                         adminData?.admins.forEach((admin) => {
-                            if (admin.uid === user.uid)
+                            if (admin.uid === user.uid) {
                                 dispatch(setAdmin(true));
-                            else {
-                                dispatch(setAdmin(false));
+                                return;
                             }
                         })
                     }
