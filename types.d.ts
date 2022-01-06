@@ -28,6 +28,14 @@ interface FacebookUser {
   photoURL: string;
 }
 
+interface FormattedUser {
+  uid: string;
+  name: string;
+  email: string;
+  phonenumber: string;
+  profilePicture: string;
+}
+
 interface NavButton {
   label: string;
   path: string;

@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react';
-import { auth } from './firebase';
 import {
-  FacebookAuthProvider,
-  signInWithRedirect,
-  signOut,
+    FacebookAuthProvider,
+    signInWithRedirect,
+    signOut
 } from 'firebase/auth';
-import { User } from '../../generated/graphql';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/reducers';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { setAdmin, setUser } from '../../redux/actions';
+import { auth } from './firebase';
 
 const formatAuthUser = (user: FacebookUser) => ({
   uid: user.uid,
