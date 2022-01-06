@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import { useSelector } from 'react-redux';
-import { FacilityImage, useFacilityQuery, useUpdateFacilityMutation } from '../../../generated/graphql';
-import { RootState } from '../../../redux/reducers';
-import { SRLWrapper } from "simple-react-lightbox";
-import DeleteFacilityImageButton from '../../../components/facilities/DeleteFacilityImageButton';
-import AddFacilityImage from '../../../components/facilities/AddFacilityImage';
-import UploadControlImages from '../../../components/UploadControlImages';
-import Spinner from '../../../components/Spinner';
-import { withApollo } from '../../../utils/withApollo'
-import JemmaImage from '../../../components/JemmaImage';
 import { toast } from 'react-toastify';
+import { SRLWrapper } from "simple-react-lightbox";
+import AddFacilityImage from '../../../components/facilities/AddFacilityImage';
+import DeleteFacilityImageButton from '../../../components/facilities/DeleteFacilityImageButton';
+import JemmaImage from '../../../components/JemmaImage';
+import Spinner from '../../../components/Spinner';
+import UploadControlImages from '../../../components/UploadControlImages';
+import { FacilityImage, HorseImage, useFacilityQuery, useUpdateFacilityMutation } from '../../../generated/graphql';
+import { RootState } from '../../../redux/reducers';
+import { withApollo } from '../../../utils/withApollo';
 
 interface Props {
 
@@ -20,7 +20,7 @@ const Facility = (props: Props) => {
     const facility: string = useSelector((state: RootState) => state.facility);
     const admin: boolean = useSelector((state: RootState) => state.admin);
     const [profilePicture, setProfilePicture] = useState(null as any);
-    const [image, setImage] = useState() as any;
+    const [image, setImage] = useState({} as FacilityImage);
     const [formState, setFormState] = useState({} as any);
     const { data, loading } = useFacilityQuery({
         variables: {
@@ -38,6 +38,7 @@ const Facility = (props: Props) => {
             });
             if (data?.facilities[0].images?.find((image) => image!.profile)) {
                 const image = data!.facilities[0].images!.find((image) => image!.profile);
+                setImage(image as FacilityImage);
                 setProfilePicture(image!.url);
             }
         }
@@ -45,29 +46,33 @@ const Facility = (props: Props) => {
 
     const [UpdateFacility] = useUpdateFacilityMutation();
 
-    const handleSubmit = async (e: any) => {
-        if (e.code === "Enter" && admin) {
-            toast.promise(
-                UpdateFacility({
-                    variables: {
-                        where: {
-                            id: data?.facilities.find((f) => f.name === facility)?.id
-                        },
-                        update: {
-                            name: formState.name,
-                            description: formState.description,
-                        }
+    const submitForm = async (e: any) => {
+        toast.promise(
+            UpdateFacility({
+                variables: {
+                    where: {
+                        id: data?.facilities.find((f) => f.id === facility)?.id
                     },
-                    update: (cache) => {
-                        cache.evict({ fieldName: "facilities" });
+                    update: {
+                        name: formState.name,
+                        description: formState.description,
                     }
-                }),
-                {
-                    pending: 'Uppdaterar...',
-                    success: 'Uppdaterad 👌',
-                    error: 'Misslyckades 🤯'
+                },
+                update: (cache) => {
+                    cache.evict({ fieldName: "facilities" });
                 }
-            )
+            }),
+            {
+                pending: 'Uppdaterar...',
+                success: 'Uppdaterad 👌',
+                error: 'Misslyckades 🤯'
+            }
+        )
+    }
+
+    const handleSubmit = async (e: any) => {
+        if (admin && !e.code || e.code === "Enter" && admin) {
+            submitForm(e);
         }
     }
 
@@ -119,7 +124,7 @@ const Facility = (props: Props) => {
                         </div>
                         <div style={{ backgroundImage: `url("${profilePicture}")`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }} className="w-full h-screen ml-20 hidden md:flex">
                             {admin &&
-                                <UploadControlImages type="facility" id="profile_upload" path={`/facility/${facility}`} profile={true}>
+                                <UploadControlImages type="facility" id="profile_upload" facilityImage={image} path={`/facility/${facility}`} profile={true}>
                                 </UploadControlImages>
                             }
                         </div>

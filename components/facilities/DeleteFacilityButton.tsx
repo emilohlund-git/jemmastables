@@ -1,6 +1,6 @@
 import React from 'react'
 import { FiTrash2 } from 'react-icons/fi';
-import { useDeleteHorsesMutation } from '../../generated/graphql';
+import { useDeleteFacilityMutation, useDeleteHorsesMutation } from '../../generated/graphql';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -9,28 +9,28 @@ interface Props {
 }
 
 const DeleteFacilityButton = (props: Props) => {
-    const [DeleteHorse] = useDeleteHorsesMutation();
+    const [DeleteFacility] = useDeleteFacilityMutation();
 
     const handleDelete = async (e: any) => {
         e.stopPropagation();
 
         try {
             await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/image4io/folders`, {
-                data: { path: 'horses/' + props.name }
+                data: { path: 'facility/' + props.name }
             })
         } catch (err) {
             console.log(err);
         }
 
         toast.promise(
-            DeleteHorse({
+            DeleteFacility({
                 variables: {
                     where: {
                         name: props.name
                     }
                 },
                 update: (cache) => {
-                    cache.evict({ fieldName: "horses" });
+                    cache.evict({ fieldName: "facility" });
                 }
             }),
             {

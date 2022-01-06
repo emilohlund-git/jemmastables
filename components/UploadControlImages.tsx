@@ -1,8 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useCreateFacilityImagesMutation, useCreateHorseImagesMutation, useDeleteFacilityImagesMutation, useDeleteHorseImagesMutation } from '../generated/graphql';
+import { FacilityImage, HorseImage, useCreateFacilityImagesMutation, useCreateHorseImagesMutation, useDeleteFacilityImagesMutation, useDeleteHorseImagesMutation } from '../generated/graphql';
 import { RootState } from '../redux/reducers';
+import axois from 'axios';
+import axios from 'axios';
 
 interface Props {
     children: any
@@ -10,9 +12,11 @@ interface Props {
     profile: boolean
     id: string
     type?: string
+    horseImage?: HorseImage
+    facilityImage?: FacilityImage
 }
 
-const UploadControlImages = ({ children, path, profile, id, type }: Props) => {
+const UploadControlImages = ({ children, path, profile, id, type, facilityImage, horseImage }: Props) => {
     const [CreateHorseImages] = useCreateHorseImagesMutation();
     const [DeleteHorseImages] = useDeleteHorseImagesMutation();
     const [CreateFacilityImages] = useCreateFacilityImagesMutation();
@@ -24,7 +28,22 @@ const UploadControlImages = ({ children, path, profile, id, type }: Props) => {
         console.log(profile);
 
         if (e.target.files.length > 0) {
+            // Delete image from Image4IO if there are any:
+            if (profile) {
+                let deletePath = '';
+                if (facilityImage)
+                    deletePath = facilityImage.path;
+                if (horseImage)
+                    deletePath = horseImage.path;
+                await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/image4io/image`, {
+                    data: {
+                        path: deletePath
+                    }
+                })
+            }
+
             const body = new FormData();
+
             body.append("file", e.target.files[0]);
             body.append("path", path);
 
@@ -111,8 +130,8 @@ const UploadControlImages = ({ children, path, profile, id, type }: Props) => {
                             }
                         }),
                         {
-                            pending: 'Laddar upp bild...',
-                            success: 'Bild uppladdad 👌',
+                            pending: 'Tar bort föregående bild...',
+                            success: 'Föregående bild borttagen 👌',
                             error: 'Misslyckades 🤯'
                         }
                     )

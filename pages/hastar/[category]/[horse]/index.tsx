@@ -21,6 +21,7 @@ const Horse = (props: Props) => {
     const admin: boolean = useSelector((state: RootState) => state.admin);
     const category: string = useSelector((state: RootState) => state.category);
     const name: string = useSelector((state: RootState) => state.horse);
+    const [image, setImage] = useState({} as HorseImage);
     const [profilePicture, setProfilePicture] = useState(null as any);
     const { data, loading } = useHorseQuery({
         variables: {
@@ -44,40 +45,45 @@ const Horse = (props: Props) => {
             });
             if (data?.horses[0].images?.find((image) => image!.profile)) {
                 const image = data!.horses[0].images!.find((image) => image!.profile);
+                setImage(image as HorseImage);
                 setProfilePicture(image!.url);
             }
         }
     }, [data, loading])
 
-    const handleSubmit = async (e: any) => {
-        if (e.code === "Enter" && admin) {
-            const { errors } = await UpdateHorse({
-                variables: {
-                    where: {
-                        name: formState.name
-                    },
-                    update: {
-                        name: formState.name,
-                        nickname: formState.nickname,
-                        gender: formState.gender,
-                        birthyear: formState.birthyear,
-                        owner: formState.owner,
-                        after: formState.after
-                    }
+    const submitForm = async (e: any) => {
+        const { errors } = await UpdateHorse({
+            variables: {
+                where: {
+                    name: formState.name
                 },
-                update: (cache) => {
-                    cache.evict({ fieldName: "horses" });
+                update: {
+                    name: formState.name,
+                    nickname: formState.nickname,
+                    gender: formState.gender,
+                    birthyear: formState.birthyear,
+                    owner: formState.owner,
+                    after: formState.after
                 }
-            });
+            },
+            update: (cache) => {
+                cache.evict({ fieldName: "horses" });
+            }
+        });
 
-            toast.promise(
-                UpdateHorse,
-                {
-                    pending: 'Uppdaterar...',
-                    success: 'Uppdaterad 👌',
-                    error: 'Misslyckades 🤯'
-                }
-            )
+        toast.promise(
+            UpdateHorse,
+            {
+                pending: 'Uppdaterar...',
+                success: 'Uppdaterad 👌',
+                error: 'Misslyckades 🤯'
+            }
+        )
+    }
+
+    const handleSubmit = async (e: any) => {
+        if (admin && !e.key || admin && e.key === "Enter") {
+            submitForm(e);
         }
     }
 
@@ -96,7 +102,7 @@ const Horse = (props: Props) => {
                                 <p className="text-lg text-gray-600 lowercase">{name}</p>
 
                             </div>
-                            <div className="flex flex-col w-full" onKeyPress={handleSubmit}>
+                            <form className="flex flex-col w-full" onKeyPress={handleSubmit} onSubmit={handleSubmit}>
                                 <div className="flex justify-center md:justify-start w-full">
                                     <input onChange={(e) => {
                                         setFormState({
@@ -153,7 +159,7 @@ const Horse = (props: Props) => {
                                         }} disabled={!admin} className="w-full appearance-none text-center md:text-left outline-none bg-black bg-opacity-0 text-lg font-thin" value={formState.after || ''} />
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                             <SRLWrapper>
                                 <div className="grid bg-gray-800 grid-cols-2 md:grid-cols-4 mt-4 overflow-y-scroll md:overscroll-contain shadow-2xl">
                                     {data!.horses[0].images && data!.horses[0].images.map((image, index) =>
@@ -173,7 +179,7 @@ const Horse = (props: Props) => {
                         </div>
                         <div style={{ backgroundImage: `url("${profilePicture}")`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }} className="w-full h-screen ml-20 hidden md:flex">
                             {admin &&
-                                <UploadControlImages id="profile_upload" path={`/horses/${name}`} profile={true}>
+                                <UploadControlImages id="profile_upload" horseImage={image} path={`/horses/${name}`} profile={true}>
                                 </UploadControlImages>
                             }
                         </div>
@@ -183,7 +189,7 @@ const Horse = (props: Props) => {
                     <Spinner />
                 }
             </div>
-        </div>
+        </div >
     )
 }
 
