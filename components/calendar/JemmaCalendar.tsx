@@ -2,20 +2,19 @@ import { DateTime } from "luxon";
 import React, { useEffect, useRef, useState } from 'react';
 import { FiChevronLeft, FiChevronRight, FiMinus, FiPlus } from 'react-icons/fi';
 import { useSelector } from "react-redux";
-import { DateSlot, useDateSlotsQuery } from "../../generated/graphql";
+import { useSwipeable } from 'react-swipeable';
+import { toast } from "react-toastify";
+import { DateSlot, useDateSlotsQuery, useDeleteDateSlotsMutation } from "../../generated/graphql";
 import { RootState } from "../../redux/reducers";
-import { containsDateSlotsAndNoTimeSlots, containsNoDateSlotsAndNoTimeSlots } from "../../utils/calendar/containsDateSlots,";
 import getDaysInMonth from "../../utils/calendar/getDaysInMonth";
 import getDaysInWeek from "../../utils/calendar/getDaysInWeek";
+import { isBeforeTodaySQL } from "../../utils/calendar/isBeforeTodaySQL";
 import Spinner from "../Spinner";
 import AddTimeSlotBanner from "./AddTimeSlotBanner";
 import AdminModal from "./AdminModal";
 import { BookingModal } from "./BookingModal";
 import { DayBox } from "./DayBox";
-import EmptyTimeSlot from './EmptyTimeSlot';
 import TimeSlotsContainer from "./TimeSlotsContainer";
-import { useSwipeable } from 'react-swipeable';
-import { isTodaySQL } from "../../utils/calendar/isTodaySQL";
 
 interface Props {
 
@@ -24,6 +23,7 @@ interface Props {
 const JemmaCalendar = (props: Props) => {
     const [active, setActive] = useState(false)
     const [height, setHeight] = useState('0px')
+    const [DeleteOldDates] = useDeleteDateSlotsMutation();
     const [currentDate, setCurrentDate] = useState(DateTime.local());
     const [days, setDays] = useState(
         getDaysInMonth(currentDate)
@@ -42,6 +42,44 @@ const JemmaCalendar = (props: Props) => {
         preventDefaultTouchmoveEvent: false,
         trackTouch: true,
     })
+
+    useEffect(() => {
+        const deleteDateSlots = data?.dateSlots.filter((dateSlot) => isBeforeTodaySQL(dateSlot.date));
+        if (deleteDateSlots && deleteDateSlots.length > 0) {
+            deleteDateSlots?.forEach(async (dateSlot) => {
+                toast.promise(
+                    DeleteOldDates({
+                        variables: {
+                            delete: {
+                                timeslots: [
+                                    {
+                                        where: {
+                                            node: {
+                                                date: {
+                                                    date: dateSlot.date
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            where: {
+                                date: dateSlot.date
+                            },
+                        },
+                        update: (cache) => {
+                            cache.evict({ fieldName: "dateSlots" });
+                        }
+                    }),
+                    {
+                        pending: "Raderar gamla tider",
+                        success: "Raderade gamla tider",
+                        error: "Kunde inte radera gamla tider"
+                    }
+                )
+            });
+        }
+    }, [data])
 
     const changeCalendar = (value: string) => {
         if (value == "minus") {

@@ -1,10 +1,9 @@
+import axios from 'axios';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { FacilityImage, HorseImage, useCreateFacilityImagesMutation, useCreateHorseImagesMutation, useDeleteFacilityImagesMutation, useDeleteHorseImagesMutation } from '../generated/graphql';
 import { RootState } from '../redux/reducers';
-import axois from 'axios';
-import axios from 'axios';
 
 interface Props {
     children: any
@@ -52,8 +51,6 @@ const UploadControlImages = ({ children, path, profile, id, type, facilityImage,
                 body
             })
             const json = await response.json();
-
-            console.log(json);
 
             if (type !== "facility") {
                 if (profile) {

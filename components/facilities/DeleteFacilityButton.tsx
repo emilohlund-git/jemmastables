@@ -30,11 +30,11 @@ const DeleteFacilityButton = (props: Props) => {
                     }
                 },
                 update: (cache) => {
-                    cache.evict({ fieldName: "facility" });
+                    cache.evict({ fieldName: "facilities" });
                 }
             }),
             {
-                pending: 'Tar bort partner...',
+                pending: 'Tar bort anläggning...',
                 success: 'Borttagen 👌',
                 error: 'Misslyckades 🤯'
             }

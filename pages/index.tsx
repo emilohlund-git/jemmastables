@@ -34,8 +34,8 @@ const Home: NextPage = () => {
         <div className="flex items-end md:pb-14">
           <div className="flex w-full h-20 items-center justify-evenly z-20">
             {!loading && data?.partners.map((partner, i: number) => (
-              <div key={i} className="w-2/12 md:w-1/12 z-20 filter grayscale invert brightness-0 opacity-50">
-                <JemmaImage width={partner.logo!.width} height={partner.logo!.height} src={partner.logo!.url} alt={partner.name} />
+              <div key={i} className="relative w-2/12 md:w-1/12 z-20 filter grayscale invert brightness-0 opacity-50">
+                <JemmaImage width={partner.logo!.width} height={partner.logo!.height} objectFit="contain" src={partner.logo!.url} alt={partner.name} />
               </div>
             ))}
           </div>
@@ -50,4 +50,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default withApollo({ssr: false})(Home)
+export default withApollo({ ssr: false })(Home)

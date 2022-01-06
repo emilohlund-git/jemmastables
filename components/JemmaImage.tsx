@@ -10,7 +10,7 @@ const JemmaImage: FC<ImageProps> = ({ className, onLoad, ...props }): ReactEleme
     }
     return (<>
         <div className={clsx([`relative h-52 filter ${!isImageReady && "blur-sm opacity-0"} transition-all duration-400`, { "blur-none": isImageReady }, className])}>
-            <Image className={className} onLoad={onLoadCallBack} alt={props.alt} src={props.src} width={props.width} height={props.height} objectFit="cover" layout="fill" quality={55} />
+            <Image className={className} onLoad={onLoadCallBack} alt={props.alt} src={props.src} width={props.width} height={props.height} objectFit={props.objectFit || "cover"} layout="fill" quality={55} />
         </div>
     </>)
 }

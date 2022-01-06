@@ -28,13 +28,11 @@ export const DayBox = (props: Props) => {
     }, [props.dateSlot])
 
     const handleClick = () => {
-        if (!isBeforeToday(props.day)) {
             dispatch(setDate(props.day));
             setTimeout(() => {
                 props.setActive(true);
                 props.setHeight(`${props.bottomBarRef.current.scrollHeight}px`);
             }, 50);
-        }
     }
 
     return (
