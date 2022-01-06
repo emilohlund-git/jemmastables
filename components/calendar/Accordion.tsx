@@ -48,14 +48,14 @@ export const Accordion = (props: AccordionProps) => {
 
     return (
         <div className="flex flex-col">
-            {admin &&
-                <DeleteTimeSlotButton count={props.count} date={props.timeslot.date.date} to={props.timeslot.to} from={props.timeslot.from} />
-            }
             <button
                 className="appearance-none cursor-pointer focus:outline-none justify-between"
                 onClick={toggleAccordion}
             >
                 <div onClick={handleClick} className="transition-all transform flex flex-row justify-between hover:bg-blue-50 hover:bg-opacity-10">
+                    {admin &&
+                        <DeleteTimeSlotButton count={props.count} date={props.timeslot.date.date} to={props.timeslot.to} from={props.timeslot.from} />
+                    }
                     <div className="flex flex-row items-center ml-4">
                         <div className={`w-2 h-16 ${getBackgroundColorByTimeSlot(props.timeslot)} rounded-md`}>
 

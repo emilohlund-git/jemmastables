@@ -116,7 +116,7 @@ export default function ProfileContent() {
                 <Tab.Panels className="mt-2">
                     <Tab.Panel
                         className={classNames(
-                            'bg-white rounded-xl p-3 max-h-96 overflow-y-scroll',
+                            'bg-white rounded-xl p-3 max-h-96 scrollbar-none overflow-y-scroll',
                             'focus:outline-none'
                         )}
                     >
@@ -155,8 +155,8 @@ export default function ProfileContent() {
                                     email: e.target.value
                                 })} name="email" className="w-full appearance-none bg-transparent text-gray-500 mr-2 py-1 px-2 leading-tight focus:outline-none transition text-sm" type="email" placeholder="Epost" />
                             </div>
-                            <div className="flex w-full justify-end">
-                                <button onClick={handleSubmit} disabled={disabled} className="disabled:bg-gray-300 disabled:cursor-default transition-all w-full bg-gray-900 text-white font-bold py-2 px-4 border-none rounded-md mt-4">
+                            <div className="flex w-full justify-center">
+                                <button onClick={handleSubmit} disabled={disabled} className="disabled:bg-gray-300 disabled:cursor-default transition-all my-6 mb-9 shadow-sm bg-black text-white self-center rounded-3xl px-4 w-full py-2 text-sm">
                                     uppdatera
                                 </button>
                             </div>

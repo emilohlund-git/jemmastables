@@ -17,6 +17,9 @@ const BookedTimeSlots = (props: Props) => {
 
     return (
         <>
+            {sortedTimeSlots.length === 0 &&
+                <p className="text-center text-md mb-8 mt-6">inga bokade tider</p>
+            }
             {sortedTimeSlots.map((timeslot, index) => {
                 return (
                     <BookedTimeSlot key={index} timeslot={timeslot!} />

@@ -41,7 +41,7 @@ const User = (props: Props) => {
                             <JemmaImage className="rounded-full max-h-32" width={200} height={200} src={user.profilePicture!} alt={user.name} />
                         </div>
                         <h1 className="font-bold text-xl text-black mt-6">{user.name.toLowerCase()}</h1>
-                        <p className="text-sm text-black">{user.email}</p>
+                        <p className="text-sm text-black">{user.email.toLowerCase()}</p>
                         <button onClick={handleLogout} className="my-6 mb-9 shadow-sm bg-gradient-to-r from-black to-gray-800 w-48 text-white self-center rounded-3xl px-4 py-2 text-sm">logga ut &rarr;</button>
                         {/* 
                             <LineProgressBar
