@@ -21,7 +21,7 @@ const LoginForm = (props: Props) => {
         const loadUser = async () => {
             if (!loading && data && data.users && authUser) {
                 const user = data.users.find((user) => user.uid === authUser.uid);
-                alert(user + "\n" + authUser);
+                alert(user.uid + "\n" + authUser.uid);
                 if (user) {
                     dispatch(setUser(user as User));
 
