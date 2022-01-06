@@ -16,6 +16,18 @@ interface Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
 }
 
+interface FacebookUser {
+  uid: string;
+  displayName: string;
+  providerData: [
+    {
+      phoneNumber: string;
+    }
+  ];
+  email: string;
+  photoURL: string;
+}
+
 interface NavButton {
   label: string;
   path: string;

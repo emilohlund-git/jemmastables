@@ -1,10 +1,9 @@
-import { FacebookAuthProvider, signInWithRedirect, signOut } from 'firebase/auth';
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAuth } from '../contexts/AuthUserProvider';
 import { useAdminsQuery, useCreateUsersMutation, User, useUsersQuery } from '../generated/graphql';
 import { setAdmin, setUser } from '../redux/actions';
 import { RootState } from '../redux/reducers';
-import { auth } from '../utils/firebase/firebase';
 
 interface Props {
 
@@ -12,80 +11,55 @@ interface Props {
 
 const LoginForm = (props: Props) => {
     const user: User = useSelector((state: RootState) => state.user);
-    const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const provider = new FacebookAuthProvider();
+    const { signin, signout, authUser } = useAuth();
+    const { data, loading } = useUsersQuery();
+    const { data: adminData, loading: adminLoading } = useAdminsQuery();
+    const [CreateUser] = useCreateUsersMutation();
     const dispatch = useDispatch();
 
-    const [CreateUser] = useCreateUsersMutation();
-    const { data, loading } = useUsersQuery();
-    const { data: AdminData, loading: AdminLoading } = useAdminsQuery();
-
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(async (facebookUser: any) => {
-            if (!loading && facebookUser) {
-                const user = data?.users.find((user) => user.uid === facebookUser.uid);
-
+        const loadUser = async () => {
+            if (!loading && data && data.users && authUser) {
+                const user = data.users.find((user) => user.uid === authUser.uid);
                 if (user) {
                     dispatch(setUser(user as User));
-                }
 
-                if (!user) {
+                    if (!adminLoading) {
+                        adminData?.admins.forEach((admin) => {
+                            if (admin.uid === user.uid)
+                                dispatch(setAdmin(true));
+                            else {
+                                dispatch(setAdmin(false));
+                            }
+                        })
+                    }
+                } else if (!user) {
                     await CreateUser({
                         variables: {
                             input: {
-                                uid: facebookUser.uid,
-                                name: facebookUser.displayName,
-                                phonenumber: facebookUser.providerData[0].phoneNumber,
-                                email: facebookUser.email,
-                                profilePicture: facebookUser.photoURL + "/?type=large",
+                                uid: authUser.uid,
+                                name: authUser.name,
+                                phonenumber: authUser.phonenumber,
+                                email: authUser.email,
+                                profilePicture: authUser.profilePicture
                             }
-                        }
-                    })
-                }
 
-                if (!AdminLoading) {
-                    AdminData?.admins.forEach((admin) => {
-                        if (facebookUser.uid === admin.uid)
-                            dispatch(setAdmin(true));
-                        else {
-                            dispatch(setAdmin(false));
                         }
                     })
                 }
             }
-            setIsLoading(false)
-        });
-
-        return unsubscribe;
-    }, [loading])
+        }
+        loadUser();
+    }, [authUser])
 
     const handleLogin = async (e: FormEvent) => {
         e.preventDefault();
-        if (!isLoading) {
-            try {
-                setError('');
-                await signInWithRedirect(auth, provider);
-            } catch (err) {
-                console.log(err);
-                setError("Inloggningen misslyckades.");
-            }
-            setIsLoading(false);
-        }
+        await signin();
     }
 
     const handleLogout = async (e: FormEvent) => {
         e.preventDefault();
-        try {
-            setError('');
-            await signOut(auth);
-            setIsLoading(true);
-            dispatch(setUser(null));
-        } catch (err) {
-            console.log(err);
-            setError('Utloggningen misslyckades');
-        }
-        setIsLoading(false);
+        await signout();
     }
 
     return (

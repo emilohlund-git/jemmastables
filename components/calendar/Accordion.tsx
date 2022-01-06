@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { TIMESLOT_TYPE } from '../../config/constants'
 import { DateSlot, TimeSlot } from '../../generated/graphql'
 import { setTime } from '../../redux/actions'
+import { RootState } from '../../redux/reducers'
 import { getBackgroundColorByTimeSlot } from '../../utils/calendar/getBackgroundColorByTimeSlot'
 import DeleteTimeSlotButton from './DeleteTimeSlotButton'
 import InformationPill from './InformationPill'
@@ -17,6 +18,7 @@ interface AccordionProps {
 }
 
 export const Accordion = (props: AccordionProps) => {
+    const admin: boolean = useSelector((state: RootState) => state.admin);
     const [active, setActive] = useState(false)
     const [height, setHeight] = useState('0px')
     const [rotate, setRotate] = useState('transform duration-700 ease')
@@ -46,7 +48,9 @@ export const Accordion = (props: AccordionProps) => {
 
     return (
         <div className="flex flex-col">
-            <DeleteTimeSlotButton count={props.count} date={props.timeslot.date.date} to={props.timeslot.to} from={props.timeslot.from} />
+            {admin &&
+                <DeleteTimeSlotButton count={props.count} date={props.timeslot.date.date} to={props.timeslot.to} from={props.timeslot.from} />
+            }
             <button
                 className="appearance-none cursor-pointer focus:outline-none justify-between"
                 onClick={toggleAccordion}
