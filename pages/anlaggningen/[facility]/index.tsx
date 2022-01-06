@@ -10,6 +10,7 @@ import UploadControlImages from '../../../components/UploadControlImages';
 import Spinner from '../../../components/Spinner';
 import { withApollo } from '../../../utils/withApollo'
 import JemmaImage from '../../../components/JemmaImage';
+import { toast } from 'react-toastify';
 
 interface Props {
 
@@ -46,24 +47,27 @@ const Facility = (props: Props) => {
 
     const handleSubmit = async (e: any) => {
         if (e.code === "Enter" && admin) {
-            const { errors } = await UpdateFacility({
-                variables: {
-                    where: {
-                        id: data?.facilities.find((f) => f.name === facility)?.id
+            toast.promise(
+                UpdateFacility({
+                    variables: {
+                        where: {
+                            id: data?.facilities.find((f) => f.name === facility)?.id
+                        },
+                        update: {
+                            name: formState.name,
+                            description: formState.description,
+                        }
                     },
-                    update: {
-                        name: formState.name,
-                        description: formState.description,
+                    update: (cache) => {
+                        cache.evict({ fieldName: "facilities" });
                     }
-                },
-                update: (cache) => {
-                    cache.evict({ fieldName: "facilities" });
+                }),
+                {
+                    pending: 'Uppdaterar...',
+                    success: 'Uppdaterad 👌',
+                    error: 'Misslyckades 🤯'
                 }
-            });
-
-            if (!errors) {
-            } else {
-            }
+            )
         }
     }
 
@@ -104,7 +108,7 @@ const Facility = (props: Props) => {
                                             {admin &&
                                                 <DeleteFacilityImageButton image={image as FacilityImage} name={facility} />
                                             }
-                                            <JemmaImage width={image!.width} height={image!.height} src={image!.url} alt={facility} />
+                                            <JemmaImage src={image!.url} alt={facility} />
                                         </div>
                                     )}
                                     {admin &&

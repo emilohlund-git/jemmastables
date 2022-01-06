@@ -2,6 +2,7 @@ import { Tab } from '@headlessui/react';
 import { FormEvent, useEffect, useState } from 'react';
 import { FiMail, FiPhone, FiUser } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { User, useUpdateUsersMutation, useUserQuery } from '../../generated/graphql';
 import { setUser } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
@@ -70,8 +71,10 @@ export default function ProfileContent() {
         })
 
         if (errors) {
+            toast.error("Misslyckades att uppdatera")
         } else {
             if (updatedUser) {
+                toast.success("Uppdaterad");
                 dispatch(setUser(updatedUser.updateUsers!.users![0] as User));
             }
         }

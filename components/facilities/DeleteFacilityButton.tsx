@@ -2,6 +2,7 @@ import React from 'react'
 import { FiTrash2 } from 'react-icons/fi';
 import { useDeleteHorsesMutation } from '../../generated/graphql';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 interface Props {
     name: string
@@ -21,16 +22,23 @@ const DeleteFacilityButton = (props: Props) => {
             console.log(err);
         }
 
-        const { errors } = await DeleteHorse({
-            variables: {
-                where: {
-                    name: props.name
+        toast.promise(
+            DeleteHorse({
+                variables: {
+                    where: {
+                        name: props.name
+                    }
+                },
+                update: (cache) => {
+                    cache.evict({ fieldName: "horses" });
                 }
-            },
-            update: (cache) => {
-                cache.evict({ fieldName: "horses" });
+            }),
+            {
+                pending: 'Tar bort partner...',
+                success: 'Borttagen 👌',
+                error: 'Misslyckades 🤯'
             }
-        })
+        )
     }
 
     return (

@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { SRLWrapper } from "simple-react-lightbox";
 import AddHorseImage from '../../../../components/horses/AddHorseImage';
 import DeleteHorseImageButton from '../../../../components/horses/DeleteHorseImageButton';
@@ -69,9 +70,14 @@ const Horse = (props: Props) => {
                 }
             });
 
-            if (!errors) {
-            } else {
-            }
+            toast.promise(
+                UpdateHorse,
+                {
+                    pending: 'Uppdaterar...',
+                    success: 'Uppdaterad 👌',
+                    error: 'Misslyckades 🤯'
+                }
+            )
         }
     }
 
@@ -156,7 +162,7 @@ const Horse = (props: Props) => {
                                             {admin &&
                                                 <DeleteHorseImageButton image={image as HorseImage} name={name} />
                                             }
-                                            <JemmaImage width={image!.width} height={image!.height} src={image!.url} alt={name} />
+                                            <JemmaImage src={image!.url} alt={name} />
                                         </div>
                                     )}
                                     {admin &&

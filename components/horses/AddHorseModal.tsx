@@ -59,7 +59,7 @@ export const AddHorseModal = React.memo((props: Props) => {
         })
         const json = await response.json();
         const _image = {
-            url: json.uploadaedFiles[0].url,
+            url: json.uploadedFiles[0].url,
             path: json.uploadedFiles[0].imagePath,
             width: json.uploadedFiles[0].width,
             height: json.uploadedFiles[0].height,

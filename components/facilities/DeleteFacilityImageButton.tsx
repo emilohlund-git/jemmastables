@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { FiTrash2 } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 import { FacilityImage, useDeleteFacilityImagesMutation } from '../../generated/graphql';
 
 interface Props {
@@ -18,20 +19,27 @@ const DeleteFacilityImageButton = (props: Props) => {
             data: { path: '/' + props.image.path.split("/jemmastables/")[1] }
         })
 
-        await DeleteImage({
-            variables: {
-                where: {
-                    owner: {
-                        name: props.name
-                    },
-                    url: props.image.url
+        toast.promise(
+            DeleteImage({
+                variables: {
+                    where: {
+                        owner: {
+                            name: props.name
+                        },
+                        url: props.image.url
+                    }
+                },
+                update: (cache) => {
+                    cache.evict({ fieldName: "facilities" });
+                    cache.evict({ fieldName: "facilityimages" });
                 }
-            },
-            update: (cache) => {
-                cache.evict({ fieldName: "facilities" });
-                cache.evict({ fieldName: "facilityimages" });
+            }),
+            {
+                pending: 'Tar bort bild...',
+                success: 'Bild borttagen 👌',
+                error: 'Misslyckades 🤯'
             }
-        })
+        )
 
         console.log("Delete");
     }

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { FiTrash2 } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 import { useDeletePartnerMutation } from '../../generated/graphql';
 
 interface Props {
@@ -17,16 +18,23 @@ const DeletePartnerButton = (props: Props) => {
             data: { path: 'partners/' + props.name }
         })
 
-        const { errors } = await DeletePartner({
-            variables: {
-                where: {
-                    name: props.name
+        toast.promise(
+            DeletePartner({
+                variables: {
+                    where: {
+                        name: props.name
+                    }
+                },
+                update: (cache) => {
+                    cache.evict({ fieldName: "partners" });
                 }
-            },
-            update: (cache) => {
-                cache.evict({ fieldName: "partners" });
+            }),
+            {
+                pending: 'Tar bort partner...',
+                success: 'Borttagen 👌',
+                error: 'Misslyckades 🤯'
             }
-        })
+        )
     }
 
     return (

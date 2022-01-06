@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { useCreateFacilityImagesMutation, useCreateHorseImagesMutation, useDeleteFacilityImagesMutation, useDeleteHorseImagesMutation } from '../generated/graphql';
 import { RootState } from '../redux/reducers';
 
@@ -33,100 +34,122 @@ const UploadControlImages = ({ children, path, profile, id, type }: Props) => {
             })
             const json = await response.json();
 
+            console.log(json);
+
             if (type !== "facility") {
                 if (profile) {
-                    await DeleteHorseImages({
-                        variables: {
-                            where: {
-                                owner: {
-                                    name: name
-                                },
-                                AND: [
-                                    {
-                                        profile: true
-                                    }
-                                ]
+                    toast.promise(
+                        DeleteHorseImages({
+                            variables: {
+                                where: {
+                                    owner: {
+                                        name: name
+                                    },
+                                    AND: [
+                                        {
+                                            profile: true
+                                        }
+                                    ]
+                                }
                             }
+                        }),
+                        {
+                            pending: 'Tar bort föregående bild...',
+                            success: 'Föregående bild borttagen 👌',
+                            error: 'Misslyckades 🤯'
                         }
-                    })
+                    )
                 }
 
-                const { errors } = await CreateHorseImages({
-                    variables: {
-                        input: [
-                            {
-                                url: json.uploadedFiles[0].url,
-                                path: json.uploadedFiles[0].imagePath,
-                                width: json.uploadedFiles[0].width,
-                                height: json.uploadedFiles[0].height,
-                                profile: profile,
-                                owner: {
-                                    connect: {
-                                        where: {
-                                            node: {
-                                                name: name
+                toast.promise(
+                    CreateHorseImages({
+                        variables: {
+                            input: [
+                                {
+                                    url: json.uploadedFiles[0].url,
+                                    path: json.uploadedFiles[0].imagePath,
+                                    width: json.uploadedFiles[0].width,
+                                    height: json.uploadedFiles[0].height,
+                                    profile: profile,
+                                    owner: {
+                                        connect: {
+                                            where: {
+                                                node: {
+                                                    name: name
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                        ]
-                    },
-                    update: (cache) => {
-                        cache.evict({ fieldName: "horses" });
+                            ]
+                        },
+                        update: (cache) => {
+                            cache.evict({ fieldName: "horses" });
+                        }
+                    }),
+                    {
+                        pending: 'Laddar upp bild...',
+                        success: 'Bild uppladdad 👌',
+                        error: 'Misslyckades 🤯'
                     }
-                });
-
-                if (!errors) {
-                } else {
-                }
+                )
             } else if (type === "facility") {
                 if (profile) {
-                    await DeleteFacilityImages({
-                        variables: {
-                            where: {
-                                owner: {
-                                    name: facility
-                                },
-                                AND: [
-                                    {
-                                        profile: true
-                                    }
-                                ]
+                    toast.promise(
+                        DeleteFacilityImages({
+                            variables: {
+                                where: {
+                                    owner: {
+                                        name: facility
+                                    },
+                                    AND: [
+                                        {
+                                            profile: true
+                                        }
+                                    ]
+                                }
                             }
+                        }),
+                        {
+                            pending: 'Laddar upp bild...',
+                            success: 'Bild uppladdad 👌',
+                            error: 'Misslyckades 🤯'
                         }
-                    })
+                    )
                 }
 
-                const { errors } = await CreateFacilityImages({
-                    variables: {
-                        input: [
-                            {
-                                url: json.uploadedFiles[0].url,
-                                path: json.uploadedFiles[0].imagePath,
-                                width: json.uploadedFiles[0].width,
-                                height: json.uploadedFiles[0].height,
-                                profile: profile,
-                                owner: {
-                                    connect: {
-                                        where: {
-                                            node: {
-                                                name: facility
+                toast.promise(
+                    CreateFacilityImages({
+                        variables: {
+                            input: [
+                                {
+                                    url: json.uploadedFiles[0].url,
+                                    path: json.uploadedFiles[0].imagePath,
+                                    width: json.uploadedFiles[0].width,
+                                    height: json.uploadedFiles[0].height,
+                                    profile: profile,
+                                    owner: {
+                                        connect: {
+                                            where: {
+                                                node: {
+                                                    name: facility
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                        ]
-                    },
-                    update: (cache) => {
-                        cache.evict({ fieldName: "facilities" });
+                            ]
+                        },
+                        update: (cache) => {
+                            cache.evict({ fieldName: "facilities" });
+                        }
+                    }),
+                    {
+                        pending: 'Laddar upp bild...',
+                        success: 'Bild uppladdad 👌',
+                        error: 'Misslyckades 🤯'
                     }
-                });
-
-                if (!errors) {
-                } else {
-                }
+                )
             }
         }
     }

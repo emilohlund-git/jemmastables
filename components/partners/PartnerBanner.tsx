@@ -1,5 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { Partner, useUpdatePartnerMutation } from '../../generated/graphql';
 import { RootState } from '../../redux/reducers';
 import DeletePartnerButton from './DeletePartnerButton';
@@ -24,18 +25,25 @@ const PartnerBanner = (props: Props) => {
 
     const handleSubmit = async (e: any) => {
         if (e.key === "Enter") {
-            const { errors } = await UpdatePartner({
-                variables: {
-                    where: {
-                        id: props.partner.id
-                    },
-                    update: {
-                        name: formState.name,
-                        website: formState.website,
-                        description: formState.description
+            toast.promise(
+                UpdatePartner({
+                    variables: {
+                        where: {
+                            id: props.partner.id
+                        },
+                        update: {
+                            name: formState.name,
+                            website: formState.website,
+                            description: formState.description
+                        }
                     }
+                }),
+                {
+                    pending: 'Uppdaterar...',
+                    success: 'Uppdaterad 👌',
+                    error: 'Misslyckades 🤯'
                 }
-            })
+            )
         }
     }
 
