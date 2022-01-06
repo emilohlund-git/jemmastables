@@ -51,6 +51,7 @@ const DeleteTimeSlotButton = (props: Props) => {
                 })
 
                 if (!errors) {
+              
                 }
             }
         } else {

@@ -11,7 +11,7 @@ import getDaysInWeek from "../../utils/calendar/getDaysInWeek";
 import { isBeforeTodaySQL } from "../../utils/calendar/isBeforeTodaySQL";
 import Spinner from "../Spinner";
 import AddTimeSlotBanner from "./AddTimeSlotBanner";
-import AdminModal from "./AdminModal";
+import AddTimeSlotModal from "./AddTimeSlotModal";
 import { BookingModal } from "./BookingModal";
 import { DayBox } from "./DayBox";
 import TimeSlotsContainer from "./TimeSlotsContainer";
@@ -141,7 +141,7 @@ const JemmaCalendar = (props: Props) => {
                 }
             </div>
             {admin &&
-                <AdminModal />
+                <AddTimeSlotModal height={height} active={active} bottomBarRef={bottomBarRef} setActive={setActive} setHeight={setHeight} />
             }
             <BookingModal />
             <div className="bg-gradient-to-t md:fixed md:bottom-0 md:w-full md:z-50 from-gray-800 to-gray-900 divide-y-2 divide-gray-700 pb-4 md:pb-0">

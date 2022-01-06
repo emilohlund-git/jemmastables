@@ -3,11 +3,16 @@ import { DateTime } from 'luxon';
 import React, { Dispatch, Fragment, SetStateAction, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TIMESLOT_TYPE } from '../../config/constants';
-import { DateSlotsDocument, useCreateDateSlotsMutation, useDateSlotQuery, useUpdateDateSlotsMutation } from '../../generated/graphql';
+import { useCreateDateSlotsMutation, useDateSlotQuery, useUpdateDateSlotsMutation } from '../../generated/graphql';
 import { setIsOpen, setType } from '../../redux/actions';
 import { RootState } from '../../redux/reducers';
 
 interface Props {
+    setActive: any;
+    setHeight: any;
+    bottomBarRef: any;
+    active: any;
+    height: any;
 }
 
 function classNames(...classes: string[]) {
@@ -79,10 +84,15 @@ const AdminModal = React.memo((props: Props) => {
                     cache.evict({ fieldName: "timeSlots" });
                     cache.evict({ fieldName: "users" });
                 }
-            })
+            });
 
             if (!errors) {
                 closeModal();
+                setTimeout(() => {
+                    props.setActive(true);
+                    /* @ts-ignore */
+                    props.setHeight(`${props.bottomBarRef.current.scrollHeight}px`);
+                }, 500);
             } else {
                 console.log(errors);
             }
@@ -124,6 +134,11 @@ const AdminModal = React.memo((props: Props) => {
 
             if (!errors) {
                 closeModal();
+                setTimeout(() => {
+                    props.setActive(true);
+                    /* @ts-ignore */
+                    props.setHeight(`${props.bottomBarRef.current.scrollHeight}px`);
+                }, 500);
             } else {
                 console.log(errors);
             }
